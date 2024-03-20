@@ -7,3 +7,10 @@ body{
   padding: 0;
   font-family: 'Satoshi', sans-serif;
 }
+
+input:-internal-autofill-selected {
+  appearance: menulist-button;
+  background-image: none !important;
+  background-color: transparent !important;
+  color: fieldtext !important;
+}
