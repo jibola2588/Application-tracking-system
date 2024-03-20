@@ -1,19 +1,21 @@
-import Button from "./components/button"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { Suspense, useEffect } from "react"
+import { routes } from './routes'
 
 function App() {
 return( 
-  <div> 
-<h1 className='text-red-400'>hello world</h1>
-          <Button
-            width='10rem'
-            color="primary"
-            label={'yes'}
-            size="small"
-            hasonclick={true}
-            handleclick={() => console.log('yes')}
-            customclassname="rounded-base"
-          />
-  </div>
+<BrowserRouter> 
+    <Suspense fallback={<span>is loading...</span>}> 
+    <Routes>
+    {routes.map((route, index) =>
+      <Route
+              key={index}
+              path={route.path}
+              element={<route.element />} />
+     )}
+     </Routes>
+    </Suspense>
+</BrowserRouter>
 )
 }
 
