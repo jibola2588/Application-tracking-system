@@ -1,22 +1,31 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import { Suspense, useEffect } from "react"
-import { routes } from './routes'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense } from "react";
+import { routes } from './routes';
 
 function App() {
-return( 
-<BrowserRouter> 
-    <Suspense fallback={<span>is loading...</span>}> 
-    <Routes>
-    {routes.map((route, index) =>
-      <Route
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<span>Loading...</span>}>
+        <Routes>
+          {routes.map((route, index) => (
+            <Route
               key={index}
               path={route.path}
-              element={<route.element />} />
-     )}
-     </Routes>
-    </Suspense>
-</BrowserRouter>
-)
+              element={<route.element/>}
+            >
+              {route.children && route.children.map((childRoute, childIndex) => (
+                <Route
+                  key={childIndex}
+                  path={childRoute.path}
+                  element={<childRoute.element/>}
+                />
+              ))}
+            </Route>
+          ))}
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
