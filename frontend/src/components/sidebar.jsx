@@ -6,12 +6,14 @@ import { CiLogout } from "react-icons/ci";
 import LogoutModal from './logout';
 
 
+
 const Container = styled.div``
 const Top = styled.div``
 const Center = styled.div``
 const Bottom = styled.div``
 
 const Siderbar = () => {
+    
     const location = useLocation();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
@@ -20,23 +22,21 @@ const Siderbar = () => {
     const handleCancel = () => {
       setIsModalOpen(false);
     };
-    const handleOk = () => {
-      setIsModalOpen(false);
-    };
+  
 
   return (
+    <div> 
+          { 
+        isModalOpen &&  <LogoutModal 
+          isModalOpen = {isModalOpen}
+          handleCancel = {handleCancel}
+        />
+       }
     <Container className='flex flex-col justify-between h-screen w-full'>
        <Top className='px-4 h-16 flex items-center'>
           ATS
       </Top>
        <Center className='flex-1 space-y-3'>
-       { 
-        isModalOpen &&  <LogoutModal 
-          isModalOpen = {isModalOpen}
-          handleOk = {handleOk}
-          handleCancel = {handleCancel}
-        />
-       }
          { 
             sideItems.map(item => (
             <Link 
@@ -59,6 +59,8 @@ const Siderbar = () => {
          <span>Logout</span>
        </Bottom>
     </Container>
+ 
+    </div>
   );
 }
 

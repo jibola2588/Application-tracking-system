@@ -7,6 +7,9 @@ import {PiLockKeyBold} from 'react-icons/pi'
 import {MdOutlineEmail} from 'react-icons/md'
 import Input from '../../components/input';
 import { validateData, validateInput } from '../../utils/helper';
+import { toast } from 'react-toastify';
+
+const data = JSON.parse(localStorage.getItem('user'));
 
 
 const Login = () => {
@@ -40,9 +43,20 @@ const handleChange = (e) => {
 
 const handleSubmit = (e) => {
   e.preventDefault();
-  setLoading(true)
   console.log(formData)
+  if(formData.email !== data.email){
+    toast.warning('In-correct email')
+    return
+  } else if (formData.password !== data.password){ 
+    toast.warning('In-correct password')
+    return
+  }
+  setLoading(true)
   setLoading(false)
+  toast.success('Login successful!')
+  setTimeout(() => { 
+    navigate('/dashboard')
+  },2000)
 }
 
   return (

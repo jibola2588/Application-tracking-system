@@ -11,7 +11,7 @@ const Settings = lazy(() => import('../pages/applicant/settings.jsx'));
 
 export const routes = [
     {
-        path: '/register',
+        path: '/',
         element: Register,
     },
     {
