@@ -7,6 +7,7 @@ import {PiLockKeyBold} from 'react-icons/pi'
 import {MdOutlineEmail} from 'react-icons/md'
 import Input from '../../components/input';
 import { validateData, validateInput } from '../../utils/helper';
+import { toast } from 'react-toastify';
 
 
 const Register = () => {
@@ -44,7 +45,12 @@ const handleSubmit = (e) => {
   e.preventDefault();
   setLoading(true)
   console.log(formData)
+  localStorage.setItem('user',JSON.stringify(formData))
   setLoading(false)
+  toast.success('Registration successful!')
+  setTimeout(() => { 
+    navigate('/login')
+  },2000)
 }
 
   return (
