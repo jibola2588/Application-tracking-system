@@ -1,5 +1,6 @@
 import {lazy} from 'react'
 
+const LandingPage = lazy(() => import('../pages/home'));
 const Register = lazy(() => import('../pages/register'));
 const Login = lazy(() => import('../pages/login'));
 // 
@@ -11,6 +12,10 @@ const Profile = lazy(() => import('../pages/applicant/profile.jsx'));
 const Settings = lazy(() => import('../pages/applicant/settings.jsx'));
 
 export const routes = [
+    {
+        path: '/',
+        element: LandingPage,
+    },
     {
         path: '/signup',
         element: Register,
