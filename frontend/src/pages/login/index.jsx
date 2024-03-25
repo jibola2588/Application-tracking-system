@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Button from '../../components/button';
 import imgRight from '../../assets/images/lapReg.jpg'
 import { useNavigate } from 'react-router-dom'
@@ -7,13 +7,15 @@ import {PiLockKeyBold} from 'react-icons/pi'
 import {MdOutlineEmail} from 'react-icons/md'
 import Input from '../../components/input';
 import { validateData, validateInput } from '../../utils/helper';
+import Axios from "axios";
+
 
 
 const Login = () => {
 
   const navigate = useNavigate();
   const goToRegister = () => { 
-    navigate('/')
+    navigate('/signup')
   }
 
   const [formData, setFormData] = useState({
@@ -37,13 +39,23 @@ const handleChange = (e) => {
   setDisabled(!valid);
 };
 
-
+Axios.defaults.withCredentials = true;
 const handleSubmit = (e) => {
   e.preventDefault();
-  setLoading(true)
-  console.log(formData)
-  setLoading(false)
-}
+  setLoading(true);
+  console.log(formData);
+  setLoading(false);
+  Axios.post("http://localhost:8000/auth/login", formData)
+    .then((response) => {
+      if(response.data.status) {
+      navigate('/')
+    } 
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 
   return (
     <div className='h-screen w-full grid md:grid-cols-2'>
@@ -114,7 +126,7 @@ const handleSubmit = (e) => {
               loading={loading}
                 />  
            </div>
-           <p className='text-sm text-[#1c0808] text-center mt-2'>Don't have an account? <span 
+           <p className='text-sm text-[#1c0808] text-center mt-2'>Don&apos;t have an account? <span 
            onClick={goToRegister}
            className='text-primary300 font-bold cursor-pointer'>Sign up</span></p>
           </form>
