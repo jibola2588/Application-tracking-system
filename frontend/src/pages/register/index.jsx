@@ -1,57 +1,66 @@
-import React, { useEffect, useState } from 'react';
-import imgRight from '../../assets/images/lapReg.jpg'
+import {  useState } from 'react';
+import imgRight from '../../assets/images/lapReg.jpg';
 import Button from '../../components/button';
-import { useNavigate } from 'react-router-dom'
-import {AiFillEye, AiFillEyeInvisible} from 'react-icons/ai'
-import {PiLockKeyBold} from 'react-icons/pi'
-import {MdOutlineEmail} from 'react-icons/md'
+import { useNavigate } from 'react-router-dom';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { PiLockKeyBold } from 'react-icons/pi';
+import { MdOutlineEmail } from 'react-icons/md';
 import Input from '../../components/input';
 import { validateData, validateInput } from '../../utils/helper';
+import Axios from 'axios';
 import { toast } from 'react-toastify';
 
 
 const Register = () => {
-
   const navigate = useNavigate();
-  const goToLogin = () => { 
-    navigate('/login')
-  }
+  const goToLogin = () => {
+    navigate('/login');
+  };
 
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    password:''
-})
-const [disabled, setDisabled] = useState(true)
-const [loading, setLoading] = useState(false)
+    password: '',
+  });
+  const [disabled, setDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  const updatedData = { ...formData, [name]: value };
-  setFormData(updatedData);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const updatedData = { ...formData, [name]: value };
+    setFormData(updatedData);
 
-  let valid = true;
-  if (name === 'password') {
+    let valid = true;
+    if (name === 'password') {
       valid = validateInput(name, value);
-  } else {
+    } else {
       valid = validateData(updatedData);
-  }
-  setDisabled(!valid);
-};
+    }
+    setDisabled(!valid);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    console.log(formData);
+    localStorage.setItem('user',JSON.stringify(formData))
+    setLoading(false);
+    Axios.post('http://localhost:8000/auth/signup', formData)
+      .then((response) => {
+        if(response.data.status) {
+          toast.success('Registration successful!')
+          setTimeout(() => { 
+            navigate('/login')
+          },2000)
+      } 
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  setLoading(true)
-  console.log(formData)
-  localStorage.setItem('user',JSON.stringify(formData))
-  setLoading(false)
-  toast.success('Registration successful!')
-  setTimeout(() => { 
-    navigate('/login')
-  },2000)
-}
 
   return (
     <div className='h-screen w-full grid md:grid-cols-2'>

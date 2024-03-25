@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Button from '../../components/button';
 import imgRight from '../../assets/images/lapReg.jpg'
 import { useNavigate } from 'react-router-dom'
@@ -7,6 +7,8 @@ import {PiLockKeyBold} from 'react-icons/pi'
 import {MdOutlineEmail} from 'react-icons/md'
 import Input from '../../components/input';
 import { validateData, validateInput } from '../../utils/helper';
+import Axios from "axios";
+
 import { toast } from 'react-toastify';
 
 const data = JSON.parse(localStorage.getItem('user'));
@@ -16,7 +18,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const goToRegister = () => { 
-    navigate('/')
+    navigate('/signup')
   }
 
   const [formData, setFormData] = useState({
@@ -40,9 +42,24 @@ const handleChange = (e) => {
   setDisabled(!valid);
 };
 
-
+Axios.defaults.withCredentials = true;
 const handleSubmit = (e) => {
   e.preventDefault();
+  setLoading(true);
+  console.log(formData);
+  setLoading(false);
+  Axios.post("http://localhost:8000/auth/login", formData)
+    .then((response) => {
+      if(response.data.status) {
+        toast.success('Login successful!')
+        setTimeout(() => { 
+          navigate('/dashboard')
+        },2000) } 
+          })
+    .catch((err) => {
+      console.log(err);
+    });
+
   console.log(formData)
   if(formData.email !== data.email){
     toast.warning('In-correct email')
@@ -51,12 +68,7 @@ const handleSubmit = (e) => {
     toast.warning('In-correct password')
     return
   }
-  setLoading(true)
-  setLoading(false)
-  toast.success('Login successful!')
-  setTimeout(() => { 
-    navigate('/dashboard')
-  },2000)
+
 }
 
   return (
@@ -128,7 +140,7 @@ const handleSubmit = (e) => {
               loading={loading}
                 />  
            </div>
-           <p className='text-sm text-[#1c0808] text-center mt-2'>Don't have an account? <span 
+           <p className='text-sm text-[#1c0808] text-center mt-2'>Don&apos;t have an account? <span 
            onClick={goToRegister}
            className='text-primary300 font-bold cursor-pointer'>Sign up</span></p>
           </form>

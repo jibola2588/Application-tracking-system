@@ -2,6 +2,7 @@ import {lazy} from 'react'
 
 const Register = lazy(() => import('../pages/register'));
 const Login = lazy(() => import('../pages/login'));
+// 
 const Dashboard = lazy(() => import('../pages/layout/dashboard'));
 const Overview = lazy(() => import('../pages/applicant/overview.jsx'));
 const Interview = lazy(() => import('../pages/applicant/interviews.jsx'));
@@ -11,7 +12,7 @@ const Settings = lazy(() => import('../pages/applicant/settings.jsx'));
 
 export const routes = [
     {
-        path: '/',
+        path: '/signup',
         element: Register,
     },
     {
