@@ -8,6 +8,8 @@ import { MdOutlineEmail } from 'react-icons/md';
 import Input from '../../components/input';
 import { validateData, validateInput } from '../../utils/helper';
 import Axios from 'axios';
+import { toast } from 'react-toastify';
+
 
 const Register = () => {
   const navigate = useNavigate();
@@ -42,17 +44,23 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     console.log(formData);
+    localStorage.setItem('user',JSON.stringify(formData))
     setLoading(false);
     Axios.post('http://localhost:8000/auth/signup', formData)
       .then((response) => {
         if(response.data.status) {
-        navigate('/login')
+          toast.success('Registration successful!')
+          setTimeout(() => { 
+            navigate('/login')
+          },2000)
       } 
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+
 
   return (
     <div className='h-screen w-full grid md:grid-cols-2'>
