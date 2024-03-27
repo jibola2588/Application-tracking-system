@@ -14,19 +14,19 @@ const Settings = lazy(() => import('../pages/applicant/settings.jsx'));
 export const routes = [
     {
         path: '/',
-        element: LandingPage,
+        element:LandingPage,
     },
     {
         path: '/signup',
-        element: Register,
+        element:Register,
     },
     {
         path: '/login',
-        element: Login,
+        element:Login,
     },
     {
         path: '/dashboard',
-        element: Dashboard,
+        element:Dashboard,
         children:[
             {
                 path:'',
