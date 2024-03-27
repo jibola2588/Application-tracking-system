@@ -9,11 +9,11 @@ export const sideItems = [
         icon:RxDashboard,
         path:'/dashboard'
     },
-    {
-        name:'Interviews',
-        icon:MdOutlineMeetingRoom,
-        path:'/dashboard/interviews'
-    },
+    // {
+    //     name:'Interviews',
+    //     icon:MdOutlineMeetingRoom,
+    //     path:'/dashboard/interviews'
+    // },
     {
         name:'Jobs',
         icon:MdOutlineAttachEmail,
