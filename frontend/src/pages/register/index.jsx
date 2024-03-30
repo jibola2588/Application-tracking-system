@@ -45,19 +45,23 @@ const Register = () => {
     setLoading(true);
     console.log(formData);
     localStorage.setItem('user',JSON.stringify(formData))
+    toast.success('Registration successful!')
+    setTimeout(() => { 
+      navigate('/login')
+    },2000)
     setLoading(false);
-    Axios.post('http://localhost:8000/auth/signup', formData)
-      .then((response) => {
-        if(response.data.status) {
-          toast.success('Registration successful!')
-          setTimeout(() => { 
-            navigate('/login')
-          },2000)
-      } 
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // Axios.post('http://localhost:8000/auth/signup', formData)
+    //   .then((response) => {
+    //     if(response.data.status) {
+    //       toast.success('Registration successful!')
+    //       setTimeout(() => { 
+    //         navigate('/login')
+    //       },2000)
+    //   } 
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
 
