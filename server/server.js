@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 const corsOptions = {
-  origin: 'http://localhost:5173', // Allow requests from this origin
+  origin: ['http://localhost:5173', 'http://localhost:800'], // Allow requests from this origin
   credentials: true // Allow credentials (cookies, authorization headers, etc.)
 };
 app.use(cookieParser());
@@ -18,7 +18,7 @@ app.use('/auth', UserRouter);
 
 const connectionSring = process.env.DB_URI;
 
-async function connect() {
+export default async function connect() {
   try {
     await mongoose.connect(connectionSring, {
       autoIndex: true,

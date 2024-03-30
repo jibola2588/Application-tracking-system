@@ -7,6 +7,7 @@ import { HiMiniUsers } from "react-icons/hi2";
 import { GrShareOption } from "react-icons/gr";
 import { VscSave } from "react-icons/vsc";
 import { MdChevronRight } from "react-icons/md";
+import { useNavigate } from "react-router";
 
 
 const Container = styled.div``
@@ -16,6 +17,7 @@ const Search = styled.input``
 
 
 const Jobs = () => {
+  const navigate = useNavigate();
 
   const skills = ['Prototyping','Wireframe','Figma','Adobe XD','Design system']
   const jobs = Array.from({ length: 12 });
@@ -23,6 +25,13 @@ const Jobs = () => {
   return (
     <Container className='text-sm'>
       <div className='flex justify-end mb-3'> 
+      <button className='bg-blue-900 py-1 px-3 text-white rounded-md flex items-center gap-1 mr-4 *:text-white cursor-pointer text-xs'
+      onClick={() => {
+        navigate('/dashboard/postJobs')
+       console.log('jobPosting')
+      }}
+      >Create Job postings</button>           
+
       <Search 
         type='text'
         className='bg-transparent border border-grey-100 rounded-md py-3 px-2 outline-none '
@@ -31,7 +40,7 @@ const Jobs = () => {
       </div>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'> 
          { 
-          jobs.map(item => ( 
+          jobs.map(item=> ( 
             <Wrapper> 
         <Job className='border border-grey-100 rounded-md p-4 space-y-2'> 
            <section className='flex items-center justify-between'> 

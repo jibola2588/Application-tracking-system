@@ -11,7 +11,7 @@ import Axios from "axios";
 
 import { toast } from 'react-toastify';
 
-const data = JSON.parse(localStorage.getItem('user'));
+// const data = JSON.parse(localStorage.getItem('user'));
 
 
 const Login = () => {
@@ -60,14 +60,14 @@ const handleSubmit = (e) => {
       console.log(err);
     });
 
-  console.log(formData)
-  if(formData.email !== data.email){
-    toast.warning('In-correct email')
-    return
-  } else if (formData.password !== data.password){ 
-    toast.warning('In-correct password')
-    return
-  }
+  // console.log(formData)
+  // if(formData.email !== data.email){
+  //   toast.warning('In-correct email')
+  //   return
+  // } else if (formData.password !== data.password){ 
+  //   toast.warning('In-correct password')
+  //   return
+  // }
 
 }
 
