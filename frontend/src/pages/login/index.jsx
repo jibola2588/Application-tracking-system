@@ -42,32 +42,39 @@ const handleChange = (e) => {
   setDisabled(!valid);
 };
 
-Axios.defaults.withCredentials = true;
+// Axios.defaults.withCredentials = true;
 const handleSubmit = (e) => {
   e.preventDefault();
   setLoading(true);
   console.log(formData);
-  setLoading(false);
-  Axios.post("http://localhost:8000/auth/login", formData)
-    .then((response) => {
-      if(response.data.status) {
-        toast.success('Login successful!')
-        setTimeout(() => { 
-          navigate('/dashboard')
-        },2000) } 
-          })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  console.log(formData)
   if(formData.email !== data.email){
     toast.warning('In-correct email')
+    setLoading(false);
     return
   } else if (formData.password !== data.password){ 
     toast.warning('In-correct password')
+    setLoading(false);
     return
   }
+
+  toast.success('Login successful!')
+        setTimeout(() => { 
+          navigate('/dashboard')
+        },2000) 
+  setLoading(false);
+  // Axios.post("http://localhost:8000/auth/login", formData)
+  //   .then((response) => {
+  //     if(response.data.status) {
+  //       toast.success('Login successful!')
+  //       setTimeout(() => { 
+  //         navigate('/dashboard')
+  //       },2000) } 
+  //         })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+
+ 
 
 }
 

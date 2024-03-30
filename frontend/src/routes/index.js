@@ -3,6 +3,7 @@ import {lazy} from 'react'
 const LandingPage = lazy(() => import('../pages/home'));
 const Register = lazy(() => import('../pages/register'));
 const Login = lazy(() => import('../pages/login'));
+const OtpCode = lazy(() => import('../pages/otp'));
 // 
 const Dashboard = lazy(() => import('../pages/layout/dashboard'));
 const Overview = lazy(() => import('../pages/applicant/overview.jsx'));
@@ -23,6 +24,10 @@ export const routes = [
     {
         path: '/login',
         element:Login,
+    },
+    {
+        path: '/code',
+        element:OtpCode,
     },
     {
         path: '/dashboard',
