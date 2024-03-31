@@ -7,11 +7,10 @@ import {PiLockKeyBold} from 'react-icons/pi'
 import {MdOutlineEmail} from 'react-icons/md'
 import Input from '../../components/input';
 import { validateData, validateInput } from '../../utils/helper';
-import Axios from "axios";
-
 import { toast } from 'react-toastify';
+import authService from '../../services/auth-service';
 
-const data = JSON.parse(localStorage.getItem('user'));
+// const data = JSON.parse(localStorage.getItem('user'));
 
 
 const Login = () => {
@@ -43,34 +42,35 @@ const handleChange = (e) => {
 };
 
 // Axios.defaults.withCredentials = true;
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
   setLoading(true);
   console.log(formData);
-  if(formData.email !== data.email){
-    toast.warning('In-correct email')
-    setLoading(false);
-    return
-  } else if (formData.password !== data.password){ 
-    toast.warning('In-correct password')
-    setLoading(false);
-    return
+  try{ 
+    const response = await authService.onLogin(formData)
+    if(response){ 
+     setLoading(false);
+         toast.success(response?.message)
+         setTimeout(() => { 
+           navigate('/dashboard')
+         },2000)
+    }
+  console.log('resp is here-->',response)
+  }catch(err){ 
+   setLoading(false);
   }
 
-  toast.success('Login successful!')
-        setTimeout(() => { 
-          navigate('/dashboard')
-        },2000) 
-  setLoading(false);
   // Axios.post("http://localhost:8000/auth/login", formData)
   //   .then((response) => {
   //     if(response.data.status) {
+  //       setLoading(false);
   //       toast.success('Login successful!')
   //       setTimeout(() => { 
   //         navigate('/dashboard')
   //       },2000) } 
   //         })
   //   .catch((err) => {
+  //     setLoading(false);
   //     console.log(err);
   //   });
 

@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import Button from '../../components/button';
-import imgRight from '../../assets/images/lapReg.jpg'
+import imgRight from '../../../assets/images/lapReg.jpg'
 import { useNavigate } from 'react-router-dom'
-import Axios from "axios";
 import { toast } from 'react-toastify';
 import PinCode from "react-code-input"
 import './index.css'
-import { VerticalSpacer } from '../../components/verticalSpacer';
+import { VerticalSpacer } from '../../../components/verticalSpacer';
+import Button from '../../../components/button';
 
 const data = JSON.parse(localStorage.getItem('user'));
 
@@ -14,18 +13,16 @@ const data = JSON.parse(localStorage.getItem('user'));
 const Login = () => {
 
   const navigate = useNavigate();
-  const goToRegister = () => { 
-    navigate('/signup')
-  }
 
 
 const [disabled, setDisabled] = useState(true)
 const [loading, setLoading] = useState(false)
 const [pinCode, setPinCode] = useState('');
+const [showResend,SetShowResend] = useState(false)
 
 
 const goToResend = () => { 
-  console.log('hello');
+  navigate('/resend-code')
 }
 // Axios.defaults.withCredentials = true;
 const handleSubmit = (e) => {
@@ -37,17 +34,7 @@ const handleSubmit = (e) => {
           navigate('/dashboard')
         },2000) 
   setLoading(false);
-  // Axios.post("http://localhost:8000/auth/login", formData)
-  //   .then((response) => {
-  //     if(response.data.status) {
-  //       toast.success('Login successful!')
-  //       setTimeout(() => { 
-  //         navigate('/dashboard')
-  //       },2000) } 
-  //         })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+
 }
 
   return (
@@ -104,16 +91,3 @@ export default Login;
 
 
 
-{/* <Input
-value={formData.confirmPassword}
-onChange={handleChange}
-label="Confirm Password"
-id="confirmPassword"
-type="password"
-switchtype="text"
-name="confirmPassword"
-placeholder="Confirm new password"
-iconleft={MdLock}
-iconright={FaRegEyeSlash}
-iconrightswitch={FaRegEye}
-/>  */}
