@@ -36,6 +36,7 @@ export const routes = [
         path: '/reset-password',
         element:ResetPassword,
     },
+    
     {
         path: '/forgot-password',
         element:ForgotPassword,

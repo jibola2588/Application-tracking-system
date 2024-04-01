@@ -45,19 +45,19 @@ const authService = {
 
         resendCode: (email) =>
         serviceInstance
-          .post(`$/ResendActivationEmail/${email}`)
+          .post(`/ResendActivationEmail/${email}`)
           .then(({ data, status }) => ({
             ...data,
             status,
           })),
 
-  logout: (request) =>
-    serviceInstance
-      .post(`$/Account/Logout`,{})
-      .then(({ data, status }) => ({
-        ...data,
-        status,
-      })),
+  // logout: (request) =>
+  //   serviceInstance
+  //     .post(`$/Account/Logout`,{})
+  //     .then(({ data, status }) => ({
+  //       ...data,
+  //       status,
+  //     })),
 };
 
 export default authService;

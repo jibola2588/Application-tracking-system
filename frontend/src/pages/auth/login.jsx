@@ -41,7 +41,7 @@ const handleChange = (e) => {
   setDisabled(!valid);
 };
 
-// Axios.defaults.withCredentials = true;
+
 const handleSubmit = async (e) => {
   e.preventDefault();
   setLoading(true);
@@ -59,23 +59,10 @@ const handleSubmit = async (e) => {
   }catch(err){ 
    setLoading(false);
   }
+}
 
-  // Axios.post("http://localhost:8000/auth/login", formData)
-  //   .then((response) => {
-  //     if(response.data.status) {
-  //       setLoading(false);
-  //       toast.success('Login successful!')
-  //       setTimeout(() => { 
-  //         navigate('/dashboard')
-  //       },2000) } 
-  //         })
-  //   .catch((err) => {
-  //     setLoading(false);
-  //     console.log(err);
-  //   });
-
- 
-
+const goToPwd = () => {
+  navigate('/forgot-password')
 }
 
   return (
@@ -134,10 +121,13 @@ const handleSubmit = async (e) => {
                     iconright={AiFillEye}
                     iconrightswitch={AiFillEyeInvisible}
                 />
+              <p className='text-sm text-[#1c0808] mt-1 text-center flex justify-end'> <span 
+           onClick={goToPwd}
+           className='text-primary300 font-bold cursor-pointer'>Forgot password</span></p>
               </div>
               </div>
            </div>
-           <div className='mt-8'> 
+           <div className='mt-6'> 
            <Button 
               label="Proceed"
               type='submit'
@@ -150,6 +140,7 @@ const handleSubmit = async (e) => {
            <p className='text-sm text-[#1c0808] text-center mt-2'>Don&apos;t have an account? <span 
            onClick={goToRegister}
            className='text-primary300 font-bold cursor-pointer'>Sign up</span></p>
+           
           </form>
         </div>
       </section>
