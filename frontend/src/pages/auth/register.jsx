@@ -7,8 +7,8 @@ import { PiLockKeyBold } from 'react-icons/pi';
 import { MdOutlineEmail } from 'react-icons/md';
 import Input from '../../components/input';
 import { validateData, validateInput } from '../../utils/helper';
-import Axios from 'axios';
 import { toast } from 'react-toastify';
+import authService from '../../services/auth-service';
 
 
 const Register = () => {
@@ -40,24 +40,42 @@ const Register = () => {
     setDisabled(!valid);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(formData);
-    localStorage.setItem('user',JSON.stringify(formData))
-    setLoading(false);
-    Axios.post('http://localhost:8000/auth/signup', formData)
-      .then((response) => {
-        if(response.data.status) {
-          toast.success('Registration successful!')
+    // console.log(formData);
+    // localStorage.setItem('user',JSON.stringify(formData))
+    try{ 
+     const response = await authService.onRegister(formData)
+     if(response){ 
+      setLoading(false);
+          toast.success(response?.message)
           setTimeout(() => { 
             navigate('/login')
           },2000)
-      } 
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+     }
+   }catch(err){ 
+    setLoading(false);
+   }
+    
+    // Axios.post('http://localhost:8000/auth/signup', formData)
+    //   .then((response) => {
+    //     if(response.data.status) {
+    //       setLoading(false);
+    //       toast.success('Registration successful!')
+    //       setTimeout(() => { 
+    //         navigate('/login')
+    //       },2000)
+    //   } 
+    //   })
+    //   .catch((err) => {
+    //     setLoading(false);
+    //     console.log(err);
+    //   });
+
+    // var decoded = jwt_decode(result.token);
+    // const exp = decoded.exp * 1000;
+    // localStorage.setItem("jwtExpiry", exp);
   };
 
 

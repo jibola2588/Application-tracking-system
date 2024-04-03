@@ -7,9 +7,8 @@ import {PiLockKeyBold} from 'react-icons/pi'
 import {MdOutlineEmail} from 'react-icons/md'
 import Input from '../../components/input';
 import { validateData, validateInput } from '../../utils/helper';
-import Axios from "axios";
-
 import { toast } from 'react-toastify';
+import authService from '../../services/auth-service';
 
 // const data = JSON.parse(localStorage.getItem('user'));
 
@@ -42,33 +41,28 @@ const handleChange = (e) => {
   setDisabled(!valid);
 };
 
-Axios.defaults.withCredentials = true;
-const handleSubmit = (e) => {
+
+const handleSubmit = async (e) => {
   e.preventDefault();
   setLoading(true);
   console.log(formData);
-  setLoading(false);
-  Axios.post("http://localhost:8000/auth/login", formData)
-    .then((response) => {
-      if(response.data.status) {
-        toast.success('Login successful!')
-        setTimeout(() => { 
-          navigate('/dashboard')
-        },2000) } 
-          })
-    .catch((err) => {
-      console.log(err);
-    });
+  try{ 
+    const response = await authService.onLogin(formData)
+    if(response){ 
+     setLoading(false);
+         toast.success(response?.message)
+         setTimeout(() => { 
+           navigate('/dashboard')
+         },2000)
+    }
+  console.log('resp is here-->',response)
+  }catch(err){ 
+   setLoading(false);
+  }
+}
 
-  // console.log(formData)
-  // if(formData.email !== data.email){
-  //   toast.warning('In-correct email')
-  //   return
-  // } else if (formData.password !== data.password){ 
-  //   toast.warning('In-correct password')
-  //   return
-  // }
-
+const goToPwd = () => {
+  navigate('/forgot-password')
 }
 
   return (
@@ -127,10 +121,13 @@ const handleSubmit = (e) => {
                     iconright={AiFillEye}
                     iconrightswitch={AiFillEyeInvisible}
                 />
+              <p className='text-sm text-[#1c0808] mt-1 text-center flex justify-end'> <span 
+           onClick={goToPwd}
+           className='text-primary300 font-bold cursor-pointer'>Forgot password</span></p>
               </div>
               </div>
            </div>
-           <div className='mt-8'> 
+           <div className='mt-6'> 
            <Button 
               label="Proceed"
               type='submit'
@@ -143,6 +140,7 @@ const handleSubmit = (e) => {
            <p className='text-sm text-[#1c0808] text-center mt-2'>Don&apos;t have an account? <span 
            onClick={goToRegister}
            className='text-primary300 font-bold cursor-pointer'>Sign up</span></p>
+           
           </form>
         </div>
       </section>
