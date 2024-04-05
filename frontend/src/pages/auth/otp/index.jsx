@@ -6,6 +6,7 @@ import PinCode from "react-code-input"
 import './index.css'
 import { VerticalSpacer } from '../../../components/verticalSpacer';
 import Button from '../../../components/button';
+import LogoComponent from '../../../components/logo';
 
 const data = JSON.parse(localStorage.getItem('user'));
 
@@ -41,13 +42,13 @@ const handleSubmit = (e) => {
     <div className='h-screen w-full grid md:grid-cols-2'>
        <div
       className='w-full h-[100%] md:hidden'>
-        <img 
-        src={imgRight}
-        className='w-[100%] h-[100%] object-cover'
-        />
+        <RightAuthScreen />
       </div>
       <section className='mt-24'>
-        <div className='max-w-[500px] mx-auto h-[320px] border border-gray-50 rounded-md shadow py-8 px-10'> 
+
+        <div className='max-w-[500px] mx-auto h-[400px] border border-gray-50 rounded-md shadow py-8 px-10'> 
+        <LogoComponent />
+        <VerticalSpacer size='15px' />
         <h3 className='text-black text-lg font-semibold text-center'>Account Verfication</h3>
         <VerticalSpacer size='5px' />
              <p className='break-words text-center px-4'>Enter the 6 digit pin sent to your mail.</p>
@@ -78,10 +79,7 @@ const handleSubmit = (e) => {
       </section>
       <div
       className='w-full h-[100%] hidden md:block'>
-        <img 
-        src={imgRight}
-        className='w-[100%] h-[100%] object-cover'
-        />
+        <RightAuthScreen />
       </div>
     </div>
   );

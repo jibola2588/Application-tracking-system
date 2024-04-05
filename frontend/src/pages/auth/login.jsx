@@ -10,6 +10,7 @@ import { validateData, validateInput } from '../../utils/helper';
 import { toast } from 'react-toastify';
 import authService from '../../services/auth-service';
 import LogoComponent from '../../components/logo';
+import RightAuthScreen from '../../components/rightSection';
 
 // const data = JSON.parse(localStorage.getItem('user'));
 
@@ -70,10 +71,7 @@ const goToPwd = () => {
     <div className='h-screen w-full grid md:grid-cols-2'>
        <div
       className='w-full h-[100%] md:hidden'>
-        <img 
-        src={imgRight}
-        className='w-[100%] h-[100%] object-cover'
-        />
+         <RightAuthScreen />
       </div>
       <section className='mt-16'>
         <div className='max-w-[400px] mx-auto'> 
@@ -84,12 +82,6 @@ const goToPwd = () => {
              <p className='mt-2 break-words text-center px-4'>Welcome back! Please enter your details </p>
              <div className='space-y-4 mt-4'> 
               <div> 
-                {/* <label className='font-medium'>Email*</label>
-                <input 
-                  type='text'
-                  placeholder='Enter your email'
-                  className='w-full bg-transparent border border-grey-300 rounded-md px-3 py-2 outline-none mt-1'
-                /> */}
                 <Input
                     value={formData.email}
                     onChange={handleChange}
@@ -103,12 +95,6 @@ const goToPwd = () => {
                 />
               </div>
               <div> 
-                {/* <label className='font-medium'>Password*</label>
-                <input 
-                  type='text'
-                  placeholder='Enter your password'
-                  className='w-full bg-transparent border border-grey-300 rounded-md px-3 py-2 outline-none mt-1'
-                /> */}
                 <Input
                     value={formData.password}
                     onChange={handleChange}            
@@ -148,10 +134,7 @@ const goToPwd = () => {
       </section>
       <div
       className='w-full h-[100%] hidden md:block'>
-        <img 
-        src={imgRight}
-        className='w-[100%] h-[100%] object-cover'
-        />
+        <RightAuthScreen />
       </div>
     </div>
   );
