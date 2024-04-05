@@ -9,6 +9,7 @@ import Input from '../../components/input';
 import { validateData, validateInput } from '../../utils/helper';
 import { toast } from 'react-toastify';
 import authService from '../../services/auth-service';
+import LogoComponent from '../../components/logo';
 
 // const data = JSON.parse(localStorage.getItem('user'));
 
@@ -78,6 +79,7 @@ const goToPwd = () => {
         <div className='max-w-[400px] mx-auto'> 
         <form onSubmit={handleSubmit}>
            <div className='my-4'> 
+           <LogoComponent />
              <h3 className='text-black text-lg font-semibold text-center'>Sign in</h3>
              <p className='mt-2 break-words text-center px-4'>Welcome back! Please enter your details </p>
              <div className='space-y-4 mt-4'> 
