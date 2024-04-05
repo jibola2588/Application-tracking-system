@@ -10,6 +10,8 @@ import { validateData, validateInput } from '../../utils/helper';
 import { toast } from 'react-toastify';
 import authService from '../../services/auth-service';
 import { VerticalSpacer } from '../../components/verticalSpacer';
+import LogoComponent from '../../components/logo';
+import RightAuthScreen from '../../components/rightSection';
 
 // const data = JSON.parse(localStorage.getItem('user'));
 
@@ -62,13 +64,11 @@ const handleSubmit = async (e) => {
     <div className='h-screen w-full grid md:grid-cols-2'>
        <div
       className='w-full h-[100%] md:hidden'>
-        <img 
-        src={imgRight}
-        className='w-[100%] h-[100%] object-cover'
-        />
+         <RightAuthScreen />
       </div>
       <section className='mt-16'>
         <div className='max-w-[400px] mx-auto'> 
+        <LogoComponent />
         <form onSubmit={handleSubmit}>
            <div className='my-4'> 
              <h3 className='text-black text-lg font-semibold text-center'>Forgot password</h3>
@@ -106,10 +106,7 @@ const handleSubmit = async (e) => {
       </section>
       <div
       className='w-full h-[100%] hidden md:block'>
-        <img 
-        src={imgRight}
-        className='w-[100%] h-[100%] object-cover'
-        />
+         <RightAuthScreen />
       </div>
     </div>
   );
