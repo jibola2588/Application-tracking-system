@@ -9,11 +9,16 @@ export const sideItems = [
         icon:RxDashboard,
         path:'/dashboard'
     },
-    // {
-    //     name:'Interviews',
-    //     icon:MdOutlineMeetingRoom,
-    //     path:'/dashboard/interviews'
-    // },
+    {
+        name:'Create jobs',
+        icon:RxDashboard,
+        path:'/dashboard/create-job'
+    },
+    {
+        name:'Interview',
+        icon:RxDashboard,
+        path:'/dashboard/interview'
+    },
     {
         name:'Jobs',
         icon:MdOutlineAttachEmail,
@@ -25,9 +30,4 @@ export const sideItems = [
         path:'/dashboard/profile'
     },
 
-    {
-        name:'Settings',
-        icon:IoSettingsOutline,
-        path:'/dashboard/settings'
-    },
 ]

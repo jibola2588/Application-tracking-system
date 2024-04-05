@@ -1,5 +1,5 @@
 import {  useState } from 'react';
-import imgRight from '../../assets/images/lapReg.jpg';
+import imgRight from '../../assets/svg/interview.svg';
 import Button from '../../components/button';
 import { useNavigate } from 'react-router-dom';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
@@ -9,6 +9,7 @@ import Input from '../../components/input';
 import { validateData, validateInput } from '../../utils/helper';
 import { toast } from 'react-toastify';
 import authService from '../../services/auth-service';
+import LogoComponent from '../../components/logo';
 
 
 const Register = () => {
@@ -83,16 +84,31 @@ const Register = () => {
   return (
     <div className='h-screen w-full grid md:grid-cols-2'>
        <div
-      className='w-full h-[100%] md:hidden'>
-        <img 
+      className='w-full h-[100%] md:hidden bg-[#3F4C5E]'>
+        {/* <img 
+        src={imgRight}
+        className='w-[100%] h-[100%] object-cover'
+        /> */}
+        <div className='w-12 h-12'> 
+            <img 
         src={imgRight}
         className='w-[100%] h-[100%] object-cover'
         />
+        </div>
       </div>
-      <section className='mt-8'>
+      <section className='mt-6'>
         <div className='max-w-[400px] mx-auto'> 
         <form onSubmit={handleSubmit}>
            <div className='my-4'> 
+           {/* <div className='flex items-center justify-center'> 
+            <span className='w-12 h-12'> 
+             <img 
+              src={logo}
+              className='w-[100%] h-[100%] object-contain'
+             />
+            </span>
+           </div> */}
+           <LogoComponent />
              <h3 className='text-black text-lg font-semibold text-center'>Sign up</h3>
              <p className='mt-2 break-words text-center px-4'>Welcome! Please proceed by creating an account with us using the form below.</p>
              <div className='space-y-4 mt-4'> 
@@ -170,11 +186,26 @@ const Register = () => {
         </div>
       </section>
       <div
-      className='w-full h-[100%] hidden md:block'>
-        <img 
+      className='w-full h-[100%] hidden md:block bg-[#f2f2f2]'>
+        {/* <img 
+        src={imgRight}
+        className='w-[100%] h-[100%] object-cover'
+        /> */}
+        <div className='flex h-screen w-full items-center justify-center'>
+        <section> 
+        
+        <div className='w-60 h-48'> 
+            <img 
         src={imgRight}
         className='w-[100%] h-[100%] object-cover'
         />
+        </div>
+          <div> 
+            <h3 className='font-bold mt-4 text-gray-600 text-xl text-center'>Let's get you hired</h3>
+          </div>
+
+        </section>
+        </div>
       </div>
     </div>
   );

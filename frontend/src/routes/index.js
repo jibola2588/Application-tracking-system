@@ -10,10 +10,13 @@ const ResendCode = lazy(() => import('../pages/auth/resendCode.jsx'));
 // 
 const Dashboard = lazy(() => import('../pages/layout/dashboard'));
 const Overview = lazy(() => import('../pages/applicant/overview.jsx'));
-const Interview = lazy(() => import('../pages/applicant/interviews.jsx'));
 const Jobs = lazy(() => import('../pages/applicant/jobs.jsx'));
 const Profile = lazy(() => import('../pages/applicant/profile.jsx'));
 const Settings = lazy(() => import('../pages/applicant/settings.jsx'));
+
+// Hr
+const JobCreation = lazy(() => import('../pages/hr/create-jobs.jsx'))
+const Interview = lazy(() => import('../pages/hr/interview.jsx'));
 
 export const routes = [
     {
@@ -54,12 +57,16 @@ export const routes = [
                 element:Overview
             },
             {
-                path:'interviews',
+                path:'interview',
                 element:Interview
             },
             {
                 path:'jobs',
                 element:Jobs
+            },
+            {
+                path:'create-job',
+                element:JobCreation
             },
             {
                 path:'settings',
