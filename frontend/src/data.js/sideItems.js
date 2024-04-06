@@ -1,7 +1,6 @@
 import { RxDashboard } from "react-icons/rx";
-import { IoSettingsOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
-import { MdOutlineAttachEmail,MdOutlineMeetingRoom } from "react-icons/md";
+import { MdOutlineAttachEmail } from "react-icons/md";
 
 export const sideItems = [
     {
