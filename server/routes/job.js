@@ -1,91 +1,67 @@
-import Job from '../models/Job.js'; // Import the Job model/schema
+import express from 'express';
+import { Jobs } from '../models/Job.js';
 
 const router = express.Router();
 
-// Route for creating a new job
+// Create a new job
 router.post('/post', async (req, res) => {
     try {
-        const {
-            user,
-            title,
-            description,
-            salary,
-            company,
-            email,
-            job_category,
-            job_type,
-            job_experience,
-            job_vacancy,
-            job_deadline
-        } = req.body; // Assuming you're sending these fields in the request body
-
-        // Create a new job object
-        const newJob = new Job({
-            user,
-            title,
-            description,
-            salary,
-            company,
-            email,
-            job_category,
-            job_type,
-            job_experience,
-            job_vacancy,
-            job_deadline
-        });
-
-        // Save the job to the database
-        const savedJob = await newJob.save();
-
-        res.status(201).json(savedJob); // Respond with the created job object
+      const job = new Jobs(req.body);
+      await job.save(); // Corrected line
+      res.status(201).send(job);
     } catch (error) {
-        res.status(400).json({ message: error.message }); // Handle errors
+      res.status(400).send(error);
     }
+  });
+
+// Get all jobs
+router.get('/get', async (req, res) => {
+  try {
+    const jobs = await Jobs.find();
+    res.send(jobs);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
-// Route for getting all jobs
-router.get('/', async (req, res) => {
+// Get job by ID
+router.get('/get/:id', async (req, res) => {
+  try {
+    const job = await Jobs.findById(req.params.id);
+    if (!job) {
+      return res.status(404).send();
+    }
+    res.send(job);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+
+// Update job by ID
+router.put('/update/:id', async (req, res) => {
     try {
-        const jobs = await Job.find();
-        res.json(jobs);
+      const job = await Jobs.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!job) {
+        return res.status(404).send();
+      }
+      res.send(job);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+      res.status(400).send(error);
     }
+  });
+  
+// Delete job by ID
+router.delete('/delete/:id', async (req, res) => {
+  try {
+    const job = await Jobs.findByIdAndDelete(req.params.id);
+    if (!job) {
+      return res.status(404).send();
+    }
+    res.send(job);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
-// Route for updating a job
-router.put('/:id', async (req, res) => {
-    const { id } = req.params;
-    const { user, title, description, salary, company, email, job_category, job_type, job_experience, job_vacancy, job_deadline } = req.body;
-
-    try {
-        const updatedJob = await Job.findByIdAndUpdate(id, { user, title, description, salary, company, email, job_category, job_type, job_experience, job_vacancy, job_deadline }, { new: true });
-
-        if (!updatedJob) {
-            return res.status(404).json({ message: 'Job not found' });
-        }
-
-        res.json(updatedJob);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-});
-
-// Route for deleting a job
-router.delete('/:id', async (req, res) => {
-    const { id } = req.params;
-
-    try {
-        const deletedJob = await Job.findByIdAndRemove(id);
-
-        if (!deletedJob) {
-            return res.status(404).json({ message: 'Job not found' });
-        }
-
-        res.json({ message: 'Job deleted successfully' });
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-});
-
-export default router;
+export {router as JobsRouter}

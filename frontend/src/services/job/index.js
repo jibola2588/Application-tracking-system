@@ -5,7 +5,7 @@ import axios from 'axios'; // Import Axios
 export const post_job = async (formData) => {
 
     try {
-        const res = await axios.post(`http://localhost:8000/api/jobs`, {
+        const res = await axios.post(`http://localhost:8000/jobs/post`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -21,10 +21,10 @@ export const post_job = async (formData) => {
 }
 
 
-// get job api
+// get job jobs
 export const get_job = async () => {
     try {
-        const res = await fetch(`http://localhost:8000/api/job/getAllJobs`, {
+        const res = await fetch(`http://localhost:8000/jobs/get`, {
             method: 'GET',
             headers : {
                 'Authorization': `Bearer ${Cookies.get('token')}`
@@ -37,10 +37,10 @@ export const get_job = async () => {
     }
 }
 
-// get specified job api
+// get specified job jobs
 export const get_specified_job = async (id) => {
     try {
-        const res = await fetch(`http://localhost:8000/api/job/getSpecifiedJob?id=${id}`, {
+        const res = await fetch(`http://localhost:8000/jobs/get/:id=${id}`, {
             method: 'GET',
             headers : {'Authorization': `Bearer ${Cookies.get('token')}`}
         })
@@ -53,11 +53,11 @@ export const get_specified_job = async (id) => {
 
 
 
-// apply  job api
+// apply  job jobs
 
 export const apply_job = async (formData) => {
     try {
-        const res = await fetch(`http://localhost:8000/api/job/applyJob`, {
+        const res = await fetch(`http://localhost:8000/jobs/job/applyJob`, {
             method: 'POST',
             headers : {'Authorization': `Bearer ${Cookies.get('token')}`},
             body: formData,
@@ -70,11 +70,11 @@ export const apply_job = async (formData) => {
 }
 
 
-// get my all applied job api
+// get my all applied job jobs
  
 export const get_my_applied_job = async (id) => {
     try {
-        const res = await fetch(`http://localhost:8000/api/job/getAppliedJobs?id=${id}`, {
+        const res = await fetch(`http://localhost:8000/jobs/job/getAppliedJobs?id=${id}`, {
             method: 'GET',
             headers : {'Authorization': `Bearer ${Cookies.get('token')}`}
         })
@@ -86,11 +86,11 @@ export const get_my_applied_job = async (id) => {
 }
 
 
-// get my all posted job api 
+// get my all posted job jobs 
 
 export const get_my_posted_job = async (id) => {
     try {
-        const res = await fetch(`http://localhost:8000/api/job/getPostedJobs?id=${id}`, {
+        const res = await fetch(`http://localhost:8000/jobs/job/getPostedJobs?id=${id}`, {
             method: 'GET',
             headers : {'Authorization': `Bearer ${Cookies.get('token')}`}
         })
@@ -102,11 +102,11 @@ export const get_my_posted_job = async (id) => {
 }
 
 
-// get my all application of specified jobs api
+// get my all application of specified jobs jobs
 
 export const get_all_applications = async (id) => {
     try {
-        const res = await fetch(`http://localhost:8000/api/job/getAllApplicationsOfSpecifiedJob?id=${id}`, {
+        const res = await fetch(`http://localhost:8000/jobs/job/getAllApplicationsOfSpecifiedJob?id=${id}`, {
             method: 'GET',
             headers : {'Authorization': `Bearer ${Cookies.get('token')}`}
         })
@@ -118,11 +118,11 @@ export const get_all_applications = async (id) => {
 }
 
 
-// change application status api
+// change application status jobs
 
 export const change_application_status = async (formData) => {
     try {
-        const res = await fetch(`http://localhost:8000/api/job/responseOfApplication`, {
+        const res = await fetch(`http://localhost:8000/jobs/job/responseOfApplication`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -141,7 +141,7 @@ export const change_application_status = async (formData) => {
 
 export const get_application_details = async (id) => {
     try {
-        const res = await fetch(`http://localhost:8000/api/job/getApplicationDetail?id=${id}`, {
+        const res = await fetch(`http://localhost:8000/jobs/job/getApplicationDetail?id=${id}`, {
             method: 'GET',
             headers : {'Authorization': `Bearer ${Cookies.get('token')}`}
         })
