@@ -4,6 +4,7 @@ import { sideItems } from '../data.js/sideItems';
 import { Link, useLocation } from 'react-router-dom';
 import { CiLogout } from "react-icons/ci";
 import LogoutModal from './logout';
+import LogoComponent from './logo';
 
 
 
@@ -32,19 +33,23 @@ const Siderbar = () => {
           handleCancel = {handleCancel}
         />
        }
-    <Container className='flex flex-col justify-between h-screen w-full'>
+    <Container className='flex flex-col justify-between h-screen w-full bg-primary400 text-white'>
        <Top className='px-4 h-16 flex items-center'>
-          ATS
+       <LogoComponent />
+       <span>
+       ATS
+       </span>
+    
       </Top>
-       <Center className='flex-1 space-y-3'>
+       <Center className='flex-1 space-y-3 px-2'>
          { 
             sideItems.map(item => (
             <Link 
             key={item.name} 
             to={item.path}
-            className={`flex items-center gap-1 py-2 px-4 cursor-pointer ${location.pathname === item.path ? 'bg-blue-300 text-white font-medium' : 'hover:bg-blue-50'}`}
+            className={`flex items-center gap-2 py-2 px-4 cursor-pointer ${location.pathname === item.path ? 'bg-[#d9e7f0] text-[#18425D] rounded-md font-bold' : 'hover:text-[#18425D] hover:bg-[#d9e7f0] hover:rounded-md'}`}
           > 
-            <span>{<item.icon className={`${location.pathname === item.path ? 'text-white' : ''}`}/>}</span>
+            <span>{<item.icon className={`${location.pathname === item.path ? 'text-[#18425D]' : ''}`}/>}</span>
             <span>{item.name}</span>
           </Link>
             ))
@@ -52,9 +57,9 @@ const Siderbar = () => {
        </Center>
        <Bottom 
        onClick={showModal}
-       className='px-4 py-2 flex gap-1 items-center cursor-pointer'> 
+       className='px-6 py-2 flex gap-2 items-center cursor-pointer'> 
          <span>
-          <CiLogout style={{color:'#000'}}/>
+          <CiLogout style={{color:'#fff'}}/>
          </span>
          <span>Logout</span>
        </Bottom>

@@ -159,7 +159,7 @@ const Register = () => {
               Already have an account?{" "}
               <span
                 onClick={goToLogin}
-                className="text-primary300 font-bold cursor-pointer"
+                className="text-primary400 font-bold cursor-pointer"
               >
                 Login
               </span>

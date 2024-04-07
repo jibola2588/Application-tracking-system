@@ -10,7 +10,7 @@ export default {
         primary100:'#EDF5FF',
         primary200:'#D1E2FF',
         primary300:'#0F67FE',
-        primary400:'#0151DA',
+        primary400:'#18425D',
         primary500:'#01294C',
         black:'#09111D',
         white:'#ffffff',

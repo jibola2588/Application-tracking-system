@@ -75,10 +75,9 @@ const Work = ({setTab}) => {
                     name='desc'
                     row={'50'}
                     column={'50'}
-                    placeholder="Write your job description"
-                    className='border border-gray-100 outline-none p-4 rounded-md'
+                    placeholder="Write the job description"
+                    className='border border-[#f1f5f8] outline-none p-4 rounded-md'
                     > 
-                    
                     </textarea>
          </div>
            <Input

@@ -44,12 +44,12 @@ const Skills = ({ setTab }) => {
          </div>
        </div>
        {data.length > 0 && (
-         <List className='mt-3 w-[35%] h-[200px] overflow-y-auto'> 
-           <ul className='space-y-2'> 
+        <List className='mt-3'> 
+           <ul className='flex gap-1 flex-wrap'> 
               { 
                 data.map((skill, index) => ( 
                   <div
-                  className='bg-gray-50 flex items-center justify-between py-[6px] px-2'
+                  className='bg-primary400 w-[100px] flex items-center justify-between py-[6px] px-2 text-white font-medium'
                   > 
                  <span  key={index}>{skill}</span>
                   <IoClose  onClick={() => {handleDelete(skill)}} className='cursor-pointer'/>
@@ -63,12 +63,12 @@ const Skills = ({ setTab }) => {
         <span className='flex items-center gap-3'> 
         <button 
            onClick={() =>{ setTab('Personal Details')}}
-           className={`border border-primary500 text-primary500 text-sm py-2 px-3  rounded-md `}>Prev
+           className={`border border-primary400 text-primary400 text-sm py-2 px-3  rounded-md `}>Prev
         </button>
         <button 
            disabled={disabled}
            onClick={() =>{ setTab('Resume')}}
-           className={` ${disabled ? `bg-gray-300 cursor-not-allowed` : 'bg-primary500 cursor-pointer' } text-white text-sm py-2 px-3  rounded-md `}>Next
+           className={` ${disabled ? `bg-gray-300 cursor-not-allowed` : 'bg-primary400 cursor-pointer' } text-white text-sm py-2 px-3  rounded-md `}>Next
         </button>
         </span>
        </div>

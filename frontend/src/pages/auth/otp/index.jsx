@@ -74,7 +74,7 @@ const handleSubmit = (e) => {
           </form>
           <p className='text-sm text-[#1c0808] text-center mt-2'>Did&apos;t receive any pin? <span 
            onClick={goToResend}
-           className='text-primary300 font-bold cursor-pointer'>Resend pin</span></p>
+           className='text-primary400 font-bold cursor-pointer'>Resend pin</span></p>
         </div>
       </section>
       <div
