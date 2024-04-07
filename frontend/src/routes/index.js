@@ -19,6 +19,7 @@ const CreateNewJob = lazy(() => import('../pages/applicant/postJobs.jsx'));
 const JobCreation = lazy(() => import('../pages/hr/create-jobs.jsx'))
 const HROverview = lazy(() => import('../pages/hr/overview.jsx'))
 const Interview = lazy(() => import('../pages/hr/interview.jsx'));
+const Application = lazy(() => import('../pages/hr/application.jsx'));
 
 export const routes = [
     {
@@ -56,11 +57,15 @@ export const routes = [
         children:[
             {
                 path:'',
-                element:Overview
+                element:HROverview
             },
+            // {
+            //     path:'interview',
+            //     element:Interview
+            // },
             {
-                path:'interview',
-                element:Interview
+                path:'applicant',
+                element:Application
             },
             {
                 path:'jobs',

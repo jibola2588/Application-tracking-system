@@ -19,6 +19,11 @@ export const sideItems = [
         path:'/dashboard/interview'
     },
     {
+        name:'Applicant',
+        icon:RxDashboard,
+        path:'/dashboard/applicant'
+    },
+    {
         name:'Jobs',
         icon:MdOutlineAttachEmail,
         path:'/dashboard/jobs'
