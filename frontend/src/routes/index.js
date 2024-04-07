@@ -17,6 +17,7 @@ const CreateNewJob = lazy(() => import('../pages/applicant/postJobs.jsx'));
 
 // Hr
 const JobCreation = lazy(() => import('../pages/hr/create-jobs.jsx'))
+const HROverview = lazy(() => import('../pages/hr/overview.jsx'))
 const Interview = lazy(() => import('../pages/hr/interview.jsx'));
 
 export const routes = [

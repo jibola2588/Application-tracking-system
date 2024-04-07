@@ -49,13 +49,13 @@ const Button = (props) => {
       }
       ${
         color === "primary"
-          ? "bg-primary300 text-white"
+          ? "bg-primary400 text-white"
           : color === "black"
             ? "bg-black text-white"
             : color === "white"
               ? "bg-white border border-[#DEE3E9] text-black"
               : color === "blue"
-                ? "bg-white border border-[#0F67FE] text-primary400"
+                ? "bg-white border border-[#18425D] text-primary400"
                 : color === "reverse"
                   ? "border border-primary300 bg-transparent text-primary300"
                   : color === "red"

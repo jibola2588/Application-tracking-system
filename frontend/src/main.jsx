@@ -4,6 +4,8 @@ import App from './App.jsx'
 import './index.css'
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { Provider } from 'react-redux';
 import { store } from '../src/store/store.js';
 

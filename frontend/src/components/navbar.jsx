@@ -36,7 +36,7 @@ const Navbar = () => {
 
   return (
     <Container className='w-full border-b border-silver px-4 h-16 flex items-center justify-between'>
-          <Left>
+          <Left className='font-medium text-primary400'>
             {breadcrumb}
           </Left>
           <Right>

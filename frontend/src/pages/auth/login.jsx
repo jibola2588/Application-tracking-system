@@ -111,7 +111,7 @@ const goToPwd = () => {
                 />
               <p className='text-sm text-[#1c0808] mt-1 text-center flex justify-end'> <span 
            onClick={goToPwd}
-           className='text-primary300 font-bold cursor-pointer'>Forgot password</span></p>
+           className='text-primary400 font-bold cursor-pointer'>Forgot password</span></p>
               </div>
               </div>
            </div>
@@ -127,7 +127,7 @@ const goToPwd = () => {
            </div>
            <p className='text-sm text-[#1c0808] text-center mt-2'>Don&apos;t have an account? <span 
            onClick={goToRegister}
-           className='text-primary300 font-bold cursor-pointer'>Sign up</span></p>
+           className='text-primary400 font-bold cursor-pointer'>Sign up</span></p>
            
           </form>
         </div>
