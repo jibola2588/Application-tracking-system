@@ -6,12 +6,17 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Provider } from 'react-redux';
+import { store } from '../src/store/store.js';
+
 
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <Provider store={store}>
    <ToastContainer />
     <App />
+    </Provider>
   </React.StrictMode>,
 )

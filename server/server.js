@@ -3,22 +3,25 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import { UserRouter } from "./routes/user.js";
+import { JobsRouter } from "./routes/job.js";
 import cookieParser from "cookie-parser";
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 const corsOptions = {
-  origin: 'http://localhost:5173', // Allow requests from this origin
+  origin: ['http://localhost:5173', 'http://localhost:800'], // Allow requests from this origin
   credentials: true // Allow credentials (cookies, authorization headers, etc.)
 };
 app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use('/auth', UserRouter);
+app.use('/jobs', JobsRouter);
+
 
 const connectionSring = process.env.DB_URI;
 
-async function connect() {
+export default async function connect() {
   try {
     await mongoose.connect(connectionSring, {
       autoIndex: true,

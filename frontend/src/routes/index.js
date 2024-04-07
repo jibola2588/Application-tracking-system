@@ -13,6 +13,7 @@ const Overview = lazy(() => import('../pages/applicant/overview.jsx'));
 const Jobs = lazy(() => import('../pages/applicant/jobs.jsx'));
 const Profile = lazy(() => import('../pages/applicant/profile.jsx'));
 const Settings = lazy(() => import('../pages/applicant/settings.jsx'));
+const CreateNewJob = lazy(() => import('../pages/applicant/postJobs.jsx'));
 
 // Hr
 const JobCreation = lazy(() => import('../pages/hr/create-jobs.jsx'))
@@ -76,7 +77,12 @@ export const routes = [
             {
                 path:'profile',
                 element:Profile
-            }
+            },
+            {
+                path:'postJobs',
+                element:CreateNewJob
+            },
+            
         ]
     },
 ];
