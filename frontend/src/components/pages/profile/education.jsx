@@ -4,7 +4,7 @@ import Input from '../../input';
 
 const Container = styled.div``
 
-const Education = ({setTab}) => {
+const Education = ({setTab,data,setData}) => {
   const [disabled, setDisabled] = useState(true);
   const [school,setSchool] = useState([])
   const [formData, setFormData] = useState({
@@ -100,7 +100,7 @@ const Education = ({setTab}) => {
           <div className='flex items-end justify-start'> 
           <button 
           onClick={() => handleSchool()}
-          className='bg-primary500 text-white py-2 px-3 rounded-md text-center w-[16rem]'>Save</button>
+          className='bg-primary500 text-white py-2 px-3 rounded-md text-center w-[16rem]'>Add</button>
           </div>
            </div>
            
@@ -132,20 +132,6 @@ const Education = ({setTab}) => {
        </section>
        ))}
         
-       </div>
-      
-       <div className='flex justify-end'> 
-        <span className='flex items-center gap-3'> 
-        <button 
-           onClick={() =>{ setTab('Resume')}}
-           className={`border border-primary500 text-primary500 text-sm py-2 px-3  rounded-md `}>Prev
-        </button>
-        <button 
-           disabled={disabled}
-           onClick={() =>{ setTab('Experience')}}
-           className={` ${disabled ? `bg-gray-300 cursor-not-allowed` : 'bg-primary500 cursor-pointer' } text-white text-sm py-2 px-3  rounded-md `}>Next
-        </button>
-        </span>
        </div>
     </Container>
   );

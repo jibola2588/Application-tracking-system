@@ -5,10 +5,9 @@ import imgL1 from '../../assets/svg/iconL1.svg'
 import imgL2 from '../../assets/svg/iconL2.svg'
 import imgL3 from '../../assets/svg/iconL3.svg'
 import imgL4 from '../../assets/svg/iconL4.svg'
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 import OverviewChart from '../../components/charts/overview';
 import { VerticalSpacer } from '../../components/verticalSpacer';
-import DataTable from '../../components/tables/applicantDash';
 
 const Container = styled.div``
 const Top = styled.div``
@@ -68,7 +67,8 @@ const Overview = () => {
       <VerticalSpacer size='40px'/>
       <h3 className='font-medium text-xl'>Interviews</h3>
       <VerticalSpacer size='20px'/>
-       <DataTable />
+       {/* <DataTable /> */}
+       <DashboardTable />
       </Bottom>
     </Container>
   );

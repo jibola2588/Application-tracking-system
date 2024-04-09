@@ -22,7 +22,9 @@ const CreateJobs = () => {
     startDate: "",
     desc: "",
     skills: [],
-    mode:''
+    mode:'',
+    count:'',
+    deadline:''
   });
 
   const handleChange = (e) => {
@@ -61,7 +63,7 @@ const CreateJobs = () => {
   return (
     <Container>
       <div>
-        <h3 className="text-primary400 font-medium mb-4 text-xl">Create job</h3>
+        <h3 className="text-primary400 font-medium mb-4 text-2xl">Create job details</h3>
         <section className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
             <Input
@@ -143,7 +145,7 @@ const CreateJobs = () => {
               customclassname="bg-transparent"
             />
             <div className="flex flex-col"> 
-            <label>Select Job type</label>
+            <label className="text-black">Select Job type</label>
             <select 
                  value={formData.mode}
                     onChange={handleChange}
@@ -151,12 +153,34 @@ const CreateJobs = () => {
                     type='text'
                     name='mode'
                className="border border-[#f1f5f8] outline-none p-4 rounded-md w-full"> 
-              <option selected>Select job type</option>
+              <option selected className="text-[#c1b5bb]">Select job type</option>
               <option>contract</option>
               <option>Part time</option>
               <option>Full time</option>
             </select>
             </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+            <Input
+              value={formData.count}
+              onChange={handleChange}
+              label="Number of Applicants"
+              id="count"
+              type="text"
+              name="count"
+              placeholder="Enter applicant number"
+              customclassname="bg-transparent"
+            />
+             <Input
+              value={formData.deadline}
+              onChange={handleChange}
+              label="Application deadline"
+              id="deadline"
+              type="date"
+              name="deadline"
+              placeholder="Enter application deadline"
+              customclassname="bg-transparent"
+            />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
           <div> 

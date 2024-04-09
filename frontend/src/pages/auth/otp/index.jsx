@@ -5,10 +5,18 @@ import './index.css';
 import { VerticalSpacer } from '../../../components/verticalSpacer';
 import Button from '../../../components/button';
 import LogoComponent from '../../../components/logo';
+import RightAuthScreen from '../../../components/rightSection';
 import Axios from "axios";
 import { toast } from 'react-toastify';
 
 const Login = () => {
+
+  
+const [disabled, setDisabled] = useState(true)
+const [loading, setLoading] = useState(false)
+const [pinCode, setPinCode] = useState('');
+const [showResend,SetShowResend] = useState(false)
+
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
 
@@ -67,6 +75,25 @@ const Login = () => {
   };
 
 
+
+
+
+// const goToResend = () => { 
+//   navigate('/resend-code')
+// }
+// Axios.defaults.withCredentials = true;
+// const handleSubmit = (e) => {
+//   e.preventDefault();
+
+
+//   toast.success('Login successful!')
+//         setTimeout(() => { 
+//           navigate('/login')
+//         },2000) 
+//   setLoading(false);
+
+// }
+
   return (
     <div className='h-screen w-full grid md:grid-cols-2'>
       {/* Left section */}
@@ -81,7 +108,7 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             <div className='flex justify-center'> 
               <PinCode 
-                type='text' fields={6}
+                type='text' fields={4}
                 autoFocus
                 onChange={(value) => setOtp(value)} 
               />
@@ -107,7 +134,7 @@ const Login = () => {
 
       {/* Right section */}
       <div className='w-full h-[100%] hidden md:block'>
-        {/* <RightAuthScreen /> */}
+        <RightAuthScreen />
       </div>
     </div>
   );

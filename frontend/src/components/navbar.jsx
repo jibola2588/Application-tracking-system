@@ -29,6 +29,9 @@ const Navbar = ({ userData }) => {
         case '/dashboard/profile':
             setBreadcrumb('Profile');
             break;
+        case '/dashboard/applicant':
+            setBreadcrumb('Applicant');
+            break;
         default:
             setBreadcrumb('Overview');
     }

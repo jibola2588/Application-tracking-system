@@ -4,7 +4,7 @@ import Input from '../../input';
 
 const Container = styled.div``
 
-const Personal = ({ setTab}) => {
+const Personal = ({ setTab,  setData , data}) => {
 
   const [disabled, setDisabled] = useState(true);
   const [formData, setFormData] = useState({
@@ -24,8 +24,22 @@ const Personal = ({ setTab}) => {
 
   useEffect(() => {
     const isAnyFieldEmpty = Object.values(formData).some(value => value === '');
-    setDisabled(isAnyFieldEmpty);
+    if(isAnyFieldEmpty){
+      // setDisabled(isAnyFieldEmpty);
+      setDisabled(true)
+    }else{ 
+      setDisabled(false)
+    }
   }, [formData]);
+
+  const handleNext = () => { 
+    setData({...data,
+    personal:formData
+  }
+    )
+    console.log('data is here',data);
+    setTab('Skills')
+  }
 
   return (
     <Container>
@@ -92,7 +106,7 @@ const Personal = ({ setTab}) => {
            <div className=' flex justify-end'> 
            <button 
            disabled={disabled}
-           onClick={() =>{ setTab('Skills')}}
+           onClick={handleNext}
            className={` ${disabled ? `bg-gray-300 cursor-not-allowed` : 'bg-primary500 cursor-pointer' } text-white text-sm py-2 px-3  rounded-md `}>Next</button>
            </div>
            </div>

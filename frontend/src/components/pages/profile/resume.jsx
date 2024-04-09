@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FiUploadCloud } from "react-icons/fi";
+import { VerticalSpacer } from '../../verticalSpacer';
 
 const Container = styled.div``;
 const Upload = styled.div`
@@ -8,8 +9,9 @@ const Upload = styled.div`
   border-radius: 20px;
 `;
 
-const Resume = () => {
+const Resume = ({setTab,data,setData}) => {
   const [file, setFile] = useState(null);
+  const [disabled, setDisabled] = useState(true);
 
   function handleChange(e) {
     const uploadedFile = e.target.files[0];
@@ -24,8 +26,23 @@ const Resume = () => {
     }
   }
 
+  useEffect(() => {
+    if(file){
+      setDisabled(false)
+    }else{
+      setDisabled(true)
+    }
+  })
+
+  const handleNext = () => { 
+    setData({...data, resume:file})
+    setTab('Education')
+    console.log('data is here',data);
+  }
+
   return (
     <Container>
+    <VerticalSpacer size='6rem'/>
       <div className='max-w-lg mx-auto'>
         <label htmlFor='upload'>
           <Upload className={` ${file ? 'h-[330px]' : 'h-[200px]'}mt-6 relative`}>
@@ -49,6 +66,19 @@ const Resume = () => {
           </Upload>
         </label>
       </div>
+      <div className='flex justify-end'> 
+        <span className='flex items-center gap-3'> 
+        <button 
+           onClick={() =>{ setTab('Skills')}}
+           className={`border border-primary500 text-primary500 text-sm py-2 px-3  rounded-md `}>Prev
+        </button>
+        <button 
+           disabled={disabled}
+           onClick={handleNext}
+           className={` ${disabled ? `bg-gray-300 cursor-not-allowed` : 'bg-primary500 cursor-pointer' } text-white text-sm py-2 px-3  rounded-md `}>Next
+        </button>
+        </span>
+       </div>
     </Container>
   );
 };
