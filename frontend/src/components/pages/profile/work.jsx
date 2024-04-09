@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import Input from '../../input';
+import { IoIosClose } from "react-icons/io";
 
 const Container = styled.div``
 
@@ -8,6 +9,7 @@ const Work = ({setTab}) => {
   const [disabled, setDisabled] = useState(true);
   const [workArray,setWorkArray] = useState([])
   const [formData, setFormData] = useState({
+    id:Math.random() * 3000,
     name: '',
     role: '',
     desc: '',
@@ -36,6 +38,11 @@ const Work = ({setTab}) => {
     const isAnyFieldEmpty = Object.values(formData).some(value => value === '');
     setDisabled(isAnyFieldEmpty);
   }, [formData]);
+
+  const handleDelete = (item) => { 
+    const result = workArray.filter(data => data.id !== item.id)
+    setWorkArray(result)
+  }
   
   return (
     <Container>
@@ -105,7 +112,7 @@ const Work = ({setTab}) => {
           <div className='flex items-end justify-start'> 
           <button 
           onClick={() => handleWork()}
-          className='bg-primary500 text-white py-2 px-3 rounded-md text-center w-[16rem]'>Save</button>
+          className='bg-primary500 text-white py-2 px-3 rounded-md text-center w-[16rem]'>Add</button>
           </div>
            </div>
            
@@ -113,7 +120,10 @@ const Work = ({setTab}) => {
        </div>
        <div className='space-y-4 mt-10'> 
        {workArray && workArray.map((item,index)=> ( 
-        <section className='border border-gray-100 rounded-md w-[50%] p-4' key={index}> 
+        <section className='border border-gray-100 rounded-md w-[50%] p-4 relative' key={index}> 
+        <span className='absolute right-0 top-0'> 
+        <IoIosClose  onClick={() => handleDelete(item)}/>
+        </span>
         <div className='flex gap-1'> 
           <span className='font-medium text-sm'>Company name :</span>
           <span>{item.name}</span>
@@ -145,11 +155,10 @@ const Work = ({setTab}) => {
            onClick={() =>{ setTab('Education')}}
            className={`border border-primary500 text-primary500 text-sm py-2 px-3  rounded-md `}>Prev
         </button>
-        {/* <button 
+        <button 
            disabled={disabled}
-           onClick={() =>{ setTab('Experience')}}
-           className={` ${disabled ? `bg-gray-300 cursor-not-allowed` : 'bg-primary500 cursor-pointer' } text-white text-sm py-2 px-3  rounded-md `}>Next
-        </button> */}
+           className={` ${disabled ? `bg-gray-300 cursor-not-allowed` : 'bg-primary500 cursor-pointer' } text-white text-sm py-2 px-3  rounded-md `}>Submit
+        </button>
         </span>
        </div>
     </Container>

@@ -28,6 +28,7 @@ const Content = styled.div``
 const Profile = () => {
 
   const [tab,setTab] = useState('Personal Details')
+  const [data,setData] = useState({})
 
   function handleChange(e) {
     console.log(e.target.files);
@@ -141,7 +142,7 @@ const tabs = [
           tabs.map((item,index) => ( 
           <div 
           onClick = {() => setTab(item.title)}
-          className={`${tab === item.title ? 'rounded-lg py-2 px-2 text-sm border border-gray-100 bg-blue-400  text-white cursor-pointer flex items-center gap-2' : 'rounded-lg py-2 px-2 text-sm border border-gray-100 cursor-pointer flex items-center gap-2' }`} key={index} > 
+          className={`${tab === item.title ? 'rounded-lg py-2 px-2 text-sm border border-gray-100 bg-primary400  text-white cursor-pointer flex items-center gap-2' : 'rounded-lg py-2 px-2 text-sm border border-gray-100 cursor-pointer flex items-center gap-2' }`} key={index} > 
                 <item.icon />
             <span>{item.title}</span>
           </div>
@@ -152,23 +153,41 @@ const tabs = [
            { tab == 'Personal Details' && <Content> 
              <Personal 
               setTab = {setTab}
+              data = {data}
+              setData = {setData}
              />
            </Content>
            }
            { tab == 'Skills' && <Content> 
-             <Skills   setTab = {setTab} />
+             <Skills   
+             setTab = {setTab} 
+             data = {data}
+             setData = {setData}
+             />
            </Content>
            }
            { tab == 'Resume' && <Content> 
-             <Resume   setTab = {setTab} />
+             <Resume   
+             setTab = {setTab} 
+             data = {data}
+             setData = {setData}
+             />
            </Content>
            }
            { tab == 'Education' && <Content> 
-            <Education   setTab = {setTab}/>
+            <Education   
+            setTab = {setTab}
+            data = {data}
+            setData = {setData}
+            />
            </Content>
            }
            { tab == 'Experience' && <Content> 
-             <Works   setTab = {setTab}/>
+             <Works   
+             setTab = {setTab}
+             data = {data}
+             setData = {setData}
+             />
            </Content>
            }
 

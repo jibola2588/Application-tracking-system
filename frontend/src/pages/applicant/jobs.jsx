@@ -8,7 +8,8 @@ import { GrShareOption } from "react-icons/gr";
 import { VscSave } from "react-icons/vsc";
 import { MdChevronRight } from "react-icons/md";
 import { useNavigate } from "react-router";
-import axios from 'axios'; // Import Axios for making HTTP requests
+import axios from 'axios';
+import JobModal from '../../components/modals/applicants/job'
 
 const Container = styled.div``
 const Wrapper = styled.div``
@@ -18,13 +19,15 @@ const Search = styled.input``
 
 const Jobs = () => {
   const navigate = useNavigate();
+  const [open,setOpen] = useState(false);
+  const [data,setData] = useState(null);
   const [jobs, setJobs] = useState([]);
+  const [query, setQuery] = useState('');
 
-  // Fetch jobs data from backend API
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/jobs/get'); // Replace with your backend API endpoint
+        const response = await axios.get('http://localhost:8000/jobs/get'); 
         setJobs(response.data);
       } catch (error) {
         console.error('Error fetching jobs:', error);
@@ -33,39 +36,61 @@ const Jobs = () => {
     fetchJobs();
   }, []);
 
+
+
+  const handleJob = (item) => { 
+    setData(item)
+    setOpen(true)
+  }
+
+  const handleChange = (e) => { 
+   setQuery(e.target.value)
+  }
+
+  const filteredProducts = jobs.filter(item =>
+    item.title.toLowerCase().includes(query.toLowerCase()) ||
+    item.company.toLowerCase().includes(query.toLowerCase())
+)
   const skills = ['Prototyping', 'Wireframe', 'Figma', 'Adobe XD', 'Design system'];
 
   return (
     <Container className='text-sm'>
+   {open && data && <JobModal 
+  item = {data}
+  open = {open}
+  onclose = {() => setOpen(false)}
+   />}
       <div className='flex justify-end mb-3'>
-        <button className='bg-blue-900 py-1 px-3 text-white rounded-md flex items-center gap-1 mr-4 *:text-white cursor-pointer text-xs'
+        {/* <button className='bg-blue-900 py-1 px-3 text-white rounded-md flex items-center gap-1 mr-4 *:text-white cursor-pointer text-xs'
           onClick={() => {
             navigate('/dashboard/postJobs')
             console.log('jobPosting')
           }}
-        >Create Job postings</button>
+        >Create Job postings</button> */}
 
         <Search
           type='text'
+          value={query}
+          onChange={handleChange}
           className='bg-transparent border border-grey-100 rounded-md py-3 px-2 outline-none '
           placeholder='Search jobs...'
         />
       </div>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
         {
-          jobs.map(job => (
-            <Wrapper key={job._id}>
-              <Job className='border border-grey-100 rounded-md p-4 space-y-2'>
+          filteredProducts.map(job => (
+            <Wrapper key={job._id} onClick={() => handleJob(job)}>
+              <Job className='border border-grey-100 rounded-md p-4 space-y-2 shadow-sm cursor-pointer'>
                 <section className='flex items-center justify-between'>
                   <div className='flex items-center gap-2'>
-                    <DiAndroid />
+                    {/* <DiAndroid /> */}
                     <span>
                       <h3 className='font-medium'>{job.title}</h3>
                       <p>{job.company}</p>
                     </span>
                   </div>
                 </section>
-                <section className='flex items-center gap-2'>
+                {/* <section className='flex items-center gap-2'>
   <span className='border-r border-[silver] pr-2'>{job.experience}</span>
   <span className='border-r border-[silver] pr-2'>{job.salary}</span>
   <span className='flex items-center gap-1'>
@@ -74,8 +99,8 @@ const Jobs = () => {
       <span key={index}>{location}</span>
     ))}
   </span>
-</section>
-<section className='space-y-2'>
+</section> */}
+{/* <section className='space-y-2'>
   <h3 className='font-medium'>{job.qualifications}</h3>
   <div className='flex items-center -ml-4 w-full flex-wrap gap-2'>
     {skills.map((skill, index) => (
@@ -86,8 +111,11 @@ const Jobs = () => {
       </span>
     ))}
   </div>
+</section> */}
+<section> 
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book
 </section>
-<section className='lg:flex items-center gap-2'>
+{/* <section className='lg:flex items-center gap-2'>
   <div className='flex items-center gap-1'>
     <IoMdTime />
     <span>{job.timePosted}</span>
@@ -109,8 +137,8 @@ const Jobs = () => {
       </li>
     </ul>
   </div>
-</section>
-<section  className='flex items-end justify-between'>
+</section> */}
+{/* <section  className='flex items-end justify-between'>
            <div className='flex items-center gap-2'> 
             <button className='py-1 px-2 border rounded-md flex items-center gap-1 cursor-pointer'>
             <span className='text-xs'>Refer Job </span>
@@ -130,12 +158,18 @@ const Jobs = () => {
             </span>
              </div>
            </div>
-           </section>
-
+           </section> */}
+  <section className='flex justify-between items-end'> 
+    {/* <button className='bg-[#18425D] py-2 px-3 rounded-md flex items-center text-white'>Apply</button> */}
+    <span className='bg-[#d8ebf6] rounded-md py-[5px] px-2 flex items-center text-[#18425D] font-medium'>Remote</span>
+    <span>{job.locations}</span>
+  </section>
               </Job>
             </Wrapper>
           ))
         }
+
+
       </section>
 
     </Container>

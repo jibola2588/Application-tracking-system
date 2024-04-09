@@ -49,7 +49,7 @@ const Register = () => {
         setLoading(false);
         toast.success(response?.message);
         setTimeout(() => {
-          navigate("/login");
+          navigate("/code");
         }, 2000);
       }
     } catch (err) {

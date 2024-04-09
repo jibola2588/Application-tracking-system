@@ -7,9 +7,9 @@ import './index.css'
 import { VerticalSpacer } from '../../../components/verticalSpacer';
 import Button from '../../../components/button';
 import LogoComponent from '../../../components/logo';
+import RightAuthScreen from '../../../components/rightSection';
 
 const data = JSON.parse(localStorage.getItem('user'));
-
 
 const Login = () => {
 
@@ -32,7 +32,7 @@ const handleSubmit = (e) => {
 
   toast.success('Login successful!')
         setTimeout(() => { 
-          navigate('/dashboard')
+          navigate('/login')
         },2000) 
   setLoading(false);
 
@@ -56,7 +56,7 @@ const handleSubmit = (e) => {
         <form onSubmit={handleSubmit}>
         <div className='flex justify-center'> 
           <PinCode 
-           type='text' fields={6}
+           type='text' fields={4}
            autoFocus
           onChange={(value) => setPinCode(value)} 
            />
