@@ -7,6 +7,7 @@ const OtpCode = lazy(() => import('../pages/auth/otp'));
 const ResetPassword = lazy(() => import('../pages/auth/resetPassword.jsx'));
 const ForgotPassword = lazy(() => import('../pages/auth/forgotPassword.jsx'));
 const ResendCode = lazy(() => import('../pages/auth/resendCode.jsx'));
+const UserDetails = lazy(() => import('../pages/auth/userDetails.jsx'));
 // 
 const Dashboard = lazy(() => import('../pages/layout/dashboard'));
 const Overview = lazy(() => import('../pages/applicant/overview.jsx'));
@@ -17,7 +18,7 @@ const CreateNewJob = lazy(() => import('../pages/applicant/postJobs.jsx'));
 
 // Hr
 const JobCreation = lazy(() => import('../pages/hr/create-jobs.jsx'))
-const HROverview = lazy(() => import('../pages/hr/overview.jsx'))
+// const HROverview = lazy(() => import('../pages/hr/overview.jsx'))
 const Interview = lazy(() => import('../pages/hr/interview.jsx'));
 
 export const routes = [
@@ -34,7 +35,7 @@ export const routes = [
         element:Login,
     },
     {
-        path: '/code',
+        path: `/code`,
         element:OtpCode,
     },
     {
@@ -49,6 +50,10 @@ export const routes = [
     {
         path: '/resend-code',
         element:ResendCode,
+    },
+    {
+        path: '/userDetails',
+        element:UserDetails,
     },
     {
         path: '/dashboard',

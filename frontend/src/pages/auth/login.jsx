@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Button from '../../components/button';
-import imgRight from '../../assets/images/lapReg.jpg'
 import { useNavigate } from 'react-router-dom'
 import {AiFillEye, AiFillEyeInvisible} from 'react-icons/ai'
 import {PiLockKeyBold} from 'react-icons/pi'
@@ -24,8 +23,7 @@ const Login = () => {
 
   const [formData, setFormData] = useState({
     email: '',
-    password:''
-})
+    password:''})
 const [disabled, setDisabled] = useState(true)
 const [loading, setLoading] = useState(false)
 
@@ -48,18 +46,24 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   setLoading(true);
   console.log(formData);
-  try{ 
-    const response = await authService.onLogin(formData)
-    if(response){ 
-     setLoading(false);
-         toast.success(response?.message)
-         setTimeout(() => { 
-           navigate('/dashboard')
-         },2000)
+  try {
+    const response = await authService.onLogin(formData);
+    if (response) {
+      setLoading(false);
+      toast.success(response?.message);
+
+      // Storing email in session storage
+      sessionStorage.setItem('email', formData.email);
+      localStorage.setItem("userdbtoken", response.data.token);
+
+      setTimeout(() => {
+        navigate(`/code`);
+      }, 2000);
     }
-  console.log('resp is here-->',response)
-  }catch(err){ 
-   setLoading(false);
+    console.log('resp is here-->', response);
+    console.log('resp is here-->', response.formData);
+  } catch (err) {
+    setLoading(false);
   }
 }
 
