@@ -5,10 +5,18 @@ import './index.css';
 import { VerticalSpacer } from '../../../components/verticalSpacer';
 import Button from '../../../components/button';
 import LogoComponent from '../../../components/logo';
+import RightAuthScreen from '../../../components/rightSection';
 import Axios from "axios";
 import { toast } from 'react-toastify';
 
 const Login = () => {
+
+  
+const [disabled, setDisabled] = useState(true)
+const [loading, setLoading] = useState(false)
+const [pinCode, setPinCode] = useState('');
+const [showResend,SetShowResend] = useState(false)
+
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
 
@@ -68,27 +76,23 @@ const Login = () => {
 
 
 
-const [disabled, setDisabled] = useState(true)
-const [loading, setLoading] = useState(false)
-const [pinCode, setPinCode] = useState('');
-const [showResend,SetShowResend] = useState(false)
 
 
-const goToResend = () => { 
-  navigate('/resend-code')
-}
+// const goToResend = () => { 
+//   navigate('/resend-code')
+// }
 // Axios.defaults.withCredentials = true;
-const handleSubmit = (e) => {
-  e.preventDefault();
+// const handleSubmit = (e) => {
+//   e.preventDefault();
 
 
-  toast.success('Login successful!')
-        setTimeout(() => { 
-          navigate('/login')
-        },2000) 
-  setLoading(false);
+//   toast.success('Login successful!')
+//         setTimeout(() => { 
+//           navigate('/login')
+//         },2000) 
+//   setLoading(false);
 
-}
+// }
 
   return (
     <div className='h-screen w-full grid md:grid-cols-2'>
@@ -130,7 +134,7 @@ const handleSubmit = (e) => {
 
       {/* Right section */}
       <div className='w-full h-[100%] hidden md:block'>
-        {/* <RightAuthScreen /> */}
+        <RightAuthScreen />
       </div>
     </div>
   );
