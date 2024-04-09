@@ -9,7 +9,7 @@ const Right = styled.div``
 
 const data = JSON.parse(localStorage.getItem('user'));
 
-const Navbar = () => {
+const Navbar = ({ userData }) => {
   const [breadcrumb, setBreadcrumb] = useState('Home');
   const location = useLocation();
 
@@ -45,7 +45,7 @@ const Navbar = () => {
           <Right>
               <div className='flex items-center gap-1'> 
                  <RxAvatar style={{width:24,height:24}}/>
-                 <span>{data ? data?.lastName : 'user'}</span>
+                 <span>{userData ? userData?.email : 'user'}</span>
               </div>
           </Right>
     </Container>

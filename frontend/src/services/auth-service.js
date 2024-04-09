@@ -29,15 +29,15 @@ const authService = {
 
         resetPassword: (data) =>
         serviceInstance
-          .post(`/ResetPassword`,data)
+          .post(`/reset-password/:id/:token`,data)
           .then(({ data, status }) => ({
             ...data,
             status,
           })),
 
-        forgotPassword: (email) =>
+        forgotPassword: (data) =>
         serviceInstance
-          .post(`/ForgetPassword/${email}`)
+          .post(`/forgot-password`, data)
           .then(({ data, status }) => ({
             ...data,
             status,

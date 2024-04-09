@@ -4,19 +4,21 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { UserRouter } from "./routes/user.js";
 import { JobsRouter } from "./routes/job.js";
+import { OTPRouter } from "./routes/otp.js";
 import cookieParser from "cookie-parser";
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://localhost:800'], // Allow requests from this origin
+  origin: ['http://localhost:5173', 'http://localhost:8000'], // Allow requests from this origin
   credentials: true // Allow credentials (cookies, authorization headers, etc.)
 };
 app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use('/auth', UserRouter);
 app.use('/jobs', JobsRouter);
+app.use('/otp', OTPRouter);
 
 
 const connectionSring = process.env.DB_URI;
