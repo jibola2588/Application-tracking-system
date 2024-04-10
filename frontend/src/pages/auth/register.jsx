@@ -47,11 +47,11 @@ const Register = () => {
       const response = await authService.onRegister(formData);
       if (response) {
         setLoading(false);
-        toast.success(response?.message);
+        toast.success('Accound created successfully, OTP code has been sent to your mail');
         setTimeout(() => {
           navigate("/code");
         }, 2000);
-      }
+      }+
     } catch (err) {
       setLoading(false);
     }
