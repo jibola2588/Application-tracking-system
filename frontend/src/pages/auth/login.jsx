@@ -57,7 +57,8 @@ const handleSubmit = async (e) => {
       localStorage.setItem("userdbtoken", response.data.token);
 
       setTimeout(() => {
-        navigate(`/code`);
+        // setTimeout(() => navigate("/userDetails"),
+        navigate(`/userDetails`);
       }, 2000);
     }
     console.log('resp is here-->', response);

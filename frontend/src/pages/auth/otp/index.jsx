@@ -60,8 +60,8 @@ const [showResend,SetShowResend] = useState(false)
         if (response.status === 200) {
           localStorage.setItem("userdbtoken", response.data.token);
           toast.success(response.data.success);
-          setTimeout(() => navigate("/userDetails"),
-          // setTimeout(() => navigate("/dashboard"),
+          // setTimeout(() => navigate("/userDetails"),
+          setTimeout(() => navigate("/login"),
           
           5000);
         } else {
