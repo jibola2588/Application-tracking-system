@@ -64,11 +64,10 @@ const Overview = () => {
        <OverviewChart />
       </Center>
       <Bottom>
-      <VerticalSpacer size='40px'/>
+      {/* <VerticalSpacer size='40px'/>
       <h3 className='font-medium text-xl'>Interviews</h3>
       <VerticalSpacer size='20px'/>
-       {/* <DataTable /> */}
-       <DashboardTable />
+       <DashboardTable /> */}
       </Bottom>
     </Container>
   );

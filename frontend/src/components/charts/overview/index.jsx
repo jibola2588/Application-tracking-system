@@ -33,17 +33,17 @@ export default function OverviewChart() {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             datasets: [
                 {
-                    label: 'Application sent',
+                    label: 'Successful Applications',
                     data: [65, 59, 80, 81, 56, 55, 40],
                     fill: false,
                     borderColor: '#18425D',
                     tension: 0.4
                 },
                 {
-                    label: 'Interview',
+                    label: 'Rejected Appications',
                     data: [28, 48, 40, 19, 86, 27, 90],
                     fill: false,
-                    borderColor: '#8BC740',
+                    borderColor: 'red',
                     tension: 0.4
                 }
             ]

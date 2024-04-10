@@ -46,12 +46,13 @@ const Register = () => {
     try {
       const response = await authService.onRegister(formData);
       if (response) {
+        sessionStorage.setItem('email',JSON.stringify(formData.email))
         setLoading(false);
         toast.success('Accound created successfully, OTP code has been sent to your mail');
         setTimeout(() => {
           navigate("/code");
         }, 2000);
-      }+
+      }
     } catch (err) {
       setLoading(false);
     }

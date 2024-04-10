@@ -3,7 +3,7 @@ import { Drawer } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { VerticalSpacer } from '../../verticalSpacer';
-// import { VerticalSpacer } from '../../../verticalSpacer';
+
 
 const currentDate = moment().format('YYYY-MM-DD');
 
@@ -91,17 +91,17 @@ const Dot = styled.div`
         }
     }};
 `
-const Jobs = ({open,onclose,item}) => {
+const Application = ({open,onclose,item}) => {
 
   const [trackArray,setTrackArray] = useState([
     {
       status:'submitted',
-      title:'Application received',
+      title:'Application submitted',
       date:currentDate,
     },
     {
       status:'test',
-      title:'Test conducted',
+      title:'Test Passed',
       date:currentDate,
     },
     {
@@ -116,72 +116,62 @@ const Jobs = ({open,onclose,item}) => {
     },
     {
       status:'successful',
-      title:'Applicantion successful',
+      title:'Hired',
       date:currentDate,
     },
   ])
  
   return (
     <>
-      <Drawer title="Job details" onClose={onclose} open={open} width={800}>
+      <Drawer title="Applicant details" onClose={onclose} open={open} width={600}>
        <section> 
-       <Top className='space-y-3'>
+       <Top>
           <div className='flex items-center justify-between'>
             <span className='text-[17px] leading-8'>Company name</span>
-            <span className='text-[17px]  leading-8'>{item?.company}</span>
+            <span className='text-[17px]  leading-8'>{item.name}</span>
           </div>
           <div className='flex items-center justify-between'>
             <span className='text-[17px] leading-8'>Applicant Date</span>
-            <span className='text-[17px]  leading-8'>{item?.timePosted}</span>
+            <span className='text-[17px]  leading-8'>{item.date}</span>
           </div>
           <div className='flex items-center justify-between'>
-            <span className='text-[17px] leading-8'>Title</span>
-            <span className='text-[17px]  leading-8'>{item?.title}</span>
+            <span className='text-[17px] leading-8'>Designation</span>
+            <span className='text-[17px] leading-8'>{item.desg}</span>
           </div>
           <div className='flex items-center justify-between'>
-            <span className='text-[17px] leading-8'>Experience level</span>
-            <span className='text-[17px] leading-8'>{item?.experience}</span>
-          </div>
-         
-          <div className='flex items-center justify-between'>
-            <span className='text-[17px] leading-8'>Qualifications</span>
-            <span className='text-[17px]  leading-8'>{item?.qualifications}</span>
-          </div>
-          
-          <div className='flex items-center justify-between'>
-            <span className='text-[17px] leading-8'>Skills</span>
-            {/* <span className='text-[17px]  leading-8'>{item?.title}</span> */}
-            <div className='flex flex-col'> 
-            {item?.skills.map((skill, index) => (
-      <span key={index} className='pl-8'>
-        <ul className='list-none'>
-          <li className='font-medium'>{skill}</li>
-        </ul>
-      </span>
-    ))}
-            </div>
-          </div>
-          <div className='flex items-start justify-between'>
-            <span className='text-[17px] leading-8'>Description</span>
-            <span className='text-[17px]  leading-8 max-w-lg break-words'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</span>
+            <span className='text-[17px] leading-8'>Job Type</span>
+            <span className='text-[17px]  leading-8'>{item.type}</span>
           </div>
           <div className='flex items-center justify-between'>
-            <span className='text-[17px] leading-8'>Location</span>
-            <span className='text-[17px]  leading-8'>{item?.locations}</span>
-          </div>
-
-          <div className='flex items-center justify-between'>
-            <span className='text-[17px] leading-8'>Days left</span>
-            <span className='text-[17px]  leading-8'>{item?.daysLeft}</span>
+            <span className='text-[17px]  leading-8'>Status</span>
+            <Status type = {item.status} className='py-1 px-2 rounded-md'> 
+                {item.status}
+              </Status>
           </div>
           </Top>
+          <Bottom> 
          <VerticalSpacer size='3rem'/>
-          <Bottom className='flex justify-end'> 
-              <button className='bg-[#18425D] py-3 px-3 rounded-md flex items-center justify-center text-white w-[12rem] font-medium '>Apply</button>
+         <h3 className='text-xl leading-[70px]'>Application process</h3>
+          <div className="tracking-info">
+          { 
+            trackArray.map((item,index) => ( 
+                <Trackwrapper key={index}>
+                  <Dot type={item.status}></Dot>
+                  <div className="flex flex-col">
+                    <orderPlaced>{item.title}</orderPlaced>
+                    <orderedContent>{currentDate}</orderedContent>
+                  </div>
+                {
+                  index < trackArray.length - 1 && <Trackline/>
+                }    
+                </Trackwrapper>
+            ))
+          }         
+              </div>
           </Bottom>
        </section>
       </Drawer>
     </>
   );
 };
-export default Jobs;
+export default Application;

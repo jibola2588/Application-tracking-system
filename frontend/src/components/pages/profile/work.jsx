@@ -5,8 +5,9 @@ import { IoIosClose } from "react-icons/io";
 
 const Container = styled.div``
 
-const Work = ({setTab}) => {
+const Work = ({setTab,data,setData}) => {
   const [disabled, setDisabled] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [workArray,setWorkArray] = useState([])
   const [formData, setFormData] = useState({
     id:Math.random() * 3000,
@@ -36,12 +37,29 @@ const Work = ({setTab}) => {
 
   useEffect(() => {
     const isAnyFieldEmpty = Object.values(formData).some(value => value === '');
-    setDisabled(isAnyFieldEmpty);
+    if(isAnyFieldEmpty){
+      setDisabled(true);
+    }else{ 
+      setDisabled(false);
+    }
   }, [formData]);
+
+  useEffect(() => {
+    if(workArray.length){
+      setIsDisabled(false)
+    }else{ 
+      setIsDisabled(true)
+    }
+  }, [workArray.length]);
 
   const handleDelete = (item) => { 
     const result = workArray.filter(data => data.id !== item.id)
     setWorkArray(result)
+  }
+
+  const handleSubmit = () => { 
+    console.log('yesss');
+    setData({...data, workData:workArray})
   }
   
   return (
@@ -112,7 +130,7 @@ const Work = ({setTab}) => {
           <div className='flex items-end justify-start'> 
           <button 
           onClick={() => handleWork()}
-          className='bg-primary500 text-white py-2 px-3 rounded-md text-center w-[16rem]'>Add</button>
+          className={ disabled ? 'bg-primary200 text-white py-2 px-3 rounded-md text-center w-[16rem] cursor-not-allowed' : 'bg-primary500 text-white py-2 px-3 rounded-md text-center w-[16rem] cursor-pointer'}>Add</button>
           </div>
            </div>
            
@@ -156,8 +174,9 @@ const Work = ({setTab}) => {
            className={`border border-primary500 text-primary500 text-sm py-2 px-3  rounded-md `}>Prev
         </button>
         <button 
-           disabled={disabled}
-           className={` ${disabled ? `bg-gray-300 cursor-not-allowed` : 'bg-primary500 cursor-pointer' } text-white text-sm py-2 px-3  rounded-md `}>Submit
+        onClick={handleSubmit}
+           disabled={isDisabled}
+           className={` ${isDisabled ? `bg-gray-300 cursor-not-allowed` : 'bg-primary500 cursor-pointer' } text-white text-sm py-2 px-3  rounded-md `}>Submit
         </button>
         </span>
        </div>

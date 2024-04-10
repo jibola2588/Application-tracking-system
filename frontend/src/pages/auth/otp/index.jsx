@@ -44,9 +44,9 @@ const [showResend,SetShowResend] = useState(false)
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (otp === "") {
-      toast.error("Enter Your OTP");
+      toast.warning("Enter Your OTP");
     } else if (!/^\d{6}$/.test(otp)) {
-      toast.error("Enter Valid OTP (6 digits)");
+      toast.warning("Enter Valid OTP (6 digits)");
     } else {
       const userEmail = sessionStorage.getItem('email');
       if (!userEmail) {
@@ -55,20 +55,20 @@ const [showResend,SetShowResend] = useState(false)
       }
 
       const data = { otp, email: userEmail };
+      
       try {
         const response = await Axios.post("http://localhost:8000/auth/verify-login", data);
         if (response.status === 200) {
-          localStorage.setItem("userdbtoken", response.data.token);
-          toast.success(response.data.success);
+          // localStorage.setItem("userdbtoken", response.data.token);
+          toast.success('Otp successfully verified');
           // setTimeout(() => navigate("/userDetails"),
           setTimeout(() => navigate("/login"),
-          
-          5000);
+          3000);
         } else {
           toast.error(response.data.message);
         }
       } catch (error) {
-        toast.error("An error occurred while verifying login");
+        toast.error("An error occurred while verifying otp");
         console.error(error);
       }
     }
@@ -108,7 +108,7 @@ const [showResend,SetShowResend] = useState(false)
           <form onSubmit={handleSubmit}>
             <div className='flex justify-center'> 
               <PinCode 
-                type='text' fields={4}
+                type='text' fields={6}
                 autoFocus
                 onChange={(value) => setOtp(value)} 
               />
@@ -126,7 +126,7 @@ const [showResend,SetShowResend] = useState(false)
             Didn't receive the pin? 
             <span 
               onClick={goToResend}
-              className='text-primary400 font-bold cursor-pointer'>Resend pin
+              className='text-primary400 font-bold cursor-pointer ml-1'>Resend pin
             </span>
           </p>
         </div>
