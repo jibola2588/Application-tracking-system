@@ -5,11 +5,11 @@ const OTPSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-},
+//   userId: {
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref: 'User',
+//     required: true
+// },
   email: { type: String, required: true,},
   otp: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },

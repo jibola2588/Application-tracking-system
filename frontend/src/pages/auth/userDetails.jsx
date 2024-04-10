@@ -29,5 +29,5 @@ export default function UserDetails() {
       });
   }, []);
 
-  return admin ? <h1>Welcome Admin</h1> :  <h1>Welcome Applicant</h1>;
+  return admin ? <AdminHome/> : <ApplicantHome/>;
 }
