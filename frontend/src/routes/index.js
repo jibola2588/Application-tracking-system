@@ -15,12 +15,16 @@ const Jobs = lazy(() => import('../pages/applicant/jobs.jsx'));
 const Profile = lazy(() => import('../pages/applicant/profile.jsx'));
 const Settings = lazy(() => import('../pages/applicant/settings.jsx'));
 const CreateNewJob = lazy(() => import('../pages/applicant/postJobs.jsx'));
+const ApplicationList = lazy(() => import('../pages/applicant/application.jsx'))
 
 // Hr
 const JobCreation = lazy(() => import('../pages/hr/create-jobs.jsx'))
 const HROverview = lazy(() => import('../pages/hr/overview.jsx'))
 const Interview = lazy(() => import('../pages/hr/interview.jsx'));
 const Application = lazy(() => import('../pages/hr/application.jsx'));
+
+
+const user = JSON.parse(localStorage.getItem('userDetails'))
 
 export const routes = [
     {
@@ -62,12 +66,12 @@ export const routes = [
         children:[
             {
                 path:'',
-                element:HROverview
+                element: user.role === 'Applicant' ? Overview : HROverview
             },
-            // {
-            //     path:'interview',
-            //     element:Interview
-            // },
+            {
+                path:'applications',
+                element:ApplicationList
+            },
             {
                 path:'applicant',
                 element:Application

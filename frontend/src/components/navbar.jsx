@@ -32,6 +32,9 @@ const Navbar = ({ userData }) => {
         case '/dashboard/applicant':
             setBreadcrumb('Applicant');
             break;
+        case '/dashboard/applications':
+            setBreadcrumb('Applications');
+            break;
         default:
             setBreadcrumb('Overview');
     }
@@ -45,7 +48,7 @@ const Navbar = ({ userData }) => {
           <Right>
               <div className='flex items-center gap-1'> 
                  <RxAvatar style={{width:24,height:24}}/>
-                 <span>{userData ? userData?.email : 'user'}</span>
+                 <span>{data.lastName || 'user'}</span>
               </div>
           </Right>
     </Container>

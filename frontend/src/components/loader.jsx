@@ -37,7 +37,7 @@ const LoaderBottom = styled.div`
   position: absolute;
   height: 4px;
   overflow: hidden;
-  background-color:rgba(213, 233, 247);
+  background-color:#18425D;
   // background-color:rgba(221, 228, 237);
   background-clip: padding-box;
   display: block;

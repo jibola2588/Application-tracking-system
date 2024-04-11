@@ -50,19 +50,23 @@ const handleSubmit = async (e) => {
     const response = await authService.onLogin(formData);
     if (response) {
       setLoading(false);
-      toast.success(response?.message);
-
-      // Storing email in session storage
+      toast.success('Login successfully');
+      if(response.body.role == 'Applicant'){ 
+    // Storing email in session storage
       sessionStorage.setItem('email', formData.email);
       localStorage.setItem("userdbtoken", response.data.token);
-
-      setTimeout(() => {
-        // setTimeout(() => navigate("/userDetails"),
-        navigate(`/userDetails`);
-      }, 2000);
+      localStorage.setItem("userDetails", JSON.stringify(response.body));
+        setTimeout(() => {
+          navigate(`/dashboard`);
+        }, 2000);
+      }else{ 
+        setTimeout(() => {
+          navigate(`/dashboard`);
+        }, 2000);
+      } 
     }
-    console.log('resp is here-->', response);
-    console.log('resp is here-->', response.formData);
+    // console.log('resp is here-->', response);
+    // console.log('resp is here-->', response.formData);
   } catch (err) {
     setLoading(false);
   }
