@@ -109,9 +109,9 @@ const Personal = ({ setTab,  setData , data}) => {
            onClick={handleNext}
            className={` ${disabled ? `bg-gray-300 cursor-not-allowed` : 'bg-primary500 cursor-pointer' } text-white text-sm py-2 px-3  rounded-md `}>Next</button>
            </div>
-           </div>
+        </div>
       </div>
-       
+    
     </Container>
   );
 }

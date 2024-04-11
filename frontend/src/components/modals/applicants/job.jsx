@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Drawer } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { VerticalSpacer } from '../../verticalSpacer';
+import Input from '../../input';
+import { FiUploadCloud } from "react-icons/fi";
+
 // import { VerticalSpacer } from '../../../verticalSpacer';
 
 const currentDate = moment().format('YYYY-MM-DD');
@@ -91,7 +94,46 @@ const Dot = styled.div`
         }
     }};
 `
+
+const Container = styled.div``;
+const Upload = styled.div`
+  border: 1px dashed gray;
+  border-radius: 20px;
+`;
+
+
+
 const Jobs = ({open,onclose,item}) => {
+
+
+  const [openModal,setOpenModal] = useState(true)
+
+  const toggleModal = () => { 
+    setOpenModal(false)
+  }
+
+  const [file, setFile] = useState(null);
+
+  function handleUpload(e) {
+    const uploadedFile = e.target.files[0];
+    if (uploadedFile) {
+      setFile({
+        name: uploadedFile.name,
+        type: uploadedFile.type,
+        size: uploadedFile.size,
+      });
+    } else {
+      setFile(null);
+    }
+  }
+
+  useEffect(() => {
+    if(file){
+      setDisabled(false)
+    }else{
+      setDisabled(true)
+    }
+  })
 
   const [trackArray,setTrackArray] = useState([
     {
@@ -120,11 +162,27 @@ const Jobs = ({open,onclose,item}) => {
       date:currentDate,
     },
   ])
+
+  const [disabled, setDisabled] = useState(true);
+  const [formData, setFormData] = useState({
+    fname: '',
+    lname: '',
+    phone: '',
+    email: '',
+  });
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const updatedData = { ...formData, [name]: value };
+    setFormData(updatedData);
+  };
  
   return (
     <>
       <Drawer title="Job details" onClose={onclose} open={open} width={800}>
-       <section> 
+
+      { openModal ? <section> 
        <Top className='space-y-3'>
           <div className='flex items-center justify-between'>
             <span className='text-[17px] leading-8'>Company name</span>
@@ -155,7 +213,7 @@ const Jobs = ({open,onclose,item}) => {
             {item?.skills.map((skill, index) => (
       <span key={index} className='pl-8'>
         <ul className='list-none'>
-          <li className='font-medium'>{skill}</li>
+          <li className='font-medium text-base'>{skill}</li>
         </ul>
       </span>
     ))}
@@ -170,16 +228,104 @@ const Jobs = ({open,onclose,item}) => {
             <span className='text-[17px]  leading-8'>{item?.locations}</span>
           </div>
 
-          <div className='flex items-center justify-between'>
+          {/* <div className='flex items-center justify-between'>
             <span className='text-[17px] leading-8'>Days left</span>
             <span className='text-[17px]  leading-8'>{item?.daysLeft}</span>
-          </div>
+          </div> */}
           </Top>
          <VerticalSpacer size='3rem'/>
           <Bottom className='flex justify-end'> 
-              <button className='bg-[#18425D] py-3 px-3 rounded-md flex items-center justify-center text-white w-[12rem] font-medium '>Apply</button>
+              <button 
+              onClick={toggleModal}
+              className='bg-[#18425D] py-3 px-3 rounded-md flex items-center justify-center text-white w-[50%] font-medium '>Apply
+              </button>
           </Bottom>
+       </section> : 
+       <section> 
+         <h3 className='font-medium text-lg'>{item.company}</h3>
+         <p>{item.title}</p>
+         <div className='space-y-5 mt-4'> 
+         <h3>Apply with the following details</h3>
+           <div className='grid grid-cols-1 md:grid-cols-2 gap-7'>
+           <Input
+                        value={formData.fname}
+                        onChange={handleChange}
+                        label="First name"
+                        id="fname"
+                        type="text"
+                        name="fname"
+                        placeholder="Enter your first name"
+                        customclassname='bg-transparent'
+                    />
+
+           <Input
+                        value={formData.lname}
+                        onChange={handleChange}
+                        label="Last name"
+                        id="lname"
+                        type="text"
+                        name="lname"
+                        placeholder="Enter your last name"
+                        customclassname='bg-transparent'
+                    />
+           </div>
+           <div  className='grid grid-cols-1 md:grid-cols-2 gap-7'> 
+           <Input
+                    value={formData.email}
+                    onChange={handleChange}
+                    label="Email address"
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email address"
+                    customclassname='bg-transparent'
+                />
+                  <Input
+                    value={formData.phone}
+                    onChange={handleChange}
+                    label="Phone number"
+                    id="phone"
+                    type="text"
+                    name="phone"
+                    placeholder="Enter your phone number"
+                    customclassname='bg-transparent'
+                />
+           </div>
+        </div>
+        <div> 
+        <Container>
+       <VerticalSpacer size='2rem'/>
+      <div className='max-w-lg mx-auto'>
+        <label htmlFor='upload'>
+          <Upload className={` ${file ? 'h-[330px]' : 'h-[200px]'}mt-6 relative`}>
+            <span className='mt-10 flex justify-center'>
+              <FiUploadCloud className='text-4xl' />
+            </span>
+            <input
+              id='upload'
+              type='file'
+              className='absolute top-0 left-0 h-[100%] w-[100%] outline-none border-none hidden'
+              onChange={handleUpload}
+            />
+            <p className='mt-5 mb-3 text-center'>upload your resume</p>
+            {file && (
+              <p className='pl-32'>
+                Name: {file.name}<br />
+                Type: {file.type}<br />
+                {/* Size: {file.size} bytes */}
+              </p>
+            )}
+          </Upload>
+        </label>
+      </div>
+       </Container>
+        </div>
+        <div className='flex gap-4 items-center mt-8'> 
+        <button className='w-[50%] bg-primary400 text-white rounded-md py-2 flex items-center justify-center cursor-pointer'>Apply</button>
+        <button className='w-[50%] border border-primary400 text-primary400 rounded-md py-2 flex items-center justify-center cursor-pointer'>Apply with your profile</button>
+        </div>
        </section>
+       }
       </Drawer>
     </>
   );
