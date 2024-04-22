@@ -1,5 +1,4 @@
 import React from 'react';
-import DataTable from '../../components/tables/application';
 import ApplicantTable from '../../components/tables/applicant';
 
 

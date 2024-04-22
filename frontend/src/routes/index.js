@@ -66,7 +66,7 @@ export const routes = [
         children:[
             {
                 path:'',
-                element: user.role === 'Applicant' ? Overview : HROverview
+                element: user?.role === 'Admin' ? HROverview : Overview
             },
             {
                 path:'applications',

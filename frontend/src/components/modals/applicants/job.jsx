@@ -321,7 +321,7 @@ const Jobs = ({open,onclose,item}) => {
        </Container>
         </div>
         <div className='flex gap-4 items-center mt-8'> 
-        <button className='w-[50%] bg-primary400 text-white rounded-md py-2 flex items-center justify-center cursor-pointer'>Apply</button>
+        <button className={'w-[50%] bg-primary400 text-white rounded-md py-2 flex items-center justify-center cursor-pointer'}>Apply</button>
         <button className='w-[50%] border border-primary400 text-primary400 rounded-md py-2 flex items-center justify-center cursor-pointer'>Apply with your profile</button>
         </div>
        </section>

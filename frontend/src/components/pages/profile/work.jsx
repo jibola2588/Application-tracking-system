@@ -58,7 +58,7 @@ const Work = ({setTab,data,setData}) => {
   }
 
   const handleSubmit = () => { 
-    console.log('yesss');
+    console.log('yesss',data);
     setData({...data, workData:workArray})
   }
   
