@@ -7,7 +7,7 @@ const Container = styled.div``
 const Left = styled.div``
 const Right = styled.div``
 
-const data = JSON.parse(localStorage.getItem('user'));
+const data = JSON.parse(localStorage.getItem('userDetails'));
 
 const Navbar = ({ userData }) => {
   const [breadcrumb, setBreadcrumb] = useState('Home');

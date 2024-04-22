@@ -31,7 +31,8 @@ const LogoutModal = (props) => {
   const {handleCancel, show } = props;
 
   const handleOk = () => {
-    console.log('logging out');
+  console.log('logging out');
+  localStorage.clear();
   toast.success('Logout successful!')
     navigate('/login')
   };
