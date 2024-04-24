@@ -384,17 +384,16 @@ router.post("/forgot-password", async (req, res) => {
   try {
     const oldUser = await User.findOne({ email });
     if (!oldUser) {
-      return res.json({ status: "User Not Exists!!" });
+      return res.json({ status: "User not registered!" });
     }
-    const secret = process.env.KEY + oldUser.password;
-    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
+    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, process.env.KEY, {
       expiresIn: "5m",
     });
-    const link = `http://localhost:8000/reset-password/${oldUser._id}/${token}`;
+    const link = `http://localhost:5173/reset-password/${token}`;
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL, // your email address
+        user: process.env.EMAIL,
         pass: process.env.PASS,
       },
     });
