@@ -5,10 +5,17 @@ import moment from 'moment';
 import { VerticalSpacer } from '../../verticalSpacer';
 import Input from '../../input';
 import { FiUploadCloud } from "react-icons/fi";
+import Axios from 'axios';
+import { toast } from 'react-toastify';
+
 
 // import { VerticalSpacer } from '../../../verticalSpacer';
 
 const currentDate = moment().format('YYYY-MM-DD');
+
+const UserData = JSON.parse(localStorage.getItem('userDetails'));
+const JobData = JSON.parse(localStorage.getItem('jobDetails'));
+
 
 
 const Top = styled.div``
@@ -133,7 +140,7 @@ const Jobs = ({open,onclose,item}) => {
     }else{
       setDisabled(true)
     }
-  })
+  }, [file])
 
   const [trackArray,setTrackArray] = useState([
     {
@@ -176,6 +183,36 @@ const Jobs = ({open,onclose,item}) => {
     const { name, value } = e.target;
     const updatedData = { ...formData, [name]: value };
     setFormData(updatedData);
+  };
+
+  const handleApply = async () => {
+    try {
+      const { fname, lname, email, phone } = formData;
+      const data = {
+        user: UserData._id, // Insert user ID here
+        job: JobData._id, // Assuming item contains job ID
+        firstName: fname,
+        lastName: lname,
+        email: email,
+        companyName: item?.company ,
+        designation: item?.title,
+        about: '', // Add other fields if needed
+        phoneNumber: phone,
+        cv: file ? file.name : '',
+        status: 'pending', // Default status
+      };
+
+      const response = await Axios.post('http://localhost:8000/appliedJob/post', data);
+
+      if (response.success) {
+        toast.successs('Job application submitted successfully');
+      } else {
+        toast.error('Failed to submit job application');
+      }
+    } catch (error) {
+      console.error('Error submitting job application:', error);
+      toast.error('Failed to submit job application');
+    }
   };
  
   return (
@@ -321,7 +358,7 @@ const Jobs = ({open,onclose,item}) => {
        </Container>
         </div>
         <div className='flex gap-4 items-center mt-8'> 
-        <button className={'w-[50%] bg-primary400 text-white rounded-md py-2 flex items-center justify-center cursor-pointer'}>Apply</button>
+        <button onClick={handleApply} className={'w-[50%] bg-primary400 text-white rounded-md py-2 flex items-center justify-center cursor-pointer'}>Apply</button>
         <button className='w-[50%] border border-primary400 text-primary400 rounded-md py-2 flex items-center justify-center cursor-pointer'>Apply with your profile</button>
         </div>
        </section>

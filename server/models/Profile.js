@@ -93,6 +93,10 @@ const personalSchema = new mongoose.Schema({
 });
 
 const applicantSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+},
   personal: personalSchema,
   skills: [String],
   resume: resumeSchema,

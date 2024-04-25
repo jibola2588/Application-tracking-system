@@ -29,6 +29,7 @@ const Jobs = () => {
       try {
         const response = await axios.get('http://localhost:8000/jobs/get'); 
         setJobs(response.data);
+        localStorage.setItem("jobDetails", JSON.stringify(response.data));
       } catch (error) {
         console.error('Error fetching jobs:', error);
       }
