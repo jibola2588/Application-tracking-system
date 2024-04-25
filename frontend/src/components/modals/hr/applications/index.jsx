@@ -127,19 +127,19 @@ const Application = ({open,onclose,item}) => {
        <Top>
           <div className='flex items-center justify-between'>
             <span className='text-[17px] leading-8'>Applicant Id</span>
-            <span className='text-[17px]  leading-8'>{item.id}</span>
+            <span className='text-[17px]  leading-8'>{item._id}</span>
           </div>
           <div className='flex items-center justify-between'>
             <span className='text-[17px] leading-8'>Applicant Date</span>
-            <span className='text-[17px]  leading-8'>{item.date}</span>
+            <span className='text-[17px]  leading-8'>{item.appliedAt}</span>
           </div>
           <div className='flex items-center justify-between'>
             <span className='text-[17px] leading-8'>Applicant Name</span>
-            <span className='text-[17px] leading-8'>{item.name}</span>
+            <span className='text-[17px] leading-8'>{item.firstName +' '+ item.lastName}</span>
           </div>
           <div className='flex items-center justify-between'>
             <span className='text-[17px] leading-8'>Applicant Designation</span>
-            <span className='text-[17px]  leading-8'>{item.desg}</span>
+            <span className='text-[17px]  leading-8'>{item.designation}</span>
           </div>
           <div className='flex items-center justify-between'>
             <span className='text-[17px]  leading-8'>Status</span>

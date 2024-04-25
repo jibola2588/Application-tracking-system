@@ -20,12 +20,38 @@ router.get("/applicants", async (req, res) => {
   
   // POST new applicant
   router.post("/applicants", async (req, res) => {
-    const applicant = new Applicant(req.body);
     try {
-      const newApplicant = await applicant.save();
-      res.status(201).json(newApplicant);
+      const {
+        personal,
+        skills,
+        resume,
+        schoolData,
+        workData
+      }= req.body;
+
+      const applicant = new Applicant({ 
+        personal,
+        skills,
+        resume,
+        schoolData,
+        workData,});
+
+      await applicant.save();
+      res.status(201).json(applicant);
     } catch (error) {
       res.status(400).json({ message: error.message });
+    }
+  });
+
+  router.get('/:userId', async (req, res) => {
+    try {
+      const userId = req.params.userId;
+      console.log('User ID:', userId); // Log the userId
+      const applicant = await Applicant.find({ user: userId });
+      res.status(200).json({ success: true, data: applicant });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Failed to get applied jobs for the user' });
     }
   });
   

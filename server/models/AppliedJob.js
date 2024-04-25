@@ -1,6 +1,4 @@
 import mongoose from 'mongoose';
-// import User from './User';
-// import Job from './Job';
 
 const ApplyJobSchema = new mongoose.Schema({
     user: {
@@ -26,6 +24,16 @@ const ApplyJobSchema = new mongoose.Schema({
     about: {
         type: String,
     },
+    companyName: {
+        type: String,
+    },
+    type: {
+        type: String,
+        default: 'Remote',
+    },
+    designation: {
+        type: String,
+    },
     phoneNumber: {
         type: String,
     },
@@ -37,7 +45,11 @@ const ApplyJobSchema = new mongoose.Schema({
         type: String,
         default: 'pending',
         enum: ['pending', 'accepted', 'rejected']
-    }
+    },
+    appliedAt: {
+        type: Date,
+        default: Date.now,
+      },
 }, { timestamps: true });
 
 

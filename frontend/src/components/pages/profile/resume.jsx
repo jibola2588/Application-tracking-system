@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FiUploadCloud } from "react-icons/fi";
 import { VerticalSpacer } from '../../verticalSpacer';
+import Axios from 'axios';
+
 
 const Container = styled.div``;
 const Upload = styled.div`
@@ -12,6 +14,11 @@ const Upload = styled.div`
 const Resume = ({setTab,data,setData}) => {
   const [file, setFile] = useState(null);
   const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
 
   function handleChange(e) {
     const uploadedFile = e.target.files[0];
@@ -34,11 +41,41 @@ const Resume = ({setTab,data,setData}) => {
     }
   })
 
-  const handleNext = () => { 
-    setData({...data, resume:file})
-    setTab('Education')
+  const fetchData = async () => {
+    try {
+      const response = await Axios.get('http://localhost:8000/profile/applicants');
+      if (response.data.length > 0) {
+        const applicantData = response.data[0];
+        setFile(applicantData.resume || []);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+
+  const handleNext = async () => {
+    try {
+      const response = await Axios.get('http://localhost:8000/profile/applicants');
+      if (response.data.length > 0) {
+        const applicantId = response.data[0]._id;
+        await Axios.put(`http://localhost:8000/profile/applicants/${applicantId}`, {
+        resume: file
+        });
+        console.log('Skills updated successfully!');
+      } else {
+        const newProfileResponse = await Axios.post('http://localhost:8000/profile/applicants', {
+          resume: file
+        });
+        console.log('Skills created successfully:', newProfileResponse.data);
+      }
+      setData({ ...data, resume: file });
+      setTab('Education')
     console.log('data is here',data);
-  }
+    } catch (error) {
+      console.error('Failed to update skills:', error);
+    }
+  };
 
   return (
     <Container>
@@ -60,7 +97,7 @@ const Resume = ({setTab,data,setData}) => {
               <p className='pl-32'>
                 Name: {file.name}<br />
                 Type: {file.type}<br />
-                {/* Size: {file.size} bytes */}
+                Size: {file.size} bytes
               </p>
             )}
           </Upload>

@@ -20,49 +20,106 @@ router.get('/list', async (req, res) => {
 // Route to post a new application
 router.post('/post', async (req, res) => {
   try {
-      // Create a new instance of AppliedJob using req.body
-      const appliedJob = new AppliedJob(req.body);
+    const {
+      user,
+      job,
+      firstName,
+      lastName,
+      email,
+      about,
+      companyName,
+      designation,
+      phoneNumber,
+      cv,
+      status,
+      appliedAt
+    } = req.body;
 
-      // Save the applied job to the database
-      await appliedJob.save();
+    const newAppliedJob = new AppliedJob({
+      user,
+      job,
+      firstName,
+      lastName,
+      email,
+      about,
+      companyName,
+      designation,
+      phoneNumber,
+      cv,
+      status,
+      appliedAt
+    });
 
-      // Send email to user
-      sendEmail(req.body.email);
+    await newAppliedJob.save();
+    sendEmail(req.body.email, 'Job Application Confirmation', 'Your job application has been received.');
 
-      // Respond with success message
-      return res.status(200).json({ message: 'Job application submitted successfully' });
+    res.status(201).json({ success: true, message: 'Job application submitted successfully' });
   } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Server error' });
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Failed to submit job application' });
+  }
+});
+
+// Route to schedule interview
+router.put('/schedule/:id', async (req, res) => {
+  try {
+    const jobId = req.params.id;
+    const { interviewDate, email } = req.body;
+
+    await AppliedJob.findByIdAndUpdate(jobId, { $set: { interviewDate, status: 'scheduled' } });
+
+    // sendEmail(email, 'Interview Scheduled', 'Your interview has been scheduled.');
+
+    res.status(200).json({ success: true, message: 'Interview scheduled successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Failed to schedule interview' });
+  }
+});
+
+// Route to reject applicant
+router.put('/reject/:id', async (req, res) => {
+  try {
+    const jobId = req.params.id;
+    // const { email } = req.body;
+
+    await AppliedJob.findByIdAndUpdate(jobId, { $set: { status: 'rejected' } });
+
+    // sendEmail(req.body.email, 'Application Rejected', 'Your job application has been rejected.');
+
+    res.status(200).json({ success: true, message: 'Applicant rejected successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Failed to reject applicant' });
   }
 });
 
 // Function to send email
-function sendEmail(userEmail) {
+function sendEmail(userEmail, subject, text) {
   // Create a transporter
   let transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASS,
-      },
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASS,
+    },
   });
 
   // Define email options
   let mailOptions = {
     from: process.env.EMAIL,
-      to: userEmail,
-      subject: 'Job Application Confirmation',
-      text: 'Your job application has been received.'
+    to: userEmail,
+    subject,
+    text
   };
 
   // Send email
   transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-          console.error('Error sending email:', error);
-      } else {
-          console.log('Email sent:', info.response);
-      }
+    if (error) {
+      console.error('Error sending email:', error);
+    } else {
+      console.log('Email sent:', info.response);
+    }
   });
 }
 

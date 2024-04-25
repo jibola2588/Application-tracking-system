@@ -4,7 +4,9 @@ import moment from 'moment';
 import styled from 'styled-components';
 import TablePagination from '@mui/material/TablePagination'; 
 import Application from '../modals/applicants/applications';
+import Axios from 'axios';
 
+const UserData = JSON.parse(localStorage.getItem('userDetails'));
 
 const Container = styled.div``
 const Top = styled.div``
@@ -41,67 +43,33 @@ const currentDate = moment().format('YYYY-MM-DD');
 
 export default function ApplicationsTable() {
   
-    const [products, setProducts] = useState([
-        {
-            id:'1',
-            date:currentDate,
-            name:'Facebook',
-            desg:'Frontend developer',
-            type:'Remote',
-            status:'pending',
-        },
-        {
-            id:'1',
-            date:currentDate,
-            name:'Facebook',
-            desg:'Frontend developer',
-            type:'Remote',
-            status:'pending',
-        },
-        {
-            id:'1',
-            date:currentDate,
-            name:'Facebook',
-            desg:'Frontend developer',
-            type:'Remote',
-            status:'pending',
-        },
-        {
-            id:'1',
-            date:currentDate,
-            name:'Facebook',
-            desg:'Frontend developer',
-            type:'Remote',
-            status:'pending',
-        },
-        {
-            id:'1',
-            date:currentDate,
-            name:'Facebook',
-            desg:'Frontend developer',
-            type:'Remote',
-            status:'pending',
-        },
-        {
-            id:'1',
-            date:currentDate,
-            name:'Facebook',
-            desg:'Frontend developer',
-            type:'Remote',
-            status:'pending',
-        },
 
-      ]);
 
     const [page, setPage] = useState(0); 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [search, setSearch] = useState('');
     const [open, setOpen] = useState(false);
-    const [item,setItem] = useState(null)
+    const [item,setItem] = useState(null);
+    const [appliedJobs, setAppliedJobs] = useState([]);
 
     const onClose = () => {
         setOpen(false);
       };
+
+      useEffect(() => {
+        const fetchAppliedJobs = async () => {
+            try {
+                const userId = UserData._id; // replace with the actual user id
+                const response = await Axios.get(`http://localhost:8000/appliedJob/${userId}`);
+                setAppliedJobs(response.data.data);
+                console.log(response, "cgfwgh");
+            } catch (error) {
+                console.error('Error fetching applied jobs:', error);
+            }
+        };
+        fetchAppliedJobs();
+    }, []);
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -117,11 +85,11 @@ export default function ApplicationsTable() {
         setPage(0);
     }
 
-     const filteredProducts = products.filter(item =>
-        item.type.toLowerCase().includes(search.toLowerCase()) ||
-        item.name.toLowerCase().includes(search.toLowerCase()) ||
-        item.desg.toLowerCase().includes(search.toLowerCase()) ||
-        item.status.toLowerCase().includes(search.toLowerCase())
+    const filteredJobs = appliedJobs.filter(job =>
+        job.type.toLowerCase().includes(search.toLowerCase()) ||
+        job.companyName.toLowerCase().includes(search.toLowerCase()) ||
+        job.designation.toLowerCase().includes(search.toLowerCase()) ||
+        job.status.toLowerCase().includes(search.toLowerCase())
     )
 
     const handleClick = (data) => {
@@ -168,15 +136,15 @@ export default function ApplicationsTable() {
                         </tr>
                     </thead> 
                     <tbody> 
-                        {filteredProducts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => ( 
-                            <tr key={index} className='text-left border-b border-[#e7e5e5] cursor-pointer w-full' onClick={() => handleClick(item)}> 
-                                <td>{item.date}</td>
-                                <td>{item.name}</td>
-                                <td>{item.desg}</td>
-                                <td>{item.type}</td>
+                        {filteredJobs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((job, index) => ( 
+                            <tr key={index} className='text-left border-b border-[#e7e5e5] cursor-pointer w-full' onClick={() => handleClick(job)}> 
+                                <td>{job.appliedAt}</td>
+                                <td>{job.companyName}</td>
+                                <td>{job.designation}</td>
+                                <td>{job.type}</td>
                                 <td className='flex items-center justify-between'> 
-                                <Status type = {item.status} className='py-1 px-2 rounded-md'> 
-                                {item.status}
+                                <Status type = {job.status} className='py-1 px-2 rounded-md'> 
+                                {job.status}
                                 </Status>
                                 </td>
                                 <td className='w-10'> 
@@ -188,7 +156,7 @@ export default function ApplicationsTable() {
                 </table>
                 <TablePagination
                     component="div"
-                    count={products.length}
+                    count={appliedJobs.length}
                     page={page}
                     onPageChange={handleChangePage}
                     rowsPerPage={rowsPerPage}
