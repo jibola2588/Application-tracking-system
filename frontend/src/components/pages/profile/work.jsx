@@ -6,6 +6,8 @@ import Axios from 'axios';
 
 const Container = styled.div``;
 
+// const userData = JSON.parse(localStorage.getItem('userDetails'));
+
 const Work = ({ setTab, data, setData }) => {
   const [disabled, setDisabled] = useState(true);
   const [isDisabled, setIsDisabled] = useState(true);
@@ -45,6 +47,8 @@ const Work = ({ setTab, data, setData }) => {
 
   const fetchData = async () => {
     try {
+      // const userId = userData._id;
+      // const response = await Axios.get(`http://localhost:8000/applicants/${userId}`);
       const response = await Axios.get('http://localhost:8000/profile/applicants');
       if (response.data.length > 0) {
         const applicantData = response.data[0];
@@ -75,7 +79,9 @@ const Work = ({ setTab, data, setData }) => {
         const applicantId = response.data[0]._id;
         await Axios.put(`http://localhost:8000/profile/applicants/${applicantId}`, { workData: workArray });
       } else {
-        await Axios.post('http://localhost:8000/profile/applicants', { workData: workArray });
+        await Axios.post('http://localhost:8000/profile/applicants', {
+          user: userData._id, 
+          workData: workArray });
       }
       setData({ ...data, workData: workArray });
       setTab('Personal Details');
