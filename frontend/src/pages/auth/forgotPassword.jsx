@@ -47,7 +47,7 @@ const handleSubmit = async (e) => {
     const response = await authService.forgotPassword(formData.email)
     if(response){ 
      setLoading(false);
-         toast.success(response?.message)
+         toast.success(response?.message || "Check your email for reset password link")
          setFormData({email:''})
          setTimeout(() => { 
            navigate('/login')

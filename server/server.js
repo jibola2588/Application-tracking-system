@@ -5,6 +5,9 @@ import cors from "cors";
 import { UserRouter } from "./routes/user.js";
 import { JobsRouter } from "./routes/job.js";
 import { OTPRouter } from "./routes/otp.js";
+import { ApplicantsRouter } from "./routes/profile.js";
+import { AppliedJobRouter } from "./routes/appliedJob.js";
+
 import cookieParser from "cookie-parser";
 dotenv.config();
 
@@ -19,6 +22,8 @@ app.use(cors(corsOptions));
 app.use('/auth', UserRouter);
 app.use('/jobs', JobsRouter);
 app.use('/otp', OTPRouter);
+app.use('/profile', ApplicantsRouter);
+app.use('/appliedJob', AppliedJobRouter);
 
 
 const connectionSring = process.env.DB_URI;

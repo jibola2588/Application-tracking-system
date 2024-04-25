@@ -3,6 +3,11 @@ import styled from "styled-components";
 import Input from "../../components/input";
 import { IoClose } from "react-icons/io5";
 import Button from "../../components/button";
+import Axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from 'react-router-dom';
+
 
 const Container = styled.div``;
 
@@ -10,6 +15,7 @@ const CreateJobs = () => {
   const [disabled, setDisabled] = useState(true);
   const [skill, setSkill] = useState("");
  const [data, setData] = useState([]);
+ const navigate = useNavigate();
  const List = styled.div``
 
   const [formData, setFormData] = useState({
@@ -47,18 +53,38 @@ const CreateJobs = () => {
   console.log('data is here', data);
 }, [data]);
 
- const handleAdd = () => { 
- console.log(skill);
- setData([...data,skill])
- setSkill('')
- console.log('data is here',data)
- }
+const handleAdd = () => {
+  console.log(skill);
+  setData([...data, skill]);
+  setFormData({ ...formData, skills: [...formData.skills, skill] }); // Add skill to formData
+  setSkill("");
+  console.log("data is here", data);
+};
 
  const handleDelete = (value) => { 
   const result = data.filter(item => item !== value)
   setData(result)
 
  }
+
+ const handleSubmit = async () => {
+  try {
+    const response = await Axios.post(
+      "http://localhost:8000/jobs/post",
+      formData
+    );
+    if (response) {
+      toast.success("Job posted successfully!");
+      setTimeout(() => {
+        navigate('/dashboard')
+        console.log("Redirecting to dashboard...");
+      }, 2000);
+    }
+  } catch (error) {
+    console.error("Error posting job:", error);
+    toast.error("Failed to post job. Please try again later.");
+  }
+};
 
   return (
     <Container>
@@ -240,6 +266,7 @@ const CreateJobs = () => {
               size='large'
               disabled={false}
               loading={false}
+              onClick={handleSubmit}
                 />  
           </span>
           </div>

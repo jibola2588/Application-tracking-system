@@ -32,9 +32,14 @@ const LogoutModal = (props) => {
 
   const handleOk = () => {
   console.log('logging out');
-  localStorage.removeItem('userDetails');
+  localStorage.clear();
+  localStorage.removeItem('token');
+  localStorage.removeItem('userDetails'); 
+   sessionStorage.clear();
+  
   toast.success('Logout successful!')
     navigate('/login')
+    window.location.reload(); 
   };
 
   return (

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { ImFilePicture } from "react-icons/im";
 import { VerticalSpacer } from '../../components/verticalSpacer';
@@ -12,6 +12,7 @@ import Skills from '../../components/pages/profile/skills';
 import Resume from '../../components/pages/profile/resume';
 import Works from '../../components/pages/profile/work';
 import Education from '../../components/pages/profile/education';
+import Axios from 'axios';
 
 const user = JSON.parse(localStorage.getItem('userDetails'))
 
@@ -25,19 +26,39 @@ const Tab = styled.div``
 const ContentWrapper = styled.div``
 const Content = styled.div``
 
+const userData = JSON.parse(localStorage.getItem('userDetails'));
+
+
 const Profile = () => {
 
   const [tab,setTab] = useState('Personal Details')
   const [data,setData] = useState({})
 
-  function handleChange(e) {
+  useEffect(() => {
+    // Fetch data when component mounts
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await Axios.get('http://localhost:8000/profile/applicants');
+      if (response.data.length > 0) {
+        setData(response.data[0]); // Assuming you're fetching only one applicant
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const handleChange = (e) => {
     console.log(e.target.files);
     setFile(URL.createObjectURL(e.target.files[0]));
-}
+  };
 
-const handleTab = (value) => { 
-  setTab(value)
-}
+  const handleTab = (value) => {
+    setTab(value);
+  };
+
 
 const tabs = [
   { 
@@ -110,29 +131,28 @@ const tabs = [
            </div>
           </Left>
           <Right className='border border-gray-100 p-4 rounded-md'>
-            <div className='flex items-center justify-between'> 
+            <div className='flex items-center justify-between'>
               <span className='font-medium'>Current status</span>
               <span>Updated on <span className='font-medium'>11/12/12</span></span>
             </div>
-            <section className='space-y-2 mt-3'> 
-              <div> 
+            <section className='space-y-2 mt-3'>
+              <div>
                 <span className='font-medium'>Working at:</span>
-                <span> Fuelmetrics</span>
+                <span> {data.personal?.company}</span>
               </div>
-              <div> 
+              <div>
                 <span className='font-medium'>Job role:</span>
-                <span> Frontend</span>
+                <span> {data.personal?.job}</span>
               </div>
-              <div> 
+              <div>
                 <span className='font-medium'>Experience:</span>
-                <span> 3 years</span>
+                <span> {data.workData?.length} years</span>
               </div>
-              <div> 
+              <div>
                 <span className='font-medium'>Location:</span>
-                <span> Lagos</span>
+                <span> {data.personal?.location}</span>
               </div>
             </section>
-
           </Right>
        </Top>
        <VerticalSpacer size='30px' />

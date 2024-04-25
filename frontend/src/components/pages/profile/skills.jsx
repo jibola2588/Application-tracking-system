@@ -1,54 +1,82 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import { IoClose } from "react-icons/io5";
+import Axios from 'axios';
 
-const Container = styled.div``
-const List = styled.div``
+const Container = styled.div``;
+const List = styled.div``;
 
-const Skills = ({ setTab,setData,data }) => {
+const Skills = ({ setTab, setData, data }) => {
+  const [skill, setSkill] = useState('');
+  const [skillData, setSkillData] = useState([]);
+  const [disabled, setDisabled] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
 
- const [skill,setSkill] = useState('');
- const [skillData, setSkillData] = useState([]);
- const [disabled, setDisabled] = useState(true);
- const [isDisabled, setIsDisabled] = useState(true);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
- useEffect(() => {
-  // console.log('data is here', skillData);
-  if(skillData.length){
-    setDisabled(false)
-  }else{ 
-    setDisabled(true)
-  }
-}, [skillData]);
+  useEffect(() => {
+    if (skillData.length) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [skillData]);
 
- const handleAdd = () => { 
- console.log(skill);
- setSkillData([...skillData,skill])
- setSkill('')
-//  console.log('data is here',skillData)
- }
+  useEffect(() => {
+    if (skill) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [skill]);
 
- const handleDelete = (value) => { 
-  const result = skillData.filter(item => item !== value)
-  setSkillData(result)
- }
+  const fetchData = async () => {
+    try {
+      const response = await Axios.get('http://localhost:8000/profile/applicants');
+      if (response.data.length > 0) {
+        const applicantData = response.data[0];
+        setSkillData(applicantData.skills || []);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
- useEffect(() => { 
-  if(skill){
-    setIsDisabled(false)
-  } else{
-    setIsDisabled(true) 
-  }
- },[skill])
+  const handleAdd = () => {
+    setSkillData([...skillData, skill]);
+    setSkill('');
+  };
 
- const handleNext = () => { 
-  setData({ 
-    ...data,
-    skills:skillData
-  })
-  console.log('skills',data);
-  setTab('Resume')
- }
+  const handleDelete = (value) => {
+    const result = skillData.filter(item => item !== value);
+    setSkillData(result);
+  };
+
+  const handleNext = async () => {
+    try {
+      const response = await Axios.get('http://localhost:8000/profile/applicants');
+      if (response.data.length > 0) {
+        // Update existing profile
+        const applicantId = response.data[0]._id;
+        await Axios.put(`http://localhost:8000/profile/applicants/${applicantId}`, {
+          skills: skillData
+        });
+        console.log('Skills updated successfully!');
+      } else {
+        // Create new profile
+        const newProfileResponse = await Axios.post('http://localhost:8000/profile/applicants', {
+          skills: skillData
+        });
+        console.log('Skills created successfully:', newProfileResponse.data);
+      }
+      setData({ ...data, skills: skillData });
+      setTab('Resume');
+    } catch (error) {
+      console.error('Failed to update skills:', error);
+    }
+  };
 
   return (
     <Container className=''>
@@ -97,7 +125,7 @@ const Skills = ({ setTab,setData,data }) => {
            className={` ${disabled ? `bg-gray-300 cursor-not-allowed` : 'bg-primary400 cursor-pointer' } text-white text-sm py-2 px-3  rounded-md `}>Next
         </button>
         </span>
-       </div>
+      </div>
     </Container>
   );
 }

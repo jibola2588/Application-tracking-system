@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import Input from '../../input';
+import Axios from 'axios';
 
-const Container = styled.div``
+const Container = styled.div``;
 
-const Personal = ({ setTab,  setData , data}) => {
 
+const userData = JSON.parse(localStorage.getItem('userDetails'));
+
+
+const Personal = ({ setTab, setData, data }) => {
   const [disabled, setDisabled] = useState(true);
   const [formData, setFormData] = useState({
     gender: '',
@@ -13,9 +17,40 @@ const Personal = ({ setTab,  setData , data}) => {
     company: '',
     job: '',
     location: '',
-    address:''
+    address: '',
+    phoneNumber: '',
   });
 
+ 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      // const userId = userData._id;
+      // const response = await Axios.get(`http://localhost:8000/applicants/${userId}`);
+      const response = await Axios.get('http://localhost:8000/profile/applicants');
+      if (response.data.length > 0) {
+        const applicantData = response.data[0];
+        setFormData({
+          gender: applicantData.personal.gender || '',
+          company: applicantData.personal.company || '',
+          job: applicantData.personal.job || '',
+          location: applicantData.personal.location || '',
+          address: applicantData.personal.address || '',
+          phoneNumber: applicantData.personal.phoneNumber || '',
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    const isAnyFieldEmpty = Object.values(formData).some(value => value === '');
+    setDisabled(isAnyFieldEmpty);
+  }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,24 +58,28 @@ const Personal = ({ setTab,  setData , data}) => {
     setFormData(updatedData);
   };
 
-  useEffect(() => {
-    const isAnyFieldEmpty = Object.values(formData).some(value => value === '');
-    if(isAnyFieldEmpty){
-      // setDisabled(isAnyFieldEmpty);
-      setDisabled(true)
-    }else{ 
-      setDisabled(false)
+  const handleNext = async () => {
+    try {
+      const response = await Axios.get('http://localhost:8000/profile/applicants');
+      if (response.data.length > 0) {
+        // Update existing profile
+        const applicantId = response.data[0]._id;
+        await Axios.put(`http://localhost:8000/profile/applicants/${applicantId}`, {
+          personal: formData
+        });
+        console.log('Profile updated successfully!');
+      } else {
+        // Create new profile
+        const newProfileResponse = await Axios.post('http://localhost:8000/profile/applicants', {
+          personal: formData
+        });
+        console.log('Profile created successfully:', newProfileResponse.data);
+      }
+      setTab('Skills');
+    } catch (error) {
+      console.error('Failed to update profile:', error);
     }
-  }, [formData]);
-
-  const handleNext = () => { 
-    setData({...data,
-    personal:formData
-  }
-    )
-    console.log('data is here',data);
-    setTab('Skills')
-  }
+  };
 
   return (
     <Container>
@@ -122,7 +161,6 @@ const Personal = ({ setTab,  setData , data}) => {
            </div>
         </div>
       </div>
-    
     </Container>
   );
 }

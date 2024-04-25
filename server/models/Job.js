@@ -9,39 +9,67 @@ const JobSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  experience: {
-    type: String,
-    required: true
-  },
   salary: {
     type: String,
     required: true
   },
-  locations: {
-    type: [String],
+  exp: {
+    type: String,
     required: true
   },
-  qualifications: {
+  qual: {
     type: String,
+    required: true
+  },
+  location: {
+    type: String,
+    required: true
+  },
+  startDate: {
+    type: Date,
+    required: true
+  },
+  desc: {
+    type: String,
+    required: true
+  },
+  mode: {
+    type: String,
+    required: true,
+    enum: ["contract", "Part time", "Full time"]
+  },
+  deadline: {
+    type: Date,
     required: true
   },
   skills: {
     type: [String],
-    required: false
+    required: true
   },
   timePosted: {
-    type: String,
-    required: true
+    type: Date,
+    default: Date.now
   },
-  applicantsCount: {
+  count: {
     type: Number,
-    required: true
+    default: 0
   },
   daysLeft: {
     type: Number,
-    required: true
   }
 });
+
+JobSchema.post('save', async function(doc, next) {
+  try {
+    const count = await this.model('Jobs').countDocuments({ _id: this._id });
+    this.count = count;
+    await this.save();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
 
 const JobModel = mongoose.model("Jobs", JobSchema);
 
