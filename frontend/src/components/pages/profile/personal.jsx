@@ -9,6 +9,7 @@ const Personal = ({ setTab,  setData , data}) => {
   const [disabled, setDisabled] = useState(true);
   const [formData, setFormData] = useState({
     gender: '',
+    phone:'',
     company: '',
     job: '',
     location: '',
@@ -44,7 +45,7 @@ const Personal = ({ setTab,  setData , data}) => {
   return (
     <Container>
       <div> 
-      <h3 className='text-center text-lg mb-3'>Complete your profile</h3>
+      <h3 className='text-xl mb-3'>Complete your profile</h3>
         <div className='space-y-5'> 
            <div className='grid grid-cols-1 md:grid-cols-2 gap-7'>
            <Input
@@ -58,14 +59,14 @@ const Personal = ({ setTab,  setData , data}) => {
                         customclassname='bg-transparent'
                     />
 
-<Input
-                        value={formData.company}
+                    <Input
+                        value={formData.phone}
                         onChange={handleChange}
-                        label="Current Company"
-                        id="company"
+                        label="Phone Number"
+                        id="phone"
                         type="text"
-                        name="company"
-                        placeholder="Enter your company name"
+                        name="phone"
+                        placeholder="Enter your phone number"
                         customclassname='bg-transparent'
                     />
            </div>
@@ -80,16 +81,16 @@ const Personal = ({ setTab,  setData , data}) => {
                     placeholder="Enter your designation"
                     customclassname='bg-transparent'
                 />
-                  <Input
-                    value={formData.location}
-                    onChange={handleChange}
-                    label="Location"
-                    id="location"
-                    type="text"
-                    name="location"
-                    placeholder="Enter your location"
-                    customclassname='bg-transparent'
-                />
+              <Input
+                        value={formData.company}
+                        onChange={handleChange}
+                        label="Current Company"
+                        id="company"
+                        type="text"
+                        name="company"
+                        placeholder="Enter your company name"
+                        customclassname='bg-transparent'
+                    />
            </div>
            <div className='grid grid-cols-1 md:grid-cols-2 gap-7'> 
            <Input
@@ -100,6 +101,16 @@ const Personal = ({ setTab,  setData , data}) => {
                     type="text"
                     name="address"
                     placeholder="Enter your address"
+                    customclassname='bg-transparent'
+                />
+                     <Input
+                    value={formData.location}
+                    onChange={handleChange}
+                    label="Location"
+                    id="location"
+                    type="text"
+                    name="location"
+                    placeholder="Enter your location"
                     customclassname='bg-transparent'
                 />
            </div>

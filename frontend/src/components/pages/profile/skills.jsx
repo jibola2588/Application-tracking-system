@@ -53,7 +53,7 @@ const Skills = ({ setTab,setData,data }) => {
   return (
     <Container className=''>
        <div> 
-         <h3>Please input your skills:</h3>
+       <h3 className='text-xl mb-3'>Please input your skills:</h3>
          <div className='w-[400px] border border-[silver] py-2 px-3 rounded-md flex gap-2 mt-2'> 
            <input 
            value={skill}

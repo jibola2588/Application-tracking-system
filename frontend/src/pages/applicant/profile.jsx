@@ -13,7 +13,7 @@ import Resume from '../../components/pages/profile/resume';
 import Works from '../../components/pages/profile/work';
 import Education from '../../components/pages/profile/education';
 
-
+const user = JSON.parse(localStorage.getItem('userDetails'))
 
 const Container = styled.div``
 const Top = styled.div``
@@ -104,8 +104,8 @@ const tabs = [
 
            </div>
            <div className='space-y-1 pl-5'> 
-             <h3 className='font-medium text-lg'>James joe</h3>
-             <h3 className='text-sm'>James@gmail.com</h3>
+             <h3 className='font-medium text-lg'>{user?.firstName} {user?.lastName}</h3>
+             <h3 className='text-sm'>{user?.email}</h3>
              <h3 className='text-sm'>07035789700</h3>
            </div>
           </Left>

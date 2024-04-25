@@ -24,7 +24,9 @@ const Interview = lazy(() => import('../pages/hr/interview.jsx'));
 const Application = lazy(() => import('../pages/hr/application.jsx'));
 
 
-const user = JSON.parse(localStorage.getItem('userDetails'))
+// const user = JSON.parse(localStorage.getItem('userDetails'))
+
+// element: user?.role === 'Admin' ? HROverview : Overview
 
 export const routes = [
     {
@@ -66,7 +68,7 @@ export const routes = [
         children:[
             {
                 path:'',
-                element: user?.role === 'Admin' ? HROverview : Overview
+                element: Overview
             },
             {
                 path:'applications',
