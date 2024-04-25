@@ -6,6 +6,9 @@ import Axios from 'axios';
 
 const Container = styled.div``;
 
+// const userData = JSON.parse(localStorage.getItem('userDetails'));
+
+
 const Education = ({ setTab, setData, data }) => {
   const [disabled, setDisabled] = useState(true);
   const [isDisabled, setIsDisabled] = useState(true);
@@ -24,6 +27,8 @@ const Education = ({ setTab, setData, data }) => {
 
   const fetchData = async () => {
     try {
+      // const userId = userData._id;
+      // const response = await Axios.get(`http://localhost:8000/applicants/${userId}`);
       const response = await Axios.get('http://localhost:8000/profile/applicants');
       if (response.data.length > 0) {
         const applicantData = response.data[0];

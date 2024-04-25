@@ -18,6 +18,37 @@ router.get('/list', async (req, res) => {
 });
 
 // Route to post a new application
+// router.post('/post', async (req, res) => {
+//   try {
+//       // Create a new instance of AppliedJob using req.body
+//       const appliedJob = new AppliedJob(req.body);
+
+//       // Save the applied job to the database
+//       await appliedJob.save();
+
+//       // Send email to user
+//       sendEmail(req.body.email);
+
+//       // Respond with success message
+//       return res.status(200).json({ message: 'Job application submitted successfully' });
+//   } catch (error) {
+//       console.error(error);
+//       return res.status(500).json({ message: 'Server error' });
+//   }
+// });
+
+router.get('/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const appliedJobs = await AppliedJob.find({ user: userId });
+    res.status(200).json({ success: true, data: appliedJobs });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Failed to get applied jobs for the user' });
+  }
+});
+
+// Route to post a new application
 router.post('/post', async (req, res) => {
   try {
     const {
