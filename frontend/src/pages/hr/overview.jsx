@@ -28,7 +28,7 @@ const Overview = () => {
          </Left>
          <Right className='flex flex-col items-end'>
            <p className='leading-[27px] font-medium'>Application received</p>
-           <h3 className='font-bold leading-[72px] text-[48px]'>87</h3>
+           <h3 className='font-bold leading-[72px] text-[48px]'>0</h3>
          </Right>
         </div>
         <div className=' bg-[#367298] h-32 rounded-md p-4 border border-silver flex  justify-between text-white items-center'>
@@ -37,7 +37,7 @@ const Overview = () => {
          </Left>
          <Right className='flex flex-col items-end'>
          <p className='leading-[27px] font-medium'>Interview schedule</p>
-           <h3 className='font-bold leading-[72px] text-[48px]'>59</h3>
+           <h3 className='font-bold leading-[72px] text-[48px]'>0</h3>
          </Right>
         </div>
         <div className=' bg-[#1BD084] h-32 rounded-md p-4 border border-silver flex  justify-between text-white items-center'>
@@ -46,7 +46,7 @@ const Overview = () => {
          </Left>
          <Right className='flex flex-col items-end'>
          <p className='leading-[27px] font-medium'>Successful Applicant</p>
-           <h3 className='font-bold leading-[72px] text-[48px]'>10</h3>
+           <h3 className='font-bold leading-[72px] text-[48px]'>0</h3>
          </Right>
         </div>
         <div className=' bg-[#8BC740] h-32 rounded-md p-4 border border-silver flex  justify-between text-white items-center'>
@@ -55,7 +55,7 @@ const Overview = () => {
          </Left>
          <Right className='flex flex-col items-end'>
            <p className='leading-[27px] font-medium'>Rejected Applicant</p>
-           <h3 className='font-bold leading-[72px] text-[48px]'>47</h3>
+           <h3 className='font-bold leading-[72px] text-[48px]'>0</h3>
          </Right>
         </div>
       </Top>

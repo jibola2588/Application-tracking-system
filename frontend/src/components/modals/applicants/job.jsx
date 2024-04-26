@@ -261,16 +261,12 @@ const Jobs = ({ open, onclose, item }) => {
                   ))}
                 </div>
               </div>
-              <div className="flex items-start justify-between">
+             {item?.desc && <div className="flex items-start justify-between">
                 <span className="text-[17px] leading-8">Description</span>
                 <span className="text-[17px]  leading-8 max-w-lg break-words">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book
+                  {item?.desc}
                 </span>
-              </div>
+              </div>}
               <div className="flex items-center justify-between">
                 <span className="text-[17px] leading-8">Location</span>
                 <span className="text-[17px]  leading-8">

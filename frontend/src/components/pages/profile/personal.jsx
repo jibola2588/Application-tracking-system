@@ -33,6 +33,8 @@ const Personal = ({ setTab, setData, data }) => {
       const response = await Axios.get('http://localhost:8000/profile/applicants');
       if (response.data.length > 0) {
         const applicantData = response.data[0];
+        // console.log('applicant data -- ',applicantData);
+        // console.log('result data -- ',response.data);
         setFormData({
           gender: applicantData.personal.gender || '',
           company: applicantData.personal.company || '',

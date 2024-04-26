@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import TablePagination from '@mui/material/TablePagination'; 
 import Application from '../modals/applicants/applications';
 import Axios from 'axios';
+import EmptyStateComponent from '../Empty';
 
 
 
@@ -17,9 +18,9 @@ const Status = styled.div`
         switch (props.type) {
             case 'pending':
                 return 'orange';
-            case 'completed':
+            case 'scheduled':
                 return 'green'; 
-            case 'cancelled':
+            case 'rejected':
                 return 'red'; 
             default:
                 return 'black'; 
@@ -29,10 +30,10 @@ const Status = styled.div`
         switch (props.type) {
             case 'pending':
                 return 'lightyellow'; 
-            case 'completed':
+            case 'scheduled':
                 return 'lightgreen'; 
-            case 'cancelled':
-                return 'lightcoral';
+            case 'rejected':
+                return 'RGB(247 226 222)';
             default:
                 return 'white'; 
         }
@@ -124,7 +125,7 @@ export default function ApplicationsTable() {
                     </span>
                 </div>
             </Top>
-            <Bottom> 
+           {filteredJobs.length ? <Bottom> 
                 <table className='w-full'> 
                     <thead className='bg-gray-100'>
                         <tr className='text-left'>
@@ -137,10 +138,10 @@ export default function ApplicationsTable() {
                             <th></th>
                         </tr>
                     </thead> 
-                    <tbody> 
+                   <tbody> 
                         {filteredJobs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((job, index) => ( 
                             <tr key={index} className='text-left border-b border-[#e7e5e5] cursor-pointer w-full' onClick={() => handleClick(job)}> 
-                                <td>{job.appliedAt}</td>
+                                <td>{new Date(job.appliedAt).toLocaleDateString()}</td>
                                 <td>{job.companyName}</td>
                                 <td>{job.designation}</td>
                                 <td>{job.type}</td>
@@ -150,13 +151,13 @@ export default function ApplicationsTable() {
                                 </Status>
                                 </td>
                                 <td className='w-10'> 
-                                <div className='border border-primary400 rounded-md py-1 px-2 text-sm'>View</div>
+                                <div className='border border-primary400 rounded-md py-1 px-2 text-sm text-primary400'>View</div>
                                 </td>
                             </tr>
                         ))}
-                    </tbody>
+                    </tbody> 
                 </table>
-                <TablePagination
+               <TablePagination
                     component="div"
                     count={appliedJobs.length}
                     page={page}
@@ -164,7 +165,7 @@ export default function ApplicationsTable() {
                     rowsPerPage={rowsPerPage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
-            </Bottom>
+            </Bottom> : <EmptyStateComponent type='data' />}
         </Container>
     );
 }

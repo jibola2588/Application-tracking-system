@@ -6,6 +6,7 @@ import TablePagination from "@mui/material/TablePagination";
 import Application from "../modals/hr/applications";
 import Axios from "axios";
 import ScheduleInterviewPopup from "../interviewCalendar";
+import EmptyStateComponent from "../Empty";
 
 const Container = styled.div``;
 const Top = styled.div``;
@@ -14,9 +15,9 @@ const Status = styled.div`
     switch (props.type) {
       case "pending":
         return "orange";
-      case "completed":
+      case "scheduled":
         return "green";
-      case "cancelled":
+      case "rejected":
         return "red";
       default:
         return "black";
@@ -26,10 +27,10 @@ const Status = styled.div`
     switch (props.type) {
       case "pending":
         return "lightyellow";
-      case "completed":
+      case "scheduled":
         return "lightgreen";
-      case "cancelled":
-        return "lightcoral";
+      case "rejected":
+        return "RGB(247 226 222)";
       default:
         return "white";
     }
@@ -118,41 +119,20 @@ export default function ApplicantTable() {
     setItem(data);
   };
 
-   const handleScheduleInterview = async (id) => {
-    try {
-      await Axios.put(`http://localhost:8000/appliedJob/schedule/${id}`, {
-        interviewDate: moment().add(7, 'days').format("YYYY-MM-DD"), // Example: Schedule interview after 7 days
-      });
-      console.log("Interview scheduled for applicant with ID:", id);
-      const response = await Axios.get(`http://localhost:8000/appliedJob/list`);
-      setAppliedJobs(response.data);
-      setShowSchedulePopup(false);
-    } catch (error) {
-      console.error("Error scheduling interview:", error);
-    }
-  };
-
-  const handleReject = async (id) => {
-    try {
-      await Axios.put(`http://localhost:8000/appliedJob/reject/${id}`);
-      console.log("Applicant rejected with ID:", id);
-      const response = await Axios.get(`http://localhost:8000/appliedJob/list`);
-      setAppliedJobs(response.data);
-    } catch (error) {
-      console.error("Error rejecting applicant:", error);
-    }
-  };
+  
 
   return (
     <Container>
       {open && item && (
-        <Application open={open} onclose={onClose} item={item} />
+        <Application 
+        setAppliedJobs={setAppliedJobs}
+        open={open} onclose={onClose} item={item} />
       )}
-       <ScheduleInterviewPopup
+       {/* <ScheduleInterviewPopup
         isOpen={showSchedulePopup}
         onClose={() => setShowSchedulePopup(false)}
         onSchedule={handleScheduleInterview}
-      />
+      /> */}
   
       {/* <VerticalSpacer size='1rem' /> */}
       <Top className="flex justify-end">
@@ -191,7 +171,7 @@ export default function ApplicantTable() {
                     onClick={() => handleClick(job)}
                   >
                     <td>{job._id}</td>
-                    <td>{job.appliedAt}</td>
+                    <td>{new Date(job.appliedAt).toLocaleDateString()}</td>
                     <td>{`${job.firstName} ${job.lastName}`}</td>
                     <td>{job.designation}</td>
                     <td className="flex items-start">
@@ -199,50 +179,17 @@ export default function ApplicantTable() {
                         {job.status}
                       </Status>
                     </td>
-                    <td>
-                    {(
-                    <ActionButtons>
-                    <Button
-                      backgroundColor="#4CAF50"
-                      color="#FFF"
-                      onClick={() => handleScheduleInterview(job._id)}
-                      disabled={job.status === "rejected"}
-                    >
-                      Schedule Interview
-                    </Button>
-                    <Button
-                      backgroundColor="#f44336"
-                      color="#FFF"
-                      onClick={() => handleReject(job._id)}
-                      disabled={job.status === "rejected"}
-                    >
-                      Reject
-                    </Button>
-                  </ActionButtons>
-                    )}
+                    <td  className='w-10'>
+                    <div  className='border border-primary400 rounded-md py-1 px-2 text-sm text-primary400 flex items-center'> 
+                      view
+                    </div>
                     </td>
                   </tr>
                 ))}
             </tbody>
           </table>
         ) : (
-            <table className="w-full">
-            <thead className="bg-gray-100">
-              <tr className="text-left">
-                <th>Applicant id</th>
-                <th>Date</th>
-                <th>Applicant name</th>
-                <th>Designation</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tr>
-                <td colSpan="5" className="text-center pt-10 text-xl0 text-gray-500">
-                  No data found
-                </td>
-            </tr>
-          </table>
-        
+          <EmptyStateComponent type='data' />       
         )}
         <TablePagination
           component="div"
@@ -256,3 +203,4 @@ export default function ApplicantTable() {
     </Container>
   );
 }
+
