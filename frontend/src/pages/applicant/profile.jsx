@@ -14,7 +14,7 @@ import Works from '../../components/pages/profile/work';
 import Education from '../../components/pages/profile/education';
 import Axios from 'axios';
 
-
+const user = JSON.parse(localStorage.getItem('userDetails'))
 
 const Container = styled.div``
 const Top = styled.div``
@@ -125,9 +125,9 @@ const tabs = [
 
            </div>
            <div className='space-y-1 pl-5'> 
-           <h3 className='font-medium text-lg'>{userData.firstName + ' ' + userData.lastName}</h3>
-            <h3 className='text-sm'>{userData.email}</h3>
-            <h3 className='text-sm'>{data.personal?.phoneNumber}</h3>
+             <h3 className='font-medium text-lg'>{user?.firstName} {user?.lastName}</h3>
+             <h3 className='text-sm'>{user?.email}</h3>
+             <h3 className='text-sm'>07035789700</h3>
            </div>
           </Left>
           <Right className='border border-gray-100 p-4 rounded-md'>

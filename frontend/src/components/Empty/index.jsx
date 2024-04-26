@@ -1,4 +1,5 @@
 import React from 'react';
+import img from '../../assets/svg/empty-template.svg'
 
 const EmptyStateComponent = ({ type }) => {
   return (
@@ -6,10 +7,10 @@ const EmptyStateComponent = ({ type }) => {
       <br />
       <div className="pt-3">
         <div className="text-center flex justify-center items-center">
-          <img src={'../assets/svg/empty-template.svg'} alt="Empty State" />
+          <img src={img} alt="Empty State" />
         </div>
         <br />
-        <div className="empty-state text-center">No {type} list available</div>
+        <div className="empty-state text-center">No {type} available</div>
       </div>
     </>
   );

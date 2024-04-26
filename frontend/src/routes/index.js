@@ -26,6 +26,8 @@ const Application = lazy(() => import('../pages/hr/application.jsx'));
 
 const user = JSON.parse(localStorage.getItem('userDetails'))
 
+
+
 export const routes = [
     {
         path: '/',

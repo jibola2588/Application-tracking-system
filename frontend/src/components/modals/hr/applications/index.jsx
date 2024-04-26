@@ -3,12 +3,39 @@ import { Drawer } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { VerticalSpacer } from '../../../verticalSpacer';
+import Axios from "axios";
 
 const currentDate = moment().format('YYYY-MM-DD');
 
 
+
+
 const Top = styled.div``
+const Center = styled.div``
 const Bottom = styled.div``
+
+const ActionButtons = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+const Button = styled.button`
+  background-color: ${(props) => props.backgroundColor || "transparent"};
+  color: ${(props) => props.color || "#333"};
+  border: 1px solid ${(props) => props.borderColor || "#ccc"};
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  opacity: ${(props) => (props.disabled ? "0.5" : "1")};
+  pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
+
+  &:hover {
+    background-color: ${(props) => props.hoverBackgroundColor || "#f5f5f5"};
+    color: ${(props) => props.hoverColor || "#333"};
+    border-color: ${(props) => props.hoverBorderColor || "#ccc"};
+  }
+`;
 
 const Status = styled.div`
     color: ${(props) => {
@@ -90,7 +117,7 @@ const Dot = styled.div`
         }
     }};
 `
-const Application = ({open,onclose,item}) => {
+const Application = ({open,onclose,item,setAppliedJobs}) => {
 
   const [trackArray,setTrackArray] = useState([
     {
@@ -120,6 +147,33 @@ const Application = ({open,onclose,item}) => {
     },
   ])
  
+  const handleScheduleInterview = async (id) => {
+    try {
+      await Axios.put(`http://localhost:8000/appliedJob/schedule/${id}`, {
+        interviewDate: moment().add(7, 'days').format("YYYY-MM-DD"), 
+      });
+      console.log("Interview scheduled for applicant with ID:", id);
+      const response = await Axios.get(`http://localhost:8000/appliedJob/list`);
+      setAppliedJobs(response.data);
+      onclose();
+      setShowSchedulePopup(false);
+    } catch (error) {
+      console.error("Error scheduling interview:", error);
+    }
+  };
+  
+  const handleReject = async (id) => {
+    try {
+      await Axios.put(`http://localhost:8000/appliedJob/reject/${id}`);
+      console.log("Applicant rejected with ID:", id);
+      const response = await Axios.get(`http://localhost:8000/appliedJob/list`);
+      setAppliedJobs(response.data);
+      onclose();
+    } catch (error) {
+      console.error("Error rejecting applicant:", error);
+    }
+  };
+
   return (
     <>
       <Drawer title="Applicant details" onClose={onclose} open={open} width={600}>
@@ -131,7 +185,7 @@ const Application = ({open,onclose,item}) => {
           </div>
           <div className='flex items-center justify-between'>
             <span className='text-[17px] leading-8'>Applicant Date</span>
-            <span className='text-[17px]  leading-8'>{item.appliedAt}</span>
+            <span className='text-[17px]  leading-8'>{new Date(item.appliedAt).toLocaleDateString()}</span>
           </div>
           <div className='flex items-center justify-between'>
             <span className='text-[17px] leading-8'>Applicant Name</span>
@@ -148,6 +202,26 @@ const Application = ({open,onclose,item}) => {
               </Status>
           </div>
           </Top>
+          <Center> 
+          <ActionButtons className='mt-8'>
+  <Button
+    backgroundColor="#4CAF50"
+    color="#FFF"
+    onClick={() => handleScheduleInterview(item._id)}
+    disabled={item.status === "rejected"}
+  >
+    Schedule Interview
+  </Button>
+  <Button
+    backgroundColor="#f44336"
+    color="#FFF"
+    onClick={() => handleReject(item._id)}
+    disabled={item.status === "rejected"}
+  >
+    Reject
+  </Button>
+</ActionButtons>
+          </Center>
           <Bottom> 
          <VerticalSpacer size='3rem'/>
          <h3 className='text-xl leading-[70px]'>Application process</h3>

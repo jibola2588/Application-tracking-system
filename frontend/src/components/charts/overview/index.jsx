@@ -7,6 +7,7 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
+import EmptyStateComponent from '../../Empty';
 
 const Container = styled.div``
 const Top = styled.div``
@@ -21,7 +22,7 @@ export default function OverviewChart() {
         dayjs('2022-04-17'),
         dayjs('2022-04-21'),
       ]);
-    const [chartData, setChartData] = useState({});
+    const [chartData, setChartData] = useState(null);
     const [chartOptions, setChartOptions] = useState({});
 
     useEffect(() => {
@@ -34,14 +35,14 @@ export default function OverviewChart() {
             datasets: [
                 {
                     label: 'Successful Applications',
-                    data: [65, 59, 80, 81, 56, 55, 40],
+                    data: [],
                     fill: false,
                     borderColor: '#18425D',
                     tension: 0.4
                 },
                 {
                     label: 'Rejected Appications',
-                    data: [28, 48, 40, 19, 86, 27, 90],
+                    data: [],
                     fill: false,
                     borderColor: 'red',
                     tension: 0.4
@@ -78,14 +79,15 @@ export default function OverviewChart() {
             }
         };
 
-        setChartData(data);
+        setChartData(null);
         setChartOptions(options);
     }, []);
 
   
     
     return (
-        <Container className='max-w-7xl p-4 shadow-md rounded-md'>
+        <> 
+       {chartData ? <Container className='max-w-7xl p-4 shadow-md rounded-md'>
             <Top className='flex justify-end'>
      <LocalizationProvider dateAdapter={AdapterDayjs}>
      <CustomDateRangePickerContainer>
@@ -101,9 +103,11 @@ export default function OverviewChart() {
     </LocalizationProvider>
             </Top>
             <Bottom className='mt-10'> 
-            <Chart type="line" data={chartData} options={chartOptions} />
+          <Chart type="line" data={chartData} options={chartOptions} /> 
             </Bottom>
-        </Container>
+        </Container> 
+        : <EmptyStateComponent type='data' />}
+        </>
     )
 }
         

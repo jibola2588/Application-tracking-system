@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/button";
 import { useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -12,6 +12,8 @@ import LogoComponent from "../../components/logo";
 import RightAuthScreen from "../../components/rightSection";
 
 const Register = () => {
+
+ 
   const navigate = useNavigate();
   const goToLogin = () => {
     navigate("/login");
