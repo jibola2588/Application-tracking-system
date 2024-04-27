@@ -130,7 +130,7 @@ const Application = ({open,onclose,item}) => {
             <span className='text-[17px] leading-8'>{item.designation}</span>
           </div>
           <div className='flex items-center justify-between'>
-            <span className='text-[17px] leading-8'>Job Type</span>
+            <span className='text-[17px] leading-8'>Job Type</span>b
             <span className='text-[17px]  leading-8'>{item.type}</span>
           </div>
           <div className='flex items-center justify-between'>
