@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import Input from '../../input';
 import Axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Container = styled.div``;
 
@@ -10,15 +11,14 @@ const userData = JSON.parse(localStorage.getItem('userDetails'));
 
 
 const Personal = ({ setTab, setData, data }) => {
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const [formData, setFormData] = useState({
     gender: '',
-    phone:'',
-    company: '',
+    phoneNumber:'',
+    email: '',
     job: '',
     location: '',
     address: '',
-    phoneNumber: '',
   });
 
  
@@ -32,12 +32,12 @@ const Personal = ({ setTab, setData, data }) => {
       // const response = await Axios.get(`http://localhost:8000/applicants/${userId}`);
       const response = await Axios.get('http://localhost:8000/profile/applicants');
       if (response.data.length > 0) {
-        const applicantData = response.data[0];
-        // console.log('applicant data -- ',applicantData);
+        const applicantData = response.data.filter(item => item.personal.email === userData.email)[0];
+
         // console.log('result data -- ',response.data);
         setFormData({
           gender: applicantData.personal.gender || '',
-          company: applicantData.personal.company || '',
+          email: applicantData.personal.email || '',
           job: applicantData.personal.job || '',
           location: applicantData.personal.location || '',
           address: applicantData.personal.address || '',
@@ -49,10 +49,11 @@ const Personal = ({ setTab, setData, data }) => {
     }
   };
 
-  useEffect(() => {
-    const isAnyFieldEmpty = Object.values(formData).some(value => value === '');
-    setDisabled(isAnyFieldEmpty);
-  }, [formData]);
+  // useEffect(() => {
+  //   const isAnyFieldEmpty = Object.values(formData).some(value => value === '');
+  //   console.log('disable value -->',isAnyFieldEmpty);
+  //   setDisabled(isAnyFieldEmpty);
+  // }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,6 +70,7 @@ const Personal = ({ setTab, setData, data }) => {
         await Axios.put(`http://localhost:8000/profile/applicants/${applicantId}`, {
           personal: formData
         });
+        toast.success('Profile updated successfully!');
         console.log('Profile updated successfully!');
       } else {
         // Create new profile
@@ -79,7 +81,12 @@ const Personal = ({ setTab, setData, data }) => {
       }
       setTab('Skills');
     } catch (error) {
-      console.error('Failed to update profile:', error);
+      if(error.response.status == 400){ 
+        toast.error(error.response.data.message);
+      }else{ 
+        toast.error('Request failed');
+      }
+  
     }
   };
 
@@ -101,17 +108,27 @@ const Personal = ({ setTab, setData, data }) => {
                     />
 
                     <Input
-                        value={formData.phone}
+                        value={formData.phoneNumber}
                         onChange={handleChange}
                         label="Phone Number"
-                        id="phone"
+                        id="phoneNumber"
                         type="text"
-                        name="phone"
+                        name="phoneNumber"
                         placeholder="Enter your phone number"
                         customclassname='bg-transparent'
                     />
            </div>
            <div  className='grid grid-cols-1 md:grid-cols-2 gap-7'> 
+           <Input
+                        value={formData.email}
+                        onChange={handleChange}
+                        label="Email Address"
+                        id="email"
+                        type="text"
+                        name="email"
+                        placeholder="Enter your mail"
+                        customclassname='bg-transparent'
+                    />
            <Input
                     value={formData.job}
                     onChange={handleChange}
@@ -122,16 +139,6 @@ const Personal = ({ setTab, setData, data }) => {
                     placeholder="Enter your designation"
                     customclassname='bg-transparent'
                 />
-              <Input
-                        value={formData.company}
-                        onChange={handleChange}
-                        label="Current Company"
-                        id="company"
-                        type="text"
-                        name="company"
-                        placeholder="Enter your company name"
-                        customclassname='bg-transparent'
-                    />
            </div>
            <div className='grid grid-cols-1 md:grid-cols-2 gap-7'> 
            <Input

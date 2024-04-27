@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import Input from '../../input';
 import { IoIosClose } from "react-icons/io";
 import Axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Container = styled.div``;
 
-// const userData = JSON.parse(localStorage.getItem('userDetails'));
+const userData = JSON.parse(localStorage.getItem('userDetails'));
 
 const Work = ({ setTab, data, setData }) => {
   const [disabled, setDisabled] = useState(true);
@@ -51,7 +52,8 @@ const Work = ({ setTab, data, setData }) => {
       // const response = await Axios.get(`http://localhost:8000/applicants/${userId}`);
       const response = await Axios.get('http://localhost:8000/profile/applicants');
       if (response.data.length > 0) {
-        const applicantData = response.data[0];
+        // const applicantData = response.data[0];
+        const applicantData = response.data.filter(item => item.personal.email === userData.email)[0];
         setWorkArray(applicantData.workData || []);
       }
     } catch (error) {
@@ -78,6 +80,7 @@ const Work = ({ setTab, data, setData }) => {
       if (response.data.length > 0) {
         const applicantId = response.data[0]._id;
         await Axios.put(`http://localhost:8000/profile/applicants/${applicantId}`, { workData: workArray });
+        toast.success('Experience updated successfully!');
       } else {
         await Axios.post('http://localhost:8000/profile/applicants', {
           user: userData._id, 
@@ -86,6 +89,7 @@ const Work = ({ setTab, data, setData }) => {
       setData({ ...data, workData: workArray });
       setTab('Personal Details');
     } catch (error) {
+        toast.error('Request failed');
       console.error('Error:', error);
     }
   };

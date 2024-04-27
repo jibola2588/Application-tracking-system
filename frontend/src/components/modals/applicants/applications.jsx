@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Drawer } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { VerticalSpacer } from '../../verticalSpacer';
-
+import Axios from "axios";
 
 const currentDate = moment().format('YYYY-MM-DD');
+const UserData = JSON.parse(localStorage.getItem('userDetails'));
+
 
 
 const Top = styled.div``
@@ -16,9 +18,9 @@ const Status = styled.div`
         switch (props.type) {
             case 'pending':
                 return 'orange';
-            case 'completed':
+            case 'scheduled':
                 return 'green'; 
-            case 'cancelled':
+            case 'rejected':
                 return 'red'; 
             default:
                 return 'black'; 
@@ -28,10 +30,10 @@ const Status = styled.div`
         switch (props.type) {
             case 'pending':
                 return 'lightyellow'; 
-            case 'completed':
+            case 'scheduled':
                 return 'lightgreen'; 
-            case 'cancelled':
-                return 'lightcoral';
+            case 'rejected':
+              return "RGB(247 226 222)"
             default:
                 return 'white'; 
         }
@@ -93,33 +95,22 @@ const Dot = styled.div`
 `
 const Application = ({open,onclose,item}) => {
 
-  const [trackArray,setTrackArray] = useState([
-    {
-      status:'submitted',
-      title:'Application submitted',
-      date:currentDate,
-    },
-    {
-      status:'test',
-      title:'Test Passed',
-      date:currentDate,
-    },
-    {
-      status:'scheduled',
-      title:'Interview scheduled',
-      date:currentDate,
-    },
-    {
-      status:'passed',
-      title:'Interview passed',
-      date:currentDate,
-    },
-    {
-      status:'successful',
-      title:'Hired',
-      date:currentDate,
-    },
-  ])
+  const [trackArray,setTrackArray] = useState([]);
+
+  useEffect(() => {
+    // Fetch track array data from an endpoint
+    async function fetchTrackArray() {
+      try {
+        const userId = UserData._id;
+        const response = await  Axios.get(`http://localhost:8000/appliedJob/${userId}`);
+        setTrackArray(response.data.data);
+      } catch (error) {
+        console.error('Error fetching track array:', error);
+      }
+    }
+    fetchTrackArray();
+  }, []);
+
  
   return (
     <>
@@ -128,15 +119,15 @@ const Application = ({open,onclose,item}) => {
        <Top>
           <div className='flex items-center justify-between'>
             <span className='text-[17px] leading-8'>Company name</span>
-            <span className='text-[17px]  leading-8'>{item.name}</span>
+            <span className='text-[17px]  leading-8'>{item.companyName}</span>
           </div>
           <div className='flex items-center justify-between'>
             <span className='text-[17px] leading-8'>Applicant Date</span>
-            <span className='text-[17px]  leading-8'>{item.date}</span>
+            <span className='text-[17px]  leading-8'>{new Date(item.appliedAt).toLocaleDateString()}</span>
           </div>
           <div className='flex items-center justify-between'>
             <span className='text-[17px] leading-8'>Designation</span>
-            <span className='text-[17px] leading-8'>{item.desg}</span>
+            <span className='text-[17px] leading-8'>{item.designation}</span>
           </div>
           <div className='flex items-center justify-between'>
             <span className='text-[17px] leading-8'>Job Type</span>
@@ -158,8 +149,8 @@ const Application = ({open,onclose,item}) => {
                 <Trackwrapper key={index}>
                   <Dot type={item.status}></Dot>
                   <div className="flex flex-col">
-                    <orderPlaced>{item.title}</orderPlaced>
-                    <orderedContent>{currentDate}</orderedContent>
+                    <orderPlaced>{item.designation}</orderPlaced>
+                    <orderedContent>{new Date(item.appliedAt).toLocaleDateString()}</orderedContent>
                   </div>
                 {
                   index < trackArray.length - 1 && <Trackline/>
