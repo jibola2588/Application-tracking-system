@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import Input from '../../input';
 import { IoClose } from "react-icons/io5";
 import Axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Container = styled.div``;
 
-// const userData = JSON.parse(localStorage.getItem('userDetails'));
+const userData = JSON.parse(localStorage.getItem('userDetails'))
 
 
 const Education = ({ setTab, setData, data }) => {
@@ -31,8 +32,10 @@ const Education = ({ setTab, setData, data }) => {
       // const response = await Axios.get(`http://localhost:8000/applicants/${userId}`);
       const response = await Axios.get('http://localhost:8000/profile/applicants');
       if (response.data.length > 0) {
-        const applicantData = response.data[0];
+        // const applicantData = response.data[0];
+        const applicantData = response.data.filter(item => item.personal.email === userData.email)[0];
         setEducationArray(applicantData.schoolData || []);
+        
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -78,12 +81,14 @@ const Education = ({ setTab, setData, data }) => {
       if (response.data.length > 0) {
         const applicantId = response.data[0]._id;
         await Axios.put(`http://localhost:8000/profile/applicants/${applicantId}`, { schoolData: educationArray });
+        toast.success('Education updated successfully!');
       } else {
         await Axios.post('http://localhost:8000/profile/applicants', { schoolData: educationArray });
       }
       setData({ ...data, schoolData: educationArray });
       setTab('Experience');
     } catch (error) {
+        toast.error('Request failed');
       console.error('Error:', error);
     }
   };

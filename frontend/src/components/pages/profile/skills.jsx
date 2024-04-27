@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import { IoClose } from "react-icons/io5";
 import Axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Container = styled.div``;
 const List = styled.div``;
+
+const userData = JSON.parse(localStorage.getItem('userDetails'));
+
 
 const Skills = ({ setTab, setData, data }) => {
   const [skill, setSkill] = useState('');
@@ -36,7 +40,7 @@ const Skills = ({ setTab, setData, data }) => {
     try {
       const response = await Axios.get('http://localhost:8000/profile/applicants');
       if (response.data.length > 0) {
-        const applicantData = response.data[0];
+        const applicantData = response.data.filter(item => item.personal.email === userData.email)[0];
         setSkillData(applicantData.skills || []);
       }
     } catch (error) {
@@ -63,6 +67,7 @@ const Skills = ({ setTab, setData, data }) => {
         await Axios.put(`http://localhost:8000/profile/applicants/${applicantId}`, {
           skills: skillData
         });
+        toast.success('Skills updated successfully!');
         console.log('Skills updated successfully!');
       } else {
         // Create new profile
@@ -74,6 +79,7 @@ const Skills = ({ setTab, setData, data }) => {
       setData({ ...data, skills: skillData });
       setTab('Resume');
     } catch (error) {
+        toast.error('Request failed');
       console.error('Failed to update skills:', error);
     }
   };

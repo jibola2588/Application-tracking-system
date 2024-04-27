@@ -127,19 +127,19 @@ const tabs = [
            <div className='space-y-1 pl-5'> 
              <h3 className='font-medium text-lg'>{user?.firstName} {user?.lastName}</h3>
              <h3 className='text-sm'>{user?.email}</h3>
-             <h3 className='text-sm'>07035789700</h3>
+             {/* <h3 className='text-sm'>07035789700</h3> */}
            </div>
           </Left>
           <Right className='border border-gray-100 p-4 rounded-md'>
             <div className='flex items-center justify-between'>
               <span className='font-medium'>Current status</span>
-              <span>Updated on <span className='font-medium'>11/12/12</span></span>
+              {/* <span>Updated on <span className='font-medium'>11/12/12</span></span> */}
             </div>
             <section className='space-y-2 mt-3'>
-              <div>
+              {/* <div>
                 <span className='font-medium'>Working at:</span>
                 <span> {data.personal?.company}</span>
-              </div>
+              </div> */}
               <div>
                 <span className='font-medium'>Job role:</span>
                 <span> {data.personal?.job}</span>
