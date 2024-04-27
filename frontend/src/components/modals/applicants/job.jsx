@@ -184,17 +184,17 @@ const Jobs = ({ open, onclose, item }) => {
     try {
       const { fname, lname, email, phone } = formData;
       const data = {
-        user: UserData._id, // Insert user ID here
-        job: JobData._id, // Assuming item contains job ID
+        user: UserData._id,
+        job: JobData?._id,
         firstName: fname,
         lastName: lname,
         email: email,
         companyName: item?.company,
         designation: item?.title,
-        about: "", // Add other fields if needed
+        about: "",
         phoneNumber: phone,
         cv: file ? file.name : "",
-        status: "pending", // Default status
+        status: "pending",
       };
 
       const response = await Axios.post(

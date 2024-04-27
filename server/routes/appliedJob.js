@@ -17,26 +17,6 @@ router.get('/list', async (req, res) => {
   }
 });
 
-// Route to post a new application
-// router.post('/post', async (req, res) => {
-//   try {
-//       // Create a new instance of AppliedJob using req.body
-//       const appliedJob = new AppliedJob(req.body);
-
-//       // Save the applied job to the database
-//       await appliedJob.save();
-
-//       // Send email to user
-//       sendEmail(req.body.email);
-
-//       // Respond with success message
-//       return res.status(200).json({ message: 'Job application submitted successfully' });
-//   } catch (error) {
-//       console.error(error);
-//       return res.status(500).json({ message: 'Server error' });
-//   }
-// });
-
 router.get('/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -48,7 +28,6 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
-// Route to post a new application
 router.post('/post', async (req, res) => {
   try {
     const {
@@ -97,10 +76,24 @@ router.put('/schedule/:id', async (req, res) => {
     const jobId = req.params.id;
     const { interviewDate, email } = req.body;
 
+    // Update job status and interview date
     await AppliedJob.findByIdAndUpdate(jobId, { $set: { interviewDate, status: 'scheduled' } });
 
-    // sendEmail(email, 'Interview Scheduled', 'Your interview has been scheduled.');
+    // Find the email associated with the job ID
+    const appliedJob = await AppliedJob.findById(jobId);
 
+    // Check if job application exists
+    if (!appliedJob) {
+      return res.status(404).json({ success: false, message: 'Job application not found' });
+    }
+
+    // Get the email from the found job application
+    const applicantEmail = appliedJob.email;
+
+    // Send interview scheduled email
+    sendEmail(applicantEmail, 'Interview Scheduled', 'Your interview has been scheduled.');
+
+    // Respond with success message
     res.status(200).json({ success: true, message: 'Interview scheduled successfully' });
   } catch (error) {
     console.error(error);
@@ -112,12 +105,25 @@ router.put('/schedule/:id', async (req, res) => {
 router.put('/reject/:id', async (req, res) => {
   try {
     const jobId = req.params.id;
-    // const { email } = req.body;
 
+    // Find the job application by ID
+    const appliedJob = await AppliedJob.findById(jobId);
+
+    // Check if job application exists
+    if (!appliedJob) {
+      return res.status(404).json({ success: false, message: 'Job application not found' });
+    }
+
+    // Get the email from the found job application
+    const email = appliedJob.email;
+
+    // Update status to 'rejected'
     await AppliedJob.findByIdAndUpdate(jobId, { $set: { status: 'rejected' } });
 
-    // sendEmail(req.body.email, 'Application Rejected', 'Your job application has been rejected.');
+    // Send rejection email
+    sendEmail(email, 'Application Rejected', 'Your job application has been rejected.');
 
+    // Respond with success message
     res.status(200).json({ success: true, message: 'Applicant rejected successfully' });
   } catch (error) {
     console.error(error);
