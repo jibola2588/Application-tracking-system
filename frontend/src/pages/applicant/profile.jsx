@@ -43,7 +43,7 @@ const Profile = () => {
     try {
       const response = await Axios.get('http://localhost:8000/profile/applicants');
       if (response.data.length > 0) {
-        setData(response.data[0]); // Assuming you're fetching only one applicant
+        setData(response.data[0]); 
       }
     } catch (error) {
       console.error('Error fetching data:', error);
