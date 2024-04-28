@@ -7,12 +7,15 @@ const router = express.Router();
 router.post('/post', async (req, res) => {
     try {
       const job = new Jobs(req.body);
-      await job.save(); // Corrected line
+      await job.save();
       res.status(201).send(job);
-    } catch (error) {
-      res.status(400).send(error);
-    }
-  });
+
+      res.status(201).json({ success: true, message: 'Job successfully created ' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Failed to create job' });
+  }
+});
 
 // Get all jobs
 router.get('/get', async (req, res) => {
