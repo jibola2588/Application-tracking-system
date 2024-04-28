@@ -6,6 +6,8 @@ import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
+const calendlyLink = 'https://calendly.com/sugutlynn/interswitch-interview-schedule';
+
 // Route to list all applications
 router.get('/list', async (req, res) => {
   try {
@@ -61,7 +63,15 @@ router.post('/post', async (req, res) => {
     });
 
     await newAppliedJob.save();
-    sendEmail(req.body.email, 'Job Application Confirmation', 'Your job application has been received.');
+    sendEmail(req.body.email, 'Job Application Confirmation', 
+    
+   `Thanks for your interest in Interswitch. Your application has been received and we will get back to you as soon as possible.
+
+If you have any questions, please do get in touch with us. We'll also gladly call you back.
+
+Best regards,
+Interswitch HR Team
+`);
 
     res.status(201).json({ success: true, message: 'Job application submitted successfully' });
   } catch (error) {
@@ -91,7 +101,14 @@ router.put('/schedule/:id', async (req, res) => {
     const applicantEmail = appliedJob.email;
 
     // Send interview scheduled email
-    sendEmail(applicantEmail, 'Interview Scheduled', 'Your interview has been scheduled.');
+    sendEmail(applicantEmail, 'Congratulations! Schedule Your Interview', 
+    `    Congratulations! We have reviewed your CV and would like to invite you to schedule an interview.
+    Please use the following link to select a time that works for you: ${calendlyLink}.
+    We look forward to meeting you!
+    
+    Best regards,
+    Interswitch HR Team`);
+
 
     // Respond with success message
     res.status(200).json({ success: true, message: 'Interview scheduled successfully' });
@@ -121,7 +138,15 @@ router.put('/reject/:id', async (req, res) => {
     await AppliedJob.findByIdAndUpdate(jobId, { $set: { status: 'rejected' } });
 
     // Send rejection email
-    sendEmail(email, 'Application Rejected', 'Your job application has been rejected.');
+    sendEmail(email, 'Application Rejected', 
+    
+   `Thank you for your interest in Interswitch. We have carefully reviewed your application, and unfortunately, we have decided not to move forward with it at this time.
+   
+We encourage you to continue exploring opportunities with us and to keep an eye out for other roles that may be a better fit.
+
+Best regards,
+Interswitch HR Team
+`);
 
     // Respond with success message
     res.status(200).json({ success: true, message: 'Applicant rejected successfully' });
