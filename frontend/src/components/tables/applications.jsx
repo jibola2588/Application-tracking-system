@@ -60,10 +60,9 @@ export default function ApplicationsTable() {
       };
 
       useEffect(() => {
-        // Fetch applied jobs for a specific user
         const fetchAppliedJobs = async () => {
             try {
-                const userId = UserData._id; // replace with the actual user id
+                const userId = UserData._id; 
                 const response = await Axios.get(`http://localhost:8000/appliedJob/${userId}`);
                 setAppliedJobs(response.data.data);
             } catch (error) {
