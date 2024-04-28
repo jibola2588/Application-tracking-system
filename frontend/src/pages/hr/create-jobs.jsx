@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Container = styled.div``;
+const List = styled.div``
 
 const CreateJobs = () => {
   const [disabled, setDisabled] = useState(true);
@@ -17,7 +18,7 @@ const CreateJobs = () => {
   const [skill, setSkill] = useState("");
  const [data, setData] = useState([]);
  const navigate = useNavigate();
- const List = styled.div``
+ 
 
   const [formData, setFormData] = useState({
     title: "",
@@ -73,6 +74,7 @@ const handleAdd = () => {
       "http://localhost:8000/jobs/post",
       formData
     );
+    console.log('response is here',response)
     if (response) {
       setIsLoading(false)
       toast.success("Job posted successfully!");

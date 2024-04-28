@@ -35,21 +35,21 @@ export default function OverviewChart() {
             datasets: [
                 {
                     label: 'Application received',
-                    data: [],
+                    data: [10, 20, 9, 11, 16, 14, 10],
                     fill: false,
                     borderColor: '#18425D',
                     tension: 0.4
                 },
                 {
                     label: 'Successful Applications',
-                    data: [],
+                    data: [8, 16, 8, 6, 8, 7,6],
                     fill: false,
                     borderColor: '#8BC740',
                     tension: 0.4
                 },
                 {
                     label: 'Rejected Applications',
-                    data: [],
+                    data:  [2, 4, 1, 5, 6, 7, 4],
                     fill: false,
                     borderColor: 'red',
                     tension: 0.4
@@ -86,7 +86,7 @@ export default function OverviewChart() {
             }
         };
 
-        setChartData(null);
+        setChartData(data);
         setChartOptions(options);
     }, []);
 
