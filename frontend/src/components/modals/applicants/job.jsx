@@ -202,7 +202,7 @@ const Jobs = ({ open, onclose, item }) => {
         data
       );
 
-      if (response.status === 201) {
+      if (response) {
         toast.success("Job application submitted successfully"); 
         navigate('/dashboard/applications');
       } else {
