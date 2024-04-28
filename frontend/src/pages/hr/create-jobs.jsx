@@ -13,6 +13,7 @@ const Container = styled.div``;
 
 const CreateJobs = () => {
   const [disabled, setDisabled] = useState(true);
+  const [isLoading,setIsLoading] = useState(false)
   const [skill, setSkill] = useState("");
  const [data, setData] = useState([]);
  const navigate = useNavigate();
@@ -46,9 +47,6 @@ const CreateJobs = () => {
     setDisabled(isAnyFieldEmpty);
   }, [formData]);
 
-
-
-
  useEffect(() => {
   console.log('data is here', data);
 }, [data]);
@@ -58,7 +56,7 @@ const handleAdd = () => {
   setData([...data, skill]);
   setFormData({ ...formData, skills: [...formData.skills, skill] }); // Add skill to formData
   setSkill("");
-  console.log("data is here", data);
+  // console.log("data is here", data);
 };
 
  const handleDelete = (value) => { 
@@ -67,13 +65,16 @@ const handleAdd = () => {
 
  }
 
- const handleSubmit = async () => {
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsLoading(true)
   try {
     const response = await Axios.post(
       "http://localhost:8000/jobs/post",
       formData
     );
     if (response) {
+      setIsLoading(false)
       toast.success("Job posted successfully!");
       setTimeout(() => {
         navigate('/dashboard')
@@ -81,6 +82,7 @@ const handleAdd = () => {
       }, 2000);
     }
   } catch (error) {
+    setIsLoading(false)
     console.error("Error posting job:", error);
     toast.error("Failed to post job. Please try again later.");
   }
@@ -90,7 +92,8 @@ const handleAdd = () => {
     <Container>
       <div>
         <h3 className="text-primary400 font-medium mb-4 text-2xl">Create job details</h3>
-        <section className="space-y-4">
+        <section 
+        className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
             <Input
               value={formData.title}
@@ -140,11 +143,11 @@ const handleAdd = () => {
             <Input
               value={formData.qual}
               onChange={handleChange}
-              label="Quanlification"
+              label="Qualification"
               id="title"
               type="=text"
               name="qual"
-              placeholder="Enter quanlification"
+              placeholder="Enter qualification"
               customclassname="bg-transparent"
             />
 
@@ -265,13 +268,12 @@ const handleAdd = () => {
               color='primary'
               size='large'
               disabled={false}
-              loading={false}
+              loading={isLoading}
               onClick={handleSubmit}
                 />  
           </span>
           </div>
-        </section>
-        
+        </section> 
       </div>
     </Container>
   );

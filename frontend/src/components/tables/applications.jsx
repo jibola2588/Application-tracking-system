@@ -31,7 +31,7 @@ const Status = styled.div`
             case 'pending':
                 return 'lightyellow'; 
             case 'scheduled':
-                return 'lightgreen'; 
+                return '#D2FCD2'; 
             case 'rejected':
                 return 'RGB(247 226 222)';
             default:

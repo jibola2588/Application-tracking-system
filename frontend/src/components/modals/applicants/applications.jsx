@@ -31,7 +31,7 @@ const Status = styled.div`
             case 'pending':
                 return 'lightyellow'; 
             case 'scheduled':
-                return 'lightgreen'; 
+                return '#D2FCD2'; 
             case 'rejected':
               return "RGB(247 226 222)"
             default:
@@ -97,20 +97,21 @@ const Application = ({open,onclose,item}) => {
 
   const [trackArray,setTrackArray] = useState([]);
 
-  useEffect(() => {
-    // Fetch track array data from an endpoint
-    async function fetchTrackArray() {
-      try {
-        const userId = UserData._id;
-        const response = await  Axios.get(`http://localhost:8000/appliedJob/${userId}`);
-        setTrackArray(response.data.data);
-      } catch (error) {
-        console.error('Error fetching track array:', error);
-      }
-    }
-    fetchTrackArray();
-  }, []);
+  // useEffect(() => {
+  //   // Fetch track array data from an endpoint
+  //   async function fetchTrackArray() {
+  //     try {
+  //       const userId = UserData._id;
+  //       const response = await  Axios.get(`http://localhost:8000/appliedJob/${userId}`);
+  //       setTrackArray(response.data.data);
+  //     } catch (error) {
+  //       console.error('Error fetching track array:', error);
+  //     }
+  //   }
+  //   fetchTrackArray();
+  // }, []);
 
+ 
  
   return (
     <>
@@ -142,8 +143,8 @@ const Application = ({open,onclose,item}) => {
           </Top>
           <Bottom> 
          <VerticalSpacer size='3rem'/>
-         <h3 className='text-xl leading-[70px]'>Application process</h3>
-          <div className="tracking-info">
+         {/* <h3 className='text-xl leading-[70px]'>Application process</h3> */}
+          {/* <div className="tracking-info">
           { 
             trackArray.map((item,index) => ( 
                 <Trackwrapper key={index}>
@@ -158,7 +159,7 @@ const Application = ({open,onclose,item}) => {
                 </Trackwrapper>
             ))
           }         
-              </div>
+              </div> */}
           </Bottom>
        </section>
       </Drawer>

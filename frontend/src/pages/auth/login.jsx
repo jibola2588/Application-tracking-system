@@ -50,6 +50,12 @@ const handleSubmit = async (e) => {
     const response = await authService.onLogin(formData);
     if (response) {
       setLoading(false);
+      // console.log('user is here',response);
+      if(response.body == undefined || !response.body){ 
+        toast.error('login unsuccessful');
+        navigate(`/login`);
+        return
+      }
       toast.success('Login successfully');
       localStorage.setItem("userDetails", JSON.stringify(response.body));
       sessionStorage.setItem('email', formData.email);

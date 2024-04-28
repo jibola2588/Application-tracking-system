@@ -138,33 +138,7 @@ const Jobs = ({ open, onclose, item }) => {
     }
   }, [file]);
 
-  const [trackArray, setTrackArray] = useState([
-    {
-      status: "submitted",
-      title: "Application received",
-      date: currentDate,
-    },
-    {
-      status: "test",
-      title: "Test conducted",
-      date: currentDate,
-    },
-    {
-      status: "scheduled",
-      title: "Interview scheduled",
-      date: currentDate,
-    },
-    {
-      status: "passed",
-      title: "Interview passed",
-      date: currentDate,
-    },
-    {
-      status: "successful",
-      title: "Applicantion successful",
-      date: currentDate,
-    },
-  ]);
+
 
   const [disabled, setDisabled] = useState(true);
   const [formData, setFormData] = useState({
@@ -237,14 +211,14 @@ const Jobs = ({ open, onclose, item }) => {
               <div className="flex items-center justify-between">
                 <span className="text-[17px] leading-8">Experience level</span>
                 <span className="text-[17px] leading-8">
-                  {item?.experience}
+                  {item?.exp}
                 </span>
               </div>
 
               <div className="flex items-center justify-between">
                 <span className="text-[17px] leading-8">Qualifications</span>
                 <span className="text-[17px]  leading-8">
-                  {item?.qualifications}
+                  {item?.qual}
                 </span>
               </div>
 
@@ -270,7 +244,7 @@ const Jobs = ({ open, onclose, item }) => {
               <div className="flex items-center justify-between">
                 <span className="text-[17px] leading-8">Location</span>
                 <span className="text-[17px]  leading-8">
-                  {item?.locations}
+                  {item?.location}
                 </span>
               </div>
 

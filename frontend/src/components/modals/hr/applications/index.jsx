@@ -42,9 +42,9 @@ const Status = styled.div`
         switch (props.type) {
             case 'pending':
                 return 'orange';
-            case 'completed':
+            case 'scheduled':
                 return 'green'; 
-            case 'cancelled':
+            case 'rejected':
                 return 'red'; 
             default:
                 return 'black'; 
@@ -54,9 +54,9 @@ const Status = styled.div`
         switch (props.type) {
             case 'pending':
                 return 'lightyellow'; 
-            case 'completed':
-                return 'lightgreen'; 
-            case 'cancelled':
+            case 'scheduled':
+                return '#D2FCD2'; 
+            case 'rejected':
                 return 'lightcoral';
             default:
                 return 'white'; 
@@ -156,7 +156,7 @@ const Application = ({open,onclose,item,setAppliedJobs}) => {
       const response = await Axios.get(`http://localhost:8000/appliedJob/list`);
       setAppliedJobs(response.data);
       onclose();
-      setShowSchedulePopup(false);
+      // setShowSchedulePopup(false);
     } catch (error) {
       console.error("Error scheduling interview:", error);
     }

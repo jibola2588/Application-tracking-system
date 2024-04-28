@@ -43,7 +43,11 @@ const Profile = () => {
     try {
       const response = await Axios.get('http://localhost:8000/profile/applicants');
       if (response.data.length > 0) {
-        setData(response.data[0]); 
+        if(userData.email !== response.data[0].personal.email){ 
+          setData(null); 
+        }else{ 
+          setData(response.data[0]); 
+        }
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -142,15 +146,15 @@ const tabs = [
               </div> */}
               <div>
                 <span className='font-medium'>Job role:</span>
-                <span> {data.personal?.job}</span>
+             {data && <span> {data.personal?.job || '--'}</span>}
               </div>
               <div>
                 <span className='font-medium'>Experience:</span>
-                <span> {data.workData?.length} years</span>
+              {data &&  <span> {data.workData?.length || '--'} years</span>}
               </div>
               <div>
                 <span className='font-medium'>Location:</span>
-                <span> {data.personal?.location}</span>
+               {data && <span> {data.personal?.location || '--'}</span>}
               </div>
             </section>
           </Right>
