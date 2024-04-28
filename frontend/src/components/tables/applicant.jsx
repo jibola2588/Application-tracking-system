@@ -5,7 +5,7 @@ import styled from "styled-components";
 import TablePagination from "@mui/material/TablePagination";
 import Application from "../modals/hr/applications";
 import Axios from "axios";
-import ScheduleInterviewPopup from "../interviewCalendar";
+// import ScheduleInterviewPopup from "../interviewCalendar";
 import EmptyStateComponent from "../Empty";
 
 const Container = styled.div``;
@@ -28,7 +28,7 @@ const Status = styled.div`
       case "pending":
         return "lightyellow";
       case "scheduled":
-        return "lightgreen";
+        return "#D2FCD2";
       case "rejected":
         return "RGB(247 226 222)";
       default:

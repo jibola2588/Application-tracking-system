@@ -51,6 +51,7 @@ const Resume = ({setTab,data,setData}) => {
       if (response.data.length > 0) {
         // const applicantData = response.data[0];
         const applicantData = response.data.filter(item => item.personal.email === userData.email)[0];
+        // console.log(applicantData, 'applicant data is here');
 
         setFile(applicantData.resume || []);
       }

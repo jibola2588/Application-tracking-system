@@ -1,5 +1,6 @@
 import {lazy} from 'react'
 
+
 const LandingPage = lazy(() => import('../pages/home'));
 const Register = lazy(() => import('../pages/auth/register.jsx'));
 const Login = lazy(() => import('../pages/auth/login.jsx'));
@@ -25,7 +26,6 @@ const Application = lazy(() => import('../pages/hr/application.jsx'));
 
 
 const user = JSON.parse(localStorage.getItem('userDetails'))
-
 
 
 export const routes = [

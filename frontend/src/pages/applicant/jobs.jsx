@@ -161,7 +161,7 @@ const Jobs = () => {
   <section className='flex justify-between items-end'> 
     {/* <button className='bg-[#18425D] py-2 px-3 rounded-md flex items-center text-white'>Apply</button> */}
     <span className='bg-[#d8ebf6] rounded-md py-[5px] px-2 flex items-center text-[#18425D] font-medium'>Remote</span>
-    <span>{job.locations}</span>
+    <span>{job.location}</span>
   </section>
               </Job>
             </Wrapper>
