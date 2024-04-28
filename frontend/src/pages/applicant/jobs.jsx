@@ -113,7 +113,7 @@ const Jobs = () => {
     ))}
   </div>
 </section> */}
-<section>{job?.desc}</section>
+<section className='break-words'>{job?.desc}</section>
 {/* <section className='lg:flex items-center gap-2'>
   <div className='flex items-center gap-1'>
     <IoMdTime />
