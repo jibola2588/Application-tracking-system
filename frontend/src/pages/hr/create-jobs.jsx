@@ -14,7 +14,6 @@ const List = styled.div``
 
 const CreateJobs = () => {
   const [disabled, setDisabled] = useState(true);
-  const [isLoading,setIsLoading] = useState(false)
   const [skill, setSkill] = useState("");
  const [data, setData] = useState([]);
  const navigate = useNavigate();
@@ -68,15 +67,14 @@ const handleAdd = () => {
 
  const handleSubmit = async (e) => {
   e.preventDefault();
-  setIsLoading(true)
   try {
     const response = await Axios.post(
       "http://localhost:8000/jobs/post",
       formData
     );
+    
     console.log('response is here',response)
     if (response) {
-      setIsLoading(false)
       toast.success("Job posted successfully!");
       setTimeout(() => {
         navigate('/dashboard')
@@ -84,7 +82,6 @@ const handleAdd = () => {
       }, 2000);
     }
   } catch (error) {
-    setIsLoading(false)
     console.error("Error posting job:", error);
     toast.error("Failed to post job. Please try again later.");
   }
@@ -270,7 +267,7 @@ const handleAdd = () => {
               color='primary'
               size='large'
               disabled={false}
-              loading={isLoading}
+              // loading={isLoading}
               onClick={handleSubmit}
                 />  
           </span>

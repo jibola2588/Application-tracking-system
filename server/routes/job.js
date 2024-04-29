@@ -8,7 +8,7 @@ router.post('/post', async (req, res) => {
     try {
       const job = new Jobs(req.body);
       await job.save();
-      res.status(201).send(job);
+      // res.status(201).send(job);
 
       res.status(201).json({ success: true, message: 'Job successfully created ' });
   } catch (error) {
