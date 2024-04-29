@@ -23,7 +23,6 @@ router.post("/signup", async (req, res) => {
       return res.json({ message: "User already exists" });
     }
     
-    // Hash the password
     const hashPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
@@ -43,10 +42,7 @@ router.post("/signup", async (req, res) => {
       specialChars: false,
     });
 
-    // Do not hash the OTP before storing
     await OTP.create({ email, otp, name: "register_otp" });
-    
-    // Send the OTP via email
     sendOTPByEmail(email, otp);
     
     return res.status(200).json({ message: "OTP sent successfully", success: true });
@@ -70,13 +66,11 @@ router.post("/login", async (req, res) => {
       return res.json({ status: false, message: "Password does not match" });
     }
 
-    // Password matches, generate JWT token
     const token = jwt.sign({ email: user.email }, process.env.KEY, {
       expiresIn: "1h",
     });
     res.cookie("token", token, { maxAge: 360000, httpOnly: true });
 
-    // Return success response
     return res.status(200).json({ success: "Login successfully", data: token , body: user });
   } catch (error) {
     console.log(error);
@@ -120,7 +114,6 @@ router.post("/send-otp", async (req, res) => {
         });
     }
 
-    // Generate OTP
     const otp = otpGenerator.generate(6, {
       digits: true,
       lowerCaseAlphabets: false,
@@ -130,23 +123,19 @@ router.post("/send-otp", async (req, res) => {
     const hashedOTP = await bcrypt.hash(otp, 12);
 
     try {
-      // Attempt to insert the OTP document
       await OTP.create({ email, otp: hashedOTP, name: "register_otp" });
-      // Send the OTP via email
       sendOTPByEmail(email, otp);
       return res
         .status(200)
         .json({ message: "OTP sent successfully", success: true });
     } catch (error) {
       if (error.code === 11000 && error.keyValue.email === email) {
-        // Duplicate key error for the same email
-        // Resend OTP
+
         sendOTPByEmail(email, otp);
         return res
           .status(200)
           .json({ message: "OTP resent successfully", success: true });
       } else {
-        // Other errors
         console.error(error);
         return res
           .status(500)
@@ -273,7 +262,7 @@ router.put("/change-password", async (req, res) => {
 
     const forg_pass_otps = otpHolder.filter(
       (otp) => otp.name == "forget_password_otp"
-    ); // otp may be sent multiple times to user. So there may be multiple otps with user email stored in dbs. But we need only last one.
+    ); 
     const findedOTP = forg_pass_otps[forg_pass_otps.length - 1];
 
     const plainOTP = otp;
@@ -312,7 +301,7 @@ router.put("/change-password", async (req, res) => {
   }
 });
 
-const OTP_EXPIRATION_TIME = 300000; // 5 minutes in milliseconds
+const OTP_EXPIRATION_TIME = 300000; 
 
 router.post("/verify-login", async (req, res) => {
   const { email, otp } = req.body;
@@ -324,30 +313,24 @@ router.post("/verify-login", async (req, res) => {
       return res.json({ status: false, message: "User does not exist" });
     }
 
-    // Find the OTP record by email
     const otpRecord = await OTP.findOne({ email });
 
-    // If OTP record not found
     if (!otpRecord) {
       return res.json({ status: false, message: "No OTP record found" });
     }
 
-    // Compare the provided OTP with the hashed OTP stored in the database
     const isMatch = await bcrypt.compare(otp, otpRecord.otp);
     if (!isMatch) {
       return res.json({ status: false, message: "Invalid OTP" });
     }
 
-    // Clear the OTP record after successful verification
     await OTP.deleteOne({ email });
 
-    // Generate JWT token for authentication
     const token = jwt.sign({ email: user.email }, process.env.KEY, {
       expiresIn: "1h",
     });
     res.cookie("token", token, { maxAge: 360000, httpOnly: true });
 
-    // Return success response
     return res.status(200).json({ success: "Login successful", data: token });
   } catch (error) {
     console.log(error);
@@ -509,8 +492,8 @@ const sendVerificationCode = (to, code) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.EMAIL, // your email address
-      pass: process.env.PASS, // your email password
+      user: process.env.EMAIL,
+      pass: process.env.PASS, 
     },
   });
 
@@ -537,8 +520,8 @@ const sendVerificationEmail = (to, link) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.EMAIL, // your email address
-      pass: process.env.PASS, // your email password
+      user: process.env.EMAIL,
+      pass: process.env.PASS,
     },
   });
 

@@ -86,18 +86,14 @@ router.put('/schedule/:id', async (req, res) => {
     const jobId = req.params.id;
     const { interviewDate, email } = req.body;
 
-    // Update job status and interview date
     await AppliedJob.findByIdAndUpdate(jobId, { $set: { interviewDate, status: 'scheduled' } });
 
-    // Find the email associated with the job ID
     const appliedJob = await AppliedJob.findById(jobId);
 
-    // Check if job application exists
     if (!appliedJob) {
       return res.status(404).json({ success: false, message: 'Job application not found' });
     }
 
-    // Get the email from the found job application
     const applicantEmail = appliedJob.email;
 
     // Send interview scheduled email
@@ -110,7 +106,6 @@ router.put('/schedule/:id', async (req, res) => {
     Interswitch HR Team`);
 
 
-    // Respond with success message
     res.status(200).json({ success: true, message: 'Interview scheduled successfully' });
   } catch (error) {
     console.error(error);
@@ -123,18 +118,14 @@ router.put('/reject/:id', async (req, res) => {
   try {
     const jobId = req.params.id;
 
-    // Find the job application by ID
     const appliedJob = await AppliedJob.findById(jobId);
 
-    // Check if job application exists
     if (!appliedJob) {
       return res.status(404).json({ success: false, message: 'Job application not found' });
     }
 
-    // Get the email from the found job application
     const email = appliedJob.email;
 
-    // Update status to 'rejected'
     await AppliedJob.findByIdAndUpdate(jobId, { $set: { status: 'rejected' } });
 
     // Send rejection email
@@ -167,7 +158,6 @@ function sendEmail(userEmail, subject, text) {
     },
   });
 
-  // Define email options
   let mailOptions = {
     from: process.env.EMAIL,
     to: userEmail,
@@ -175,7 +165,6 @@ function sendEmail(userEmail, subject, text) {
     text
   };
 
-  // Send email
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.error('Error sending email:', error);

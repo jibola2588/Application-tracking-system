@@ -59,16 +59,16 @@ const JobSchema = new mongoose.Schema({
   }
 });
 
-JobSchema.post('save', async function(doc, next) {
-  try {
-    const count = await this.model('Jobs').countDocuments({ _id: this._id });
-    this.count = count;
-    await this.save();
-    next();
-  } catch (err) {
-    next(err);
-  }
-});
+// JobSchema.post('save', async function(doc, next) {
+//   try {
+//     const count = await this.model('Jobs').countDocuments({ _id: this._id });
+//     this.count = count;
+//     await this.save();
+//     next();
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 
 const JobModel = mongoose.model("Jobs", JobSchema);

@@ -94,19 +94,16 @@ router.get("/applicants", async (req, res) => {
   // POST or PUT resume for applicant
 router.put("/applicants/:id/resume", getApplicant, async (req, res) => {
     try {
-        // Check if the resume exists
         if (req.files && req.files.resume) {
             const resume = req.files.resume;
             const applicant = res.applicant;
 
-            // Update the resume field in the applicant document
             applicant.resume = {
                 name: resume.name,
-                data: resume.data.toString('base64'), // Convert Buffer to base64
+                data: resume.data.toString('base64'),
                 contentType: resume.mimetype
             };
 
-            // Save the applicant document
             await applicant.save();
 
             res.json({ message: "Resume updated" });
@@ -120,19 +117,17 @@ router.put("/applicants/:id/resume", getApplicant, async (req, res) => {
 
 router.post("/applicants/:id/resume", getApplicant, async (req, res) => {
     try {
-        // Check if the resume exists
         if (req.files && req.files.resume) {
             const resume = req.files.resume;
             const applicant = res.applicant;
 
-            // Update the resume field in the applicant document
+         
             applicant.resume = {
                 name: resume.name,
-                data: resume.data.toString('base64'), // Convert Buffer to base64
+                data: resume.data.toString('base64'), 
                 contentType: resume.mimetype
             };
 
-            // Save the applicant document
             await applicant.save();
 
             res.status(201).json({ message: "New resume uploaded" });
